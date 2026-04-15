@@ -131,7 +131,7 @@ Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready,
 ```
 
 ### 阶段 5：质量评估与爆款归因
-生成视频后，对照 `evaluation-rubric.md` (v2.2) 进行**五维度评分**：
+生成视频后，对照 `references/evaluation-rubric.md` (v2.2) 进行**五维度评分**：
 
 | 维度 | 分值 | 核心检查项 |
 | :--- | :--- | :--- |
@@ -143,12 +143,12 @@ Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready,
 | **总分** | **100 分** | ≥75 发布 / 60-74 优化 / <60 废弃 |
 
 ### 阶段 6：数据回流与 Skill 自我迭代
-> **触发条件**：当某个钩子类型连续 3 次获得用户选择，或用户反馈视频数据表现好。
+> **触发条件**：用户反馈视频数据后，Skill 自动分析并调整策略。
 
 **迭代动作**：
-1. 更新 `viral-hook-patterns.md` 中对应钩子的 **“爆款指数”** 及复播/互动策略有效性。
-2. 在 `CHANGELOG.md` 中记录本次微调。
-3. 若某类提示词导致画面崩坏，更新 `cinematic-vocabulary.md` 的负面词表。
+1. 根据用户反馈的完播率、复播率、互动数据，判断钩子类型、脚本结构、复播彩蛋的有效性。
+2. 在内部状态中更新对应钩子的 **“爆款指数”** 及策略有效性权重。
+3. 在对话中告知用户已完成的策略调整。
 4. **追踪复播率与深度评论占比**：当某类复播彩蛋连续 3 次将复播率提升 >20%，将其设为该品类的默认选项。
 
 ---
@@ -187,11 +187,13 @@ Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready,
 - `references/viral-hook-patterns.md` (v2.2) —— 爆款钩子特征库，含复播引导与深度互动策略
 - `references/cinematic-vocabulary.md` (v2.1) —— 电影级提示词词汇表，含多镜头语法与音频同步指令
 - `references/platform-specs.md` (v2.1) —— 全平台最新算法规格与多镜头/音频支持度
-- `evaluation-rubric.md` (v2.2) —— 五维度评分表（含算法信号维度）
-- `product-tracker-template.md` (v2.1) —— 产品追踪与爆款复盘模板
+- `references/evaluation-rubric.md` (v2.2) —— 五维度评分表（含算法信号维度）
+- `references/product-tracker-template.md` (v2.1) —— 产品追踪与爆款复盘模板（可选）
 - `examples/prompt-examples.md` (v2.1) —— 双镜头提示词示例库
 - `references/failure-case-library.md` (v1.0) —— 失败案例与修复方案
 - `references/ab-testing-matrix.md` (v1.0) —— A/B 测试矩阵模板
+- `references/ad-campaign-testing.md` (v1.0) —— 广告创意测试完全指南
+- `references/localization-guide.md` (v1.0) —— 出海短视频本土化完全指南
 
 ---
 
