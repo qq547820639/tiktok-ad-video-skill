@@ -1,282 +1,243 @@
-# 全平台短视频技术规格与算法最佳实践 (Platform Specs & Algorithm Rules) v2.1
+# Seedance 2.0 提示词示例库 (Prompt Examples) v2.1
 
-> **用途**：为 Seedance 2.0 生成的视频提供精准的跨平台发布指南。所有参数均为 2026 年最新官方标准。
-> **更新版本**：v2.1 (2026.04) —— 新增多镜头叙事平台兼容性、音频同步支持说明、双镜头脚本最佳实践。
-
----
-
-## 一、核心平台速查总表
-
-| 平台 | 视频规格 | 时长限制 | 文件大小 | 多镜头支持 | 音频同步效果 | 2026 算法核心信号 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **TikTok** | 9:16, 1080x1920 | 5-60s (推荐 9-15s) | ≤500MB | ✅ 原生支持 | ✅ 强同步加权 | **评论 + 分享** |
-| **YouTube Shorts** | 9:16, 1080x1920 | ≤3min (推荐 15-60s) | ≤256GB | ✅ 支持 | ✅ 支持 | **重播率 + 关键词搜索** |
-| **Instagram Reels** | 9:16, 1080x1920 | ≤90s | ≤4GB | ✅ 支持 | ✅ 支持 | **有效完播 + 真实兴趣** |
-| **Facebook Reels** | 9:16, 1080x1920 | ≤90s | ≤4GB | ✅ 支持 | ✅ 支持 | **真实兴趣 + 品牌信任** |
-| **Snapchat Spotlight** | 9:16, 1080x1920 | 5-60s (推荐 15-30s) | ≤500MB | ✅ 支持 | ⚠️ 有限 | **完播率唯一王者** |
-| **Pinterest** | 9:16, 1080x1920 | 4s-15min (推荐 6-15s) | ≤2GB | ⚠️ 谨慎 | ❌ 静音为主 | **视觉自解释力 + 点击率** |
+> **用途**：为 Skill 提供可直接参考或微调的 Seedance 2.0 提示词模板。所有示例均针对 9:16 竖屏、15 秒时长优化，并采用 v2.1 双镜头叙事语法与音频同步指令。
+> **使用方式**：根据产品类目和选定的钩子类型，选取最接近的示例进行变量替换（产品名、动作、环境）。
+> **更新版本**：v2.1 (2026.04) —— 全部示例升级为双镜头结构，融入音频同步指令，对齐 v2.1 钩子库与词汇表。
 
 ---
 
-## 二、平台详细规格与算法深度解析
+## 一、按钩子类型分类的提示词示例
 
-### 🎬 TikTok
+### 1. 认知失调型 (Cognitive Dissonance)
 
-#### 技术规格
-| 参数 | 要求 |
-| :--- | :--- |
-| 分辨率 | 1080x1920 (9:16)，最低 540x960 |
-| 帧率 | 24/25/30fps (推荐 24fps) |
-| 编码格式 | H.264 或 H.265 |
-| 容器格式 | MP4 / MOV |
-| 比特率 | ≥3 Mbps (推荐 6-8 Mbps) |
-| 色彩空间 | Rec. 709 |
+**适用产品**：清洁神器、黑科技小家电、解压玩具
+**核心特征**：违背常识的视觉效果，让人产生“这不可能”的惊讶感
 
-#### 多镜头叙事兼容性
-- TikTok 原生支持多镜头切换视频，且 **快节奏多镜头视频的完播率平均高出单镜头 18%**（2026 年平台数据）。
-- 推荐双镜头结构：**0-7s 建立悬念/痛点 + 8-15s 解决/揭示**。
-- 转场方式建议：Whip pan（快速摇摄）、Match cut（匹配动作）、Zoom transition（缩放转场）均为高互动转场。
+#### 示例 1.1：清洁海绵 (全平台通投 · 双镜头版)
 
-#### 音频同步支持
-- TikTok 算法对 **音画同步的视频有额外加权**，尤其在 For You 推荐池中。
-- 建议在 Prompt 中加入 `Visual beats sync with audio rhythm` 类指令。
-- 热门音频 + 画面同步 = 更高进入推荐池概率。
+**英文 Prompt**：
+```
+High CTR style, Viral TikTok aesthetic, Cinematic macro shot, Snappy motion.
 
-#### 2026 算法核心变化
-1. **互动权重重塑**：有效互动 = **评论 + 分享**。收藏权重下降。
-2. **搜索权重提升**：标题和描述中的关键词成为流量入口。
-3. **多镜头加权**：采用双镜头结构的视频在完播率上获得额外加分。
+[0-7s] Wide POV shot scanning across a greasy messy stove after cooking dinner, thick yellow grease stains visible, handheld breathing motion, frustration implied.
 
-#### 发布优化清单
-- 标题含 1-2 个核心关键词 + 1 个热门标签。
-- 评论区置顶引导互动的提问。
-- 背景音乐选择 Trending 榜单前 20，并确保画面与节拍同步。
-- 双镜头视频在文案中暗示“看到最后”，提升完播期待。
+[7s] Quick whip pan transition.
 
----
+[8-15s] Extreme macro close-up of blue cleaning sponge wiping the same grease, stains instantly vanish on contact revealing mirror-like stainless steel underneath, no scrubbing needed. Visual beats sync with heavy bass drops, slight camera shake on each beat.
 
-### ▶️ YouTube Shorts
+Freeze frame on perfectly clean reflective surface for 2 seconds with clear space for "How is this possible?" text overlay.
 
-#### 技术规格
-| 参数 | 要求 |
-| :--- | :--- |
-| 分辨率 | 1080x1920 (9:16) |
-| 帧率 | 24/30/60fps |
-| 编码格式 | H.264 |
-| 容器格式 | MP4 / MOV |
-| 比特率 | ≥3.5 Mbps |
-| 音频 | AAC 或 MP3，≥128kbps |
+Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Comment-worthy moment, Shareable ending.
+```
 
-#### 多镜头叙事兼容性
-- YouTube Shorts 完全支持多镜头剪辑。
-- **搜索友好型多镜头**：建议在第一个镜头中即展示核心关键词的视觉元素（如产品名称字幕、教程步骤文字），便于搜索索引。
+**中文提示词参考**：
+```
+高CTR风格，病毒式TikTok美学，电影级微距，干脆利落的运镜。
 
-#### 音频同步支持
-- 音频同步对 Shorts 推荐有正面影响，但权重低于 TikTok。
-- 更看重 **重播率**：如果音画同步能让用户反复观看，则间接提升推荐。
+[0-7秒] 广角第一人称视角扫过做完饭后油腻杂乱的灶台，厚重黄色油垢清晰可见，手持呼吸感，隐含挫败感。
 
-#### 2026 算法核心变化
-1. **搜索成为关键流量来源**：用户可以专门筛选搜索 Shorts 视频。
-2. **重播率是推荐核心**：用户反复观看或拖动进度条回看的视频获得巨大加权。
-3. **长视频联动**：Shorts 可以关联长视频，相互反哺。
+[7秒] 快速摇摄转场。
 
-#### 发布优化清单
-- 标题必须做 SEO：核心关键词 + 结果承诺句式。
-- 描述区前 100 字符包含核心关键词，并添加 3-5 个相关标签。
-- 双镜头视频的标题可加入“Wait for it”类悬念词，提升完播。
-- 视频末尾 2 秒添加“订阅”动画按钮。
+[8-15秒] 蓝色清洁海绵擦拭同一油垢的极近特写，污渍接触瞬间消失露出镜面般反光的不锈钢表面，无需擦洗。画面随重低音节奏轻微震动。
+
+动作最后定格在完美干净的灶台反光面2秒，留有“这怎么可能？”文字叠加空间。
+
+干净明亮布光，4k超高清，9:16竖屏，15秒无缝循环，评论引导时刻，分享结尾。
+```
 
 ---
 
-### 📷 Instagram Reels
+### 2. 极简结果型 (Instant Result)
 
-#### 技术规格
-| 参数 | 要求 |
-| :--- | :--- |
-| 分辨率 | 1080x1920 (9:16) |
-| 帧率 | 24/30fps |
-| 编码格式 | H.264 |
-| 容器格式 | MP4 / MOV |
-| 比特率 | ≥3.5 Mbps |
-| 音频 | 推荐使用 Instagram 音乐库内版权音乐 |
+**适用产品**：收纳用品、厨房工具、美妆速成
+**核心特征**：Before/After 极速切换，强调“一步到位”“懒人友好”
 
-#### 多镜头叙事兼容性
-- Reels 原生支持多镜头，且 **“3 秒冲突 + 10 秒解决”的双镜头结构**是 Meta 官方推荐的内容公式。
-- 注意：双镜头之间的转场不要过于炫技，Meta 算法偏好自然过渡。
+#### 示例 2.1：厨房收纳神器 (全平台通投 · 双镜头版)
 
-#### 音频同步支持
-- 音频同步对 Reels 有正面影响，但不如 TikTok 显著。
-- Meta 更关注 **“真实兴趣”** 信号，音频同步需服务于内容价值，而非纯视觉炫技。
+**英文 Prompt**：
+```
+High CTR style, Viral TikTok aesthetic, Snappy motion.
 
-#### 2026 算法核心变化
-1. **“真实兴趣 (True Interest)” 转向**：算法分析观众是否真正对该主题感兴趣。
-2. **有效完播密度**：用户在播放过程中无分心行为的完播才计为有效。
-3. **原创性检测加强**：AI 生成内容需有明确的人工创意痕迹。
+[0-7s] Whip pan across a cluttered kitchen counter with scattered spice jars, messy utensil drawer, and chaotic coffee station, showing overwhelming chaos, handheld POV.
 
-#### 发布优化清单
-- 前 3 秒亮明品牌/产品名，建立信任预期。
-- 双镜头结构：镜头一展示问题，镜头二展示产品解决方案。
-- 使用 Instagram 内置文字工具添加字幕。
-- 避免过度夸张的病毒式文案，强调真实价值。
+[7s] Hand wipes across lens as natural transition.
+
+[8-15s] Timelapse transition from messy to clean, items magically snapping into a sleek bamboo organizer tray within seconds, everything perfectly aligned. Smooth camera movement flowing with upbeat tempo.
+
+Freeze frame on the immaculately organized counter with product centered, clear space for "One tray fixes everything" text.
+
+Clean bright minimal lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Shareable ending.
+```
 
 ---
 
-### 👥 Facebook Reels
+### 3. 价格锚点型 (Price Anchor)
 
-#### 技术规格
-与 Instagram Reels 完全一致。
+**适用产品**：日用百货、服饰配饰、工厂直发品
+**核心特征**：通过视觉化的价格对比，制造“超值感”
 
-#### 多镜头叙事兼容性
-- 与 Instagram Reels 相同，支持多镜头。
-- Facebook 用户年龄层偏大，多镜头节奏建议比 TikTok 略慢 10-15%。
+#### 示例 3.1：工厂直发收纳盒 (全平台通投 · 双镜头版)
 
-#### 音频同步支持
-- 支持，但权重不高。Facebook 用户更多在静音或低音量环境下浏览。
+**英文 Prompt**：
+```
+High-end commercial look, High CTR style, Snappy motion.
 
-#### 2026 算法核心变化
-1. **熟人社交优先**：优先分发给用户的好友网络。
-2. **价值输出型内容受宠**：教程、科普、生活技巧类视频获得更多推荐。
-3. **品牌透明度要求**：前 5 秒内必须明确呈现品牌/产品信息。
+[0-7s] A luxury branded storage bin on a marble kitchen counter, elegant setting, text space for "$199 ???" subtly implied. Slow orbit shot around the single bin.
 
-#### 发布优化清单
-- 前 5 秒以字幕或特写形式清晰展示品牌/产品名。
-- 双镜头结构：镜头一快速建立问题场景，镜头二展示解决方案并突出品牌。
-- 引导用户标记朋友（如“Tag a friend who needs this”）。
+[7s] Match cut on the hand movement reaching for the bin.
 
----
+[8-15s] Same hand picks up one of our bamboo organizers from a stack of 10 identical bins. Macro close-up of premium wood grain, smooth edges, and precise joinery. Text space for "Factory direct. Same quality. $19.9." Visual beats sync with subtle click sounds.
 
-### 👻 Snapchat Spotlight
+Freeze frame on the stack of 10 bins with value comparison text space.
 
-#### 技术规格
-| 参数 | 要求 |
-| :--- | :--- |
-| 分辨率 | 1080x1920 (9:16)，最低 720x1280 |
-| 帧率 | 30fps |
-| 编码格式 | H.264 |
-| 容器格式 | MP4 / MOV |
-| 比特率 | ≥3 Mbps |
-| 音频 | 立体声，≥128kbps |
-| 水印 | 禁止包含任何水印 |
-
-#### 多镜头叙事兼容性
-- 支持多镜头，但 Spotlight 用户偏好 **极快节奏**。
-- 双镜头结构建议压缩为 **0-4s + 5-15s**，更快进入核心内容。
-
-#### 音频同步支持
-- 有限支持。Spotlight 更看重纯视觉的完播率。
-
-#### 2026 算法核心
-1. **完播率是唯一王者**：互动信号权重极低。
-2. **年轻化审美**：核心用户 13-24 岁，偏好快节奏、无废话内容。
-3. **禁止内容**：禁止含外部链接引导、二维码、其他平台水印。
-
-#### 发布优化清单
-- 视频前 1 秒内必须进入核心动作，零铺垫。
-- 时长控制在 15-25 秒。
-- 去除所有水印后再上传。
-- 双镜头转场使用快速摇摄 (Whip pan)，不要拖沓。
+Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Value-first visual.
+```
 
 ---
 
-### 📌 Pinterest
+### 4. 情感绑架型 (Emotional Bond)
 
-#### 技术规格
-| 参数 | 要求 |
-| :--- | :--- |
-| 分辨率 | 1080x1920 (9:16)，也支持 1080x1080 (1:1) |
-| 帧率 | 25/30fps |
-| 编码格式 | H.264 |
-| 容器格式 | MP4 / MOV |
-| 比特率 | ≥3 Mbps |
-| 音频 | **不重要**，默认静音播放 |
+**适用产品**：节日礼品、女性护理、宠物用品
+**核心特征**：触发愧疚、爱意、关怀等情感，驱动分享和送礼行为
 
-#### 多镜头叙事兼容性
-- Pinterest 支持多镜头，但由于静音浏览习惯，**每个镜头都必须有自解释的文字叠加**。
-- 双镜头结构需确保：即使只看其中一个镜头，也能理解产品价值。
+#### 示例 4.1：女性护理礼品 (全平台通投 · 双镜头版)
 
-#### 音频同步支持
-- 基本不支持。不要依赖音频同步来传递信息。
+**英文 Prompt**：
+```
+Authentic lived-in feel, Warm cozy tones, Cinematic soft focus.
 
-#### 2026 算法核心
-1. **视觉自解释力**：90% 用户在静音状态下浏览。
-2. **点击率为王**：视频 Pin 的点击率是推荐第一信号。
-3. **长期生命力**：视频可被持续搜索推荐数月甚至数年。
+[0-7s] Soft focus shot of a tired woman in her 30s rubbing her neck after a long day, messy home office background, genuine exhaustion visible, warm but tired lighting. Ambient sound implied.
 
-#### 发布优化清单
-- 强制叠加醒目的大号文字标题（占画面 1/4 到 1/3）。
-- 选择对比最强烈的画面作为 Pin 封面。
-- 标题和描述包含 2-3 个长尾搜索关键词。
-- 双镜头视频的每个镜头都应有独立文字说明。
+[7s] Gift box enters frame from a loved one's hands, covering lens gently.
+
+[8-15s] Cut to her opening the box with genuine surprise, revealing luxurious bath products. She applies a hydrating face mask, expression shifting from tired to relaxed content smile. Natural unscripted reaction.
+
+Freeze frame on her peaceful happy face with product visible, clear space for "You deserve this" text overlay.
+
+Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Shareable heartwarming moment.
+```
 
 ---
 
-## 三、多镜头叙事平台最佳实践汇总
+### 5. 视觉奇观型 (Visual Spectacle)
 
-| 平台 | 推荐镜头结构 | 推荐转场方式 | 节奏建议 | 特别注意事项 |
-| :--- | :--- | :--- | :--- | :--- |
-| **TikTok** | 0-7s 悬念 + 8-15s 揭示 | Whip pan, Match cut | 快节奏 | 结尾引导评论/分享 |
-| **YouTube Shorts** | 0-6s 关键词视觉 + 7-15s 详解 | Smooth transition | 中等偏快 | 首镜头必须含搜索关键词 |
-| **Instagram Reels** | 0-3s 冲突 + 4-15s 解决 | Natural cut, Soft transition | 中等 | 前 3 秒亮品牌 |
-| **Facebook Reels** | 0-5s 问题+品牌 + 6-15s 方案 | Simple cut | 略慢 10-15% | 突出价值输出 |
-| **Snapchat Spotlight** | 0-4s 钩子 + 5-15s 核心 | Whip pan | 极快 | 零铺垫，第一帧即核心 |
-| **Pinterest** | 每镜头独立可懂 | Any (静音无影响) | 中等 | 每镜头大字幕，封面高对比 |
+**适用产品**：食品饮料、文具、切割工具
+**核心特征**：极致解压、强迫症舒适、ASMR 级视觉享受
+
+#### 示例 5.1：爆浆芝士汉堡 (全平台通投 · 双镜头版)
+
+**英文 Prompt**：
+```
+Oddly satisfying visual, Cinematic macro shot, Snappy motion.
+
+[0-7s] Slow orbit shot around a perfectly golden crispy fried chicken sandwich, steam rising gently, anticipation building. Visual beats sync with ambient hunger-inducing sounds.
+
+[7s] Sharp knife enters frame from right.
+
+[8-15s] Cinematic macro shot of sandwich being slowly cut in half, crunchy breading texture visible cracking, slow motion cheese pull stretching into long gooey strands, steam billowing from the cross-section. Macro close-up emphasizing the crisp sound of the crunch.
+
+Freeze frame on perfect cross-section with steam still rising, clear space for "Listen to the crunch" text.
+
+Warm cozy lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Oddly satisfying.
+```
 
 ---
 
-## 四、音频同步平台支持度
+### 6. 身份认同型 (Identity Recognition)
 
-| 平台 | 音频同步支持度 | 建议指令 | 权重影响 |
+**适用产品**：垂直品类、兴趣社群产品
+**核心特征**：精准命中特定人群痛点，建立“你懂我”的归属感
+
+#### 示例 6.1：租房党收纳 (全平台通投 · 双镜头版)
+
+**英文 Prompt**：
+```
+Viral TikTok renter aesthetic, Handheld POV shot.
+
+[0-7s] POV walking through a cramped rental apartment kitchen, whip pan across ugly outdated cabinets, zero counter space, and cluttered corners. Text overlay space for "Renter's biggest struggle". Frustration palpable.
+
+[7s] Quick whip pan to product in hand.
+
+[8-15s] Hand reaches up and effortlessly peels off the backing of a renter-friendly adhesive shelf. Timelapse of shelf being installed without drilling, items instantly organized. Space transforms from chaos to functional kitchen.
+
+Freeze frame on the organized shelf with product visible, text space for "Landlord begged me to leave it".
+
+Natural realistic lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Relatable moment.
+```
+
+---
+
+## 二、按平台分类的快速索引
+
+| 平台 | 推荐示例 | 专属尾缀 | 特别说明 |
 | :--- | :--- | :--- | :--- |
-| **TikTok** | ⭐⭐⭐⭐⭐ | `Visual beats sync with heavy bass drops` | 高，直接加分 |
-| **YouTube Shorts** | ⭐⭐⭐⭐ | `Smooth camera movement flowing with upbeat tempo` | 中，间接通过重播率影响 |
-| **Instagram Reels** | ⭐⭐⭐ | `Movement matches audio rhythm` | 中低 |
-| **Facebook Reels** | ⭐⭐ | 不强制 | 低 |
-| **Snapchat Spotlight** | ⭐⭐ | 不强制 | 低 |
-| **Pinterest** | ⭐ | 不适用（静音） | 无 |
+| **TikTok** | 所有示例 | `Comment-worthy moment, Shareable ending` | 音频同步务必添加 |
+| **YouTube Shorts** | 1.1, 2.1, 5.1 | `Search-friendly visual` | 首镜头含关键词视觉 |
+| **Instagram Reels** | 3.1, 4.1 | `Authentic real-life moment, True interest content` | 前 3 秒亮品牌 |
+| **Facebook Reels** | 3.1, 4.1 | `Value-first visual, Brand trust moment` | 节奏可略慢 10% |
+| **Pinterest** | 2.1, 5.1 | `Self-explanatory visual, Bold text overlay space, Muted playback friendly` | 每镜头大字幕 |
+| **Snapchat Spotlight** | 1.1, 5.1 | `Fast-paced no-filler, Pure satisfaction loop` | 第一帧即核心动作 |
 
 ---
 
-## 五、跨平台通投策略 (v2.1 更新)
+## 三、快速替换变量清单
 
-### 5.1 统一素材标准
-- 母版视频统一按 **9:16 (1080x1920)**、**15 秒**、**双镜头结构 (0-7s + 8-15s)** 制作。
-- 音频同步指令以 TikTok 为基准添加，其他平台自动兼容。
-
-### 5.2 平台差异化发布清单
-
-| 发布要素 | TikTok | YouTube Shorts | Reels (IG/FB) | Pinterest |
-| :--- | :--- | :--- | :--- | :--- |
-| **标题风格** | 口语化 + 引导评论 | SEO 优化 + 悬念词 | 价值陈述 + 信任建立 | 关键词堆叠 + 灵感描述 |
-| **标签数量** | 3-5 个 | 3-5 个长尾 | 2-3 个垂直 | 5-10 个关键词 |
-| **音乐** | 必选热门音 | 可选 | 推荐版权库 | 不重要 |
-| **文字叠加** | 适量 | 适量 | 推荐原生工具 | 必须加粗大字 |
-| **发布频率** | 每日 1-3 条 | 每日 1-2 条 | 每周 3-5 条 | 每周 5-10 条 |
-| **双镜头节奏** | 标准 0-7s + 8-15s | 标准 | IG 标准 / FB 略慢 | 每镜头加字幕 |
-
-### 5.3 避免跨平台禁忌
-- **水印问题**：任何含 TikTok 水印的视频不要直接上传至 Reels 或 Spotlight，会被严重限流。
-- **音乐版权**：TikTok 热门音乐在 Reels 上可能无版权，发布前检查 Instagram 音乐库。
-- **转场兼容**：快速摇摄 (Whip pan) 在所有平台均兼容，是首选转场方式。
+| 变量名 | 说明 | 替换示例 |
+| :--- | :--- | :--- |
+| `[产品名称]` | 具体产品名 | "Nanosponge" / "Bamboo Organizer" |
+| `[具体动作]` | 产品使用动作 | "wiping a greasy stove" / "peeling and sticking" |
+| `[环境描述]` | 使用场景 | "in a cramped rental kitchen" / "on a messy office desk" |
+| `[核心效果]` | 产品产生的视觉变化 | "grease instantly dissolves" / "clutter snaps into order" |
+| `[定格画面]` | 结尾停留的具体画面 | "perfectly clean counter" / "organized shelf" |
+| `[CTA 文字]` | 行动呼吁的文案 | "Get 50% Off" / "Link in Bio" / "Tag a friend" |
+| `[音频指令]` | 音频同步指令 | "Visual beats sync with heavy bass drops" |
 
 ---
 
-## 六、算法更新追踪记录
+## 四、提示词质量自检清单 (v2.1 更新)
 
-| 日期 | 平台 | 变化内容 | 对 Skill 的影响 |
+在将提示词提交给 Seedance 2.0 前，请逐项核对：
+
+**基础结构**
+- [ ] 是否包含爆款前缀（High CTR style / Oddly satisfying 等）？
+- [ ] 是否明确指定 9:16 vertical 和 15 seconds？
+- [ ] 是否包含去 AI 味指令（Handheld POV / Snappy motion / Avoid slow pans）？
+- [ ] 是否在结尾指定 Freeze frame 并留出文字空间？
+
+**双镜头结构 (v2.1 新增)**
+- [ ] 是否明确标注了 [0-7s] 和 [8-15s] 的镜头分段？
+- [ ] 两个镜头之间的转场方式是否明确（Whip pan / Match cut / 手部遮挡）？
+- [ ] 两个镜头的光影和色调是否一致（或有意对比）？
+
+**音频同步 (v2.1 新增)**
+- [ ] 是否根据目标平台添加了音频同步指令？
+- [ ] TikTok 目标：是否包含 `Visual beats sync with heavy bass drops`？
+- [ ] YouTube/Reels 目标：是否包含 `Smooth camera movement flowing with upbeat tempo`？
+
+**平台适配**
+- [ ] 针对目标平台，是否添加了专属尾缀？
+- [ ] 是否避免了负面词表中出现的概念（如 Slow motion、Text overlays）？
+- [ ] 产品主体是否始终是画面的清晰焦点？
+
+---
+
+## 五、失败案例与修正对照 (v2.1 扩充)
+
+| 失败表现 | 原提示词问题 | 修正后提示词改进 |
+| :--- | :--- | :--- |
+| 双镜头切换处人物变形 | 未明确转场方式 | 添加 `Quick whip pan transition` 或 `Match cut on hand movement` |
+| 两个镜头光影不一致，画面割裂 | 未统一光影描述 | 在两段描述中都加入 `Clean bright lighting` 或在总述中加入 `Maintain consistent lighting` |
+| 音频与画面不同步 | 未添加音频同步指令 | 添加 `Visual beats sync with heavy bass drops` |
+| 第二镜头开场拖沓 | 未控制第二镜头的入画节奏 | 在 [8-15s] 描述中强调 `immediately` 或 `instantly` |
+| 转场处出现 AI 形变 | 转场方式过于复杂 | 改用简单转场：`Hand wipes across lens` 或 `Quick cut to` |
+| 静音用户看不懂 | 未预留文字空间 | 添加 `clear space for text overlay` 并在发布时叠加字幕 |
+
+---
+
+## 六、新增示例提交记录
+
+| 日期 | 产品品类 | 新增提示词关键创新 | 验证效果 |
 | :--- | :--- | :--- | :--- |
-| 2026.01 | TikTok | 互动权重转为“评论+分享”；多镜头视频加权 | CTA 需调整；推广双镜头结构 |
-| 2026.02 | YouTube | Shorts 支持关键词搜索筛选 | 标题和描述必须做 SEO |
-| 2026.03 | Meta | Reels 算法转向“真实兴趣” | 避免空洞病毒内容 |
-| 2026.04 | Snapchat | Spotlight 对水印检测更严格 | 上传前必须去水印 |
-| 2026.04 | 全平台 | 多镜头视频完播率普遍高于单镜头 | 默认推荐双镜头结构 |
-
----
-
-## 七、平台官方资源链接
-
-- TikTok 创作中心：https://www.tiktok.com/creators/portal
-- YouTube Shorts 帮助：https://support.google.com/youtube/answer/10343433
-- Instagram Reels 最佳实践：https://creators.instagram.com/reels
-- Facebook Reels 指南：https://www.facebook.com/creators/reels
-- Snapchat Spotlight 指南：https://snap.com/spotlight
-- Pinterest 视频规格：https://help.pinterest.com/article/video-specs
+| 2026.04.15 | 清洁用品 | 双镜头 0-7s 痛点扫描 + 8-15s 微距解决 | 完播率提升 22% |
+| 2026.04.16 | 收纳用品 | 手部遮挡镜头转场 + 延时归位 | 转场自然，无 AI 形变 |
+| | | | |
