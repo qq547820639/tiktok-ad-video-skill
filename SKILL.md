@@ -1,5 +1,3 @@
-以下是格式化后的完整 `SKILL.md` 内容。已统一缩进、规范表格对齐、优化空行间距，可直接复制替换仓库文件。
-
 ```markdown
 # TikTok Ad Video Skill (Seedance 2.0 Edition · v2.0)
 
