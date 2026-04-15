@@ -618,10 +618,4 @@ If a video scores below threshold:
 │  [0-3s]  Hook — stop the scroll          │
 │  [3-10s] Demo — cinematic product show   │
 │  [10-13s] Price — anchoring reveal       │
-│  [13-15s] CTA — download app             │
-│                                          │
-│  Template: date%3 → 0=A 1=B 2=C         │
-│  Safety:   Center 60%, no edge text      │
-│  End with: "No Chinese text anywhere"    │
-└──────────────────────────────────────────┘
-```
+│  [
