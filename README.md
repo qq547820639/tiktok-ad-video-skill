@@ -9,6 +9,7 @@ An AI agent skill for producing high-conversion short-form ad videos (9:16, 15s)
 - **Submits to Jimeng** Seedance 2.0 for AI video generation
 - **Produces ad copy** optimized for 6+ platforms
 - **Evaluates video quality** using an 8-dimension scoring rubric (40-point scale)
+- **Tracks product usage** to prevent repeats and maintain category balance
 
 ## Key Features
 
@@ -24,13 +25,16 @@ An AI agent skill for producing high-conversion short-form ad videos (9:16, 15s)
 
 ```
 tiktok-ad-video-skill/
-├── SKILL.md                          # Core skill document (read this first)
-├── README.md                         # This file
+├── SKILL.md                              # Core skill document (600+ lines, 13 chapters)
+├── README.md                             # This file
+├── LICENSE                               # MIT License
 ├── examples/
-│   └── prompt-examples.md            # 5 real production prompts with results
+│   └── prompt-examples.md                # 6 real production prompts + scored evaluation example
 └── references/
-    ├── evaluation-rubric.md          # Quick-reference scoring sheet
-    └── platform-specs.md            # Multi-platform ad specs & safety zones
+    ├── evaluation-rubric.md              # Quick-reference scoring sheet & failure pattern fixes
+    ├── platform-specs.md                 # Multi-platform ad specs, copy formats & safety zones
+    ├── cinematic-vocabulary.md           # 100+ camera/lighting/material/transition terms for prompts
+    └── product-tracker-template.md       # Product usage tracking, naming convention & price research
 ```
 
 ## Quick Start
