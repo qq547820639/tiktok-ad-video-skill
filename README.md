@@ -8,6 +8,86 @@
 
 ---
 
+## 📖 用户使用指南
+
+> 本章节面向**直接使用者**：无论你是电商卖家、广告优化师还是内容创作者，按照以下步骤即可用本 Skill 生成高质量广告视频。
+
+### 第一步：准备工作
+
+1. **获取 Skill 文件**：克隆或下载本仓库到本地。
+2. **加载到 AI 助手**：将 `SKILL.md` 的内容作为系统提示词（System Prompt）粘贴到你的 AI 工具中（如 ChatGPT、Claude、Dify 等）。
+3. **注册即梦 AI**：访问 [jimeng.jianying.com](https://jimeng.jianying.com) 注册账号并充值积分（Seedance 2.0 标准模式每次生成消耗 120 积分）。
+
+### 第二步：输入产品信息
+
+向加载了 Skill 的 AI 助手发送你的产品信息。**最简单的输入方式**：
+
+> “我卖 [产品名称]，核心卖点是 [一句话描述]，价格在 [价格区间]，目标客户是 [人群描述]。”
+
+**示例**：
+> “我卖纳米清洁海绵，不用洗洁精就能去油污，价格 9.9-19.9 美元，目标客户是 25-45 岁的家庭主妇和租房党。”
+
+### 第三步：参与钩子盲选
+
+Skill 会输出 **3 个爆款钩子文案选项**（例如 A/B/C），请你凭直觉选择最能吸引你的一个。
+
+**示例输出**：
+```
+【爆款钩子三选一】
+A. [认知失调型]：别再用普通抹布了！你擦掉的只是水，不是细菌。
+B. [极简结果型]：3秒见证厨房台面从油腻到反光，懒人必备清洁片。
+C. [价格锚点型]：不是几百块的清洁服务请不起，而是9.9的它更有性价比。
+```
+
+**你需要做的**：回复 `A`、`B` 或 `C`。
+
+### 第四步：获取生成资源
+
+Skill 会根据你的选择输出以下内容：
+
+1. **15 秒双镜头脚本**（0-7 秒痛点 + 8-15 秒解决，含复播彩蛋设计）
+2. **Seedance 2.0 完整提示词**（可直接复制粘贴到即梦 AI）
+3. **多平台发布指南**（包含各平台标题、标签、互动引导话术）
+
+### 第五步：生成视频
+
+1. 打开即梦 AI 的 **文生视频** 功能。
+2. 将 Skill 输出的 **英文提示词** 粘贴到输入框。
+3. 选择 **Seedance 2.0 模型**，时长选择 **15 秒**，比例选择 **9:16**。
+4. 点击生成，等待约 1-2 分钟。
+5. 下载生成的视频。
+
+### 第六步：反馈数据，让 Skill 自我迭代
+
+视频发布 3-7 天后，**回到对话中告诉 Skill 视频的表现**。Skill 会主动询问关键数据，并**自动分析、自动调整后续视频的生成策略**。
+
+**示例对话**：
+```
+你：上次那个清洁海绵的视频，TikTok 播放量 5 万，完播率 42%，但评论只有 15 条。
+
+Skill：收到。完播率 42% 表现优秀（高于基准 30%），说明双镜头+复播彩蛋策略有效。
+评论数偏低，建议下次将结尾 CTA 改为开放式提问，例如“你觉得这个技巧实用吗？评论区聊聊”。
+我已将“认知失调型+开放式提问”设为清洁类产品的默认组合。
+```
+
+如果你希望长期追踪多个产品的数据（如生成周报、向团队汇报），可以自行选择填写仓库中 `references/product-tracker-template.md` 模板——但**这不是必须的**。Skill 的迭代主要依赖你在对话中反馈的核心指标。
+
+---
+
+### 常见问题速查
+
+| 问题 | 解决方法 |
+| :--- | :--- |
+| **生成的视频有人物手部畸变** | 在提示词中加入 `Well-formed hands, No extra fingers` |
+| **视频前 3 秒不够抓人** | 在提示词最前面加上 `High CTR style, Eye-catching opening` |
+| **双镜头切换处出现画面扭曲** | 将转场指令改为 `Quick whip pan transition` 或 `Match cut on hand movement` |
+| **TikTok 评论区互动少** | 在发布时使用深度互动话术（如“你觉得这个技巧实用吗？评论区聊聊”） |
+| **想投放付费广告** | 参考 `references/ad-campaign-testing.md` |
+| **想在多个国家投放** | 参考 `references/localization-guide.md` |
+| **视频生成失败想排查原因** | 查阅 `references/failure-case-library.md` |
+
+---
+
 ## 🎯 一句话简介
 
 这是一个为 **即梦 AI（jimeng.jianying.com）Seedance 2.0 视频生成模型** 量身打造的、具备**自我迭代能力**的 TikTok 广告视频生成 Skill。通过“钩子预判 → 图文盲测 → 15秒双镜头脚本 → 多平台分发 → 五维评估 → 数据归因”闭环，帮助你在 2026 年的短视频算法环境下，用最少的积分消耗，跑出最高的爆款概率。
@@ -35,14 +115,14 @@ tiktok-ad-video-skill/
 ├── README.md                        # 📖 项目说明（本文件）
 ├── CHANGELOG.md                     # 📋 版本变更日志（v1.0 → v2.2）
 ├── LICENSE.txt                      # 📄 MIT 开源协议
-├── evaluation-rubric.md             # 📊 五维度评分表（v2.2）
-├── product-tracker-template.md      # 📈 产品追踪与复盘模板（v2.1）
 ├── examples/
 │   └── prompt-examples.md           # 📝 6 个双镜头提示词示例（v2.1）
 └── references/
     ├── viral-hook-patterns.md       # 🔥 6 大钩子库 + 复播/深度互动策略（v2.2）
     ├── cinematic-vocabulary.md      # 🎬 100+ 词汇 + 多镜头/音频同步语法（v2.1）
     ├── platform-specs.md            # 📱 6+ 平台规格与多镜头/音频支持度（v2.1）
+    ├── evaluation-rubric.md         # 📊 五维度评分表（v2.2）
+    ├── product-tracker-template.md  # 📈 产品追踪与复盘模板（v2.1，可选）
     ├── failure-case-library.md      # 🚨 10 个典型失败案例 + 修复方案（v1.0）
     ├── ab-testing-matrix.md         # 🧪 A/B 测试矩阵模板（v1.0）
     ├── ad-campaign-testing.md       # 📊 广告创意测试完全指南（v1.0 新增）
@@ -54,12 +134,12 @@ tiktok-ad-video-skill/
 | 文件 | 作用 | 使用频率 |
 | :--- | :--- | :--- |
 | `SKILL.md` | 定义 Skill 角色、6 阶段工作流、复播铁律与自迭代逻辑 | 每次任务 |
-| `evaluation-rubric.md` | 五维度评分标准 + 失败模式速查表 | 每条视频评估 |
-| `product-tracker-template.md` | 记录选品、视频参数、发布数据与归因 | 每个产品 |
 | `examples/prompt-examples.md` | 6 个双镜头提示词模板，即拿即用 | 需要参考时 |
 | `references/viral-hook-patterns.md` | 6 大钩子类型 + 双镜头脚本 + 复播/深度互动策略 | 钩子选择阶段 |
 | `references/cinematic-vocabulary.md` | 100+ 电影词汇 + 多镜头语法 + 音频同步指令 | 构建 Prompt 时 |
 | `references/platform-specs.md` | 2026 年 6+ 平台规格、算法规则、多镜头/音频支持度 | 多平台分发时 |
+| `references/evaluation-rubric.md` | 五维度评分标准 + 失败模式速查表 | 每条视频评估 |
+| `references/product-tracker-template.md` | **可选**：手动记录产品数据，用于周报或深度分析 | 按需使用 |
 | `references/failure-case-library.md` | 10 个高频失败案例与修复方案，避坑指南 | 遇到问题时查阅 |
 | `references/ab-testing-matrix.md` | A/B 测试模板，系统化验证创意假设 | 需要精准优化时 |
 | `references/ad-campaign-testing.md` | **新增**：广告测试金字塔、创意疲劳监测、平台差异化策略 | 付费广告投放时 |
@@ -112,7 +192,7 @@ graph TD
 | **算法信号** | 15 分 | 复播率预估(5) + 互动质量预估(5) + 收藏/分享引导(5) |
 | **总分** | **100 分** | **≥75 发布 / 60-74 优化 / <60 废弃** |
 
-*详见 `evaluation-rubric.md` 获取详细评分标准与失败模式修复方案。*
+*详见 `references/evaluation-rubric.md` 获取详细评分标准与失败模式修复方案。*
 
 ---
 
@@ -121,42 +201,10 @@ graph TD
 Skill 具备数据驱动的自进化能力：
 
 1. **每次任务** → 后台生成《自检报告》
-2. **每个产品** → 填写 `product-tracker-template.md` 归因分析
-3. **连续 3 次验证** → 触发钩子权重调整或结构优化
-4. **发现失败模式** → 更新 `failure-case-library.md` 与负面词表
-5. **A/B 测试验证** → 使用 `ab-testing-matrix.md` 科学决策
-6. **广告投放数据** → 使用 `ad-campaign-testing.md` 筛选高转化创意
-7. **多市场投放** → 使用 `localization-guide.md` 进行本土化适配
-
----
-
-## 🚀 快速开始
-
-1. **阅读** `SKILL.md` 了解完整方法论（16 个章节）
-2. **配置** 你的品牌元素（Logo、主色调、App 名称）
-3. **注册** 即梦 AI 账号：[jimeng.jianying.com](https://jimeng.jianying.com)
-4. **遵循** `SKILL.md` 中的每日执行工作流
-
-### 基础使用示例
-
-```
-输入：「我卖一款纳米清洁海绵，不用洗洁精就能去油污。」
-
-Skill 输出：
-1. 三个钩子选项供盲选
-2. 基于选择的 15 秒双镜头脚本（0-7s痛点 + 8-15s解决，含复播彩蛋）
-3. 可直接粘贴到 Seedance 2.0 的完整提示词（含音频同步指令）
-4. 多平台发布指南（含深度互动引导话术）
-```
-
-### 进阶场景
-
-| 场景 | 参考文档 |
-| :--- | :--- |
-| 需要科学验证创意方向 | `references/ab-testing-matrix.md` |
-| 付费广告投放优化 | `references/ad-campaign-testing.md` |
-| 出海多国家本土化 | `references/localization-guide.md` |
-| 视频生成失败需要排错 | `references/failure-case-library.md` |
+2. **用户反馈数据** → 在对话中告诉 Skill 播放量、完播率、互动情况
+3. **自动分析归因** → Skill 判断成败原因，调整后续策略
+4. **连续 3 次验证** → 触发钩子权重调整或结构优化
+5. **（可选）手动追踪** → 如需周报/月报，可填写 `references/product-tracker-template.md`
 
 ---
 
