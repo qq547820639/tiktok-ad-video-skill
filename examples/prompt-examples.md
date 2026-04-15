@@ -162,20 +162,20 @@ Below is a real scoring example demonstrating how to use the evaluation rubric o
 | # | Dimension              | Score | Notes                                              |
 |---|------------------------|-------|-----------------------------------------------------|
 | 1 | Hook Effectiveness     | 4     | Woman touching neck with frustrated expression —     |
-| |   |                        |       | relatable but not instantly shocking. Good, not great.|
+|   |                        |       | relatable but not instantly shocking. Good, not great.|
 | 2 | Cinematic Quality      | 5     | Beautiful warm lighting, smooth slow-motion, rich    |
-| |   |                        |       | skin tones. No visible AI artifacts.                 |
+|   |                        |       | skin tones. No visible AI artifacts.                 |
 | 3 | Product Clarity        | 4     | V-shape recognizable, LED colors visible. Slight     |
-| |   |                        |       | size distortion vs real product (appears larger).    |
+|   |                        |       | size distortion vs real product (appears larger).    |
 | 4 | Brand Element Render   | 3     | Logo partially visible, price readable, badge        |
-| |   |                        |       | slightly blurred. Could be more prominent.           |
+|   |                        |       | slightly blurred. Could be more prominent.           |
 | 5 | Price Anchoring Impact | 4     | "$500 on creams" hook + "$16.18" creates strong      |
-| |   |                        |       | contrast. Would be 5 if competitor brand was shown.  |
+|   |                        |       | contrast. Would be 5 if competitor brand was shown.  |
 | 6 | CTA Clarity            | 4     | "Download HuoPan App" visible and centered.          |
-| |   |                        |       | Font slightly small but readable.                    |
+|   |                        |       | Font slightly small but readable.                    |
 | 7 | Safety Zone Compliance | 5     | All text comfortably in center 60%. No edge issues.  |
 | 8 | Overall Ad Effectiveness| 4    | Would confidently run as paid ad. Professional feel. |
-| |   | **TOTAL**              |**33/40**| Decision: ✅ USE (Good — above 28 threshold)       |
+|   | **TOTAL**              |**33/40**| Decision: ✅ USE (Good — above 28 threshold)       |
 ```
 
 **Key takeaways from this score:**
