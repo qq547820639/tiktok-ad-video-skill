@@ -1,121 +1,77 @@
-# Viral Hook Pattern Library (爆款钩子特征库)
+爆款钩子特征库 (Viral Hook Pattern Library)
+用途：在生成 Seedance 2.0 提示词前进行策略匹配。Skill 应根据产品类型，从本库中选取至少 1 个高爆款指数钩子作为视频前 3 秒的核心叙事。
+迭代规则：每当某个钩子类型连续 3 次获得用户正向反馈（选择或数据验证），可在内部日志中提升其“爆款指数”权重。
+版本：v2.0 (2026.04) —— 已根据 Meta 真实兴趣算法和 TikTok 互动权重更新进行调整。
 
-> **Purpose**: Before writing a Seedance 2.0 prompt, match the product to 1-2 high-potential hook types from this library. The selected hook determines the video's opening 0-3 seconds — the single most important factor for paid ad performance.
->
-> **Iteration rule**: When a hook type gets 3+ consecutive positive outcomes (user selects it, or ad data shows high CTR), increase its Viral Index weight in internal tracking.
->
-> **Automation note**: In cron/automated mode, the AI selects the best hook autonomously based on product category match. No user interaction required.
+钩子类型速查表
+钩子类型	核心心理触发点	提示词关键视觉元素	爆款指数	适用产品类别	Meta 真实兴趣适配 (2026 新增)
+认知失调型	违背常识、打破预期	反物理现象、意想不到的对比、微观放大	⭐⭐⭐⭐⭐	黑科技小家电、清洁神器、解压玩具	需在前 3 秒同步展示产品名称，避免纯悬念被判定为“点击诱饵”
+极简结果型	懒惰红利、一步到位	Before/After 极速切换、单手操作、零步骤演示	⭐⭐⭐⭐⭐	收纳用品、厨房工具、美妆速成	强调“这个结果对你的生活意味着什么”，而非单纯展示效果
+价格锚点型	占便宜心理、价值错位	大额价格划掉动画、堆叠产品数量展示、高端场景对比	⭐⭐⭐⭐	日用百货、服饰配饰、工厂直发品	前 5 秒需同步传递产品质量信号，避免被判定为“低质促销”
+情感绑架型	愧疚感、爱与被爱	送礼场景、家庭温馨镜头、独处自愈时刻	⭐⭐⭐⭐	节日礼品、女性护理、宠物用品	强化“真实关系”呈现，避免过度煽情或剧本感
+视觉奇观型	解压、ASMR、强迫症满足	慢动作液体倾倒、完美切割、极度整齐排列	⭐⭐⭐⭐	食品饮料、文具、切割工具	保证画面质感，Meta 算法对低质 AI 生成画面降权严重
+身份认同型	圈层归属、社交标签	特定人群标志（如“新手妈妈”“租房党”“健身人”）	⭐⭐⭐	垂直品类、兴趣社群产品	强调“真实用户场景”，避免虚假人设
+各钩子在 Seedance 2.0 (15秒) 中的落地脚本结构
+1. 认知失调型
+0-3s：特写产品产生违背常识的效果（如：黑科技海绵吸走玻璃上的陈年水垢）。
 
----
+3-10s：快切展示普通方法 vs 本产品方法的悬殊对比。
 
-## Hook Type Quick Reference
+10-15s：放大使用者的惊讶表情，定格产品 Logo。
 
-| Hook Type | Core Psychological Trigger | Key Visual Elements for Prompt | Viral Index | Best Product Categories |
-| :--- | :--- | :--- | :--- | :--- |
-| **Cognitive Dissonance** (认知失调型) | Defies expectations, breaks common sense | Anti-physics phenomena, unexpected contrasts, microscopic zoom | ⭐⭐⭐⭐⭐ | Smart home gadgets, cleaning devices, stress toys |
-| **Instant Result** (极简结果型) | Laziness dividend, one-step solution | Before/After rapid cut, single-hand operation, zero-step demo | ⭐⭐⭐⭐⭐ | Storage, kitchen tools, beauty shortcuts |
-| **Price Anchoring** (价格锚点型) | Bargain psychology, value mismatch | Crossed-out high price animation, product quantity stacking, premium scene contrast | ⭐⭐⭐⭐ | Daily goods, fashion accessories, factory-direct items |
-| **Emotional Bond** (情感绑架型) | Guilt, love, self-care | Gift-giving scene, family warmth, solo self-care moment | ⭐⭐⭐⭐ | Holiday gifts, women's care, pet products |
-| **Visual Spectacle** (视觉奇观型) | ASMR satisfaction, OCD fulfillment | Slow-motion liquid pour, perfect cuts, extreme alignment | ⭐⭐⭐⭐ | Food/beverage, stationery, cutting tools |
-| **Identity Tribe** (身份认同型) | Community belonging, social label | Specific persona markers ("new mom", "renter", "gym rat") | ⭐⭐⭐ | Niche verticals, interest community products |
+2. 极简结果型
+0-3s：一只手拿着产品，一只手展示脏乱场景（特写摇镜）。
 
----
+3-8s：产品轻轻接触污渍，瞬间溶解/吸附/变形。
 
-## 15-Second Seedance 2.0 Script Structures by Hook Type
+8-15s：镜头拉远，展示整个区域焕然一新，无需额外擦拭动作。
 
-### 1. Cognitive Dissonance (认知失调型)
-**Best for**: Products with a "wow, that's impossible" visual effect.
+3. 价格锚点型
+0-3s：屏幕上打出“$199 ???”，随后被红叉划掉。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | Close-up of product producing a reality-defying effect (e.g. magic sponge erasing years of scale) | `extreme close-up, impossible cleaning result, viewer disbelief` |
-| 3-10s | Rapid cuts: normal method fails → this product succeeds dramatically | `quick cuts, side-by-side comparison, dramatic difference` |
-| 10-15s | Zoom out to satisfied user expression, product logo freeze frame | `reaction shot, freeze frame on product, brand overlay centered` |
+3-8s：堆叠展示 10 件同款产品，屏幕打出“工厂直发，只要 $9.9”。
 
-**Prompt prefix**: `Mind-bending product reveal, Cognitive dissonance hook, "Wait, that actually works?" moment`
+8-15s：快速展示产品质量细节，证明与高价无异。
 
-### 2. Instant Result (极简结果型)
-**Best for**: Products where the transformation is visually instantaneous.
+4. 情感绑架型
+0-3s：女性疲惫地揉肩，桌上杂乱。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | One hand holds product, other hand shows dirty/messy scene (close-up pan) | `split attention, messy scene close-up, handheld movement` |
-| 3-8s | Product touches surface → instant dissolve/absorb/transform | `instant transformation, one-touch solution, satisfying dissolve` |
-| 8-15s | Camera pulls back revealing entire area spotless, no extra effort needed | `wide reveal, pristine result, effortless completion, no wipe needed` |
+3-8s：镜头转向送礼者（或自己），递上包装精美的产品。
 
-**Prompt prefix**: `Satisfying instant result, One-touch transformation, Lazy genius solution`
+8-15s：使用产品后舒展的笑容，定格字幕“爱自己/爱她，不需要理由”。
 
-### 3. Price Anchoring (价格锚点型)
-**Best for**: Products with a dramatic price gap vs retail competitors.
+5. 视觉奇观型
+0-3s：微距镜头下，浓稠酱汁缓缓流过食物表面。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | Screen shows "$199 ???" which gets crossed out in red | `price tag animation, red X strike-through, centered text` |
-| 3-8s | Stack of 10 identical products, text: "Factory direct, only $9.9" | `product stacking, quantity display, price reveal bold red` |
-| 8-15s | Quick close-ups of quality details proving it matches the expensive version | `quality macro shots, material details, premium feel proof` |
+3-10s：切开食物的瞬间，内部流出爆浆馅料（升格慢动作）。
 
-**Prompt prefix**: `Price shock reveal, "How is this so cheap?" moment, Factory-vs-retail comparison`
+10-15s：咬下第一口的脆响特写，屏幕字幕“Listen to the crunch”。
 
-### 4. Emotional Bond (情感绑架型)
-**Best for**: Products that solve a personal pain point or make great gifts.
+6. 身份认同型
+0-3s：屏幕大字：“租房党最大的痛”。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | Person looking tired, rubbing shoulders, desk cluttered | `tired expression, shoulder pain, messy environment, soft lighting` |
-| 3-8s | Camera pans to gift-giver (or self-care moment), beautifully wrapped product appears | `gift reveal, beautiful packaging, warm lighting transition` |
-| 8-15s | Using product → relaxed smile, text overlay: "You deserve this" | `relief moment, genuine smile, freeze frame with text overlay` |
+3-8s：展示出租屋典型的拥挤台面/发霉角落。
 
-**Prompt prefix**: `Emotional self-care moment, Gift-giving warmth, "Treat yourself" aesthetic`
+8-15s：产品出现，瞬间释放空间，打字：“搬走时房东求我留下它”。
 
-### 5. Visual Spectacle (视觉奇观型)
-**Best for**: Products with inherently satisfying visual/audio qualities.
+2026 平台特定钩子优化指南
+TikTok：评论与分享驱动型钩子
+关键变化：收藏权重下降，评论+分享成为核心。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | Macro shot of thick sauce flowing over food surface | `extreme macro, viscous liquid flow, slow-motion pour` |
-| 3-10s | Cutting into food reveals molten/explosive filling (slow-motion) | `cross-section reveal, slow-motion explosion, ASMR texture` |
-| 10-15s | First bite close-up with visible crunch, text: "Listen to the crunch" | `bite close-up, crunch moment, text overlay centered` |
+钩子改造：在视频结尾增加“开放式问题”或“两难选择”，引导用户在评论区表态。
 
-**Prompt prefix**: `ASMR visual feast, Oddly satisfying, Sensory overload close-up`
+示例：“你觉得这个效果值多少钱？A. $9.9 B. $29.9 C. 猜对有奖”
 
-### 6. Identity Tribe (身份认同型)
-**Best for**: Products targeting a specific lifestyle or community.
+YouTube Shorts：SEO 前置型钩子
+关键变化：Shorts 支持关键词搜索。
 
-| Time | Content | Prompt Focus |
-| :--- | :--- | :--- |
-| 0-3s | Bold text on screen: "Every renter's biggest pain" | `bold text overlay, identity callout, relatable hook` |
-| 3-8s | Show typical problem for that identity (e.g. cramped counter, moldy corner) | `real-life problem scene, authentic messy environment` |
-| 8-15s | Product appears → transforms space, text: "Landlord begged me to leave it behind" | `space transformation, humorous text, freeze frame result` |
+钩子改造：在视频画面前 3 秒以醒目大字呈现核心关键词。
 
-**Prompt prefix**: `"This is for the [identity] crowd", Tribal callout, Niche community hook`
+示例：清洁类产品在首帧叠加文字“How to Clean Grease in 3 Seconds”
 
----
+Meta Reels：真实兴趣型钩子
+关键变化：算法优先推荐对观众有真实价值的内容。
 
-## Hook Selection Decision Tree (for automated/cron mode)
+钩子改造：减少纯粹视觉刺激，增加“这个产品改变了我的……”叙事。
 
-```
-START → Analyze product category & visual features
-  │
-  ├─ Product has a "magic" visual effect? → Cognitive Dissonance ⭐⭐⭐⭐⭐
-  ├─ Product shows instant before/after? → Instant Result ⭐⭐⭐⭐⭐
-  ├─ Price gap vs retail > 70%? → Price Anchoring ⭐⭐⭐⭐
-  ├─ Product is a gift / self-care? → Emotional Bond ⭐⭐⭐⭐
-  ├─ Product has ASMR / satisfying visuals? → Visual Spectacle ⭐⭐⭐⭐
-  └─ Product targets specific group? → Identity Tribe ⭐⭐⭐
-  
-  If multiple hooks match → Pick the one with highest Viral Index
-  If tied → Prefer hooks NOT used in last 3 videos (variety rule)
-```
-
----
-
-## Hook Performance Tracking
-
-Record each video's hook type and outcome. After accumulating data:
-
-| Metric | Action |
-| :--- | :--- |
-| Hook selected 3+ times consecutively → | Increase its Viral Index weight |
-| Hook consistently gets low scores (<25/40) → | Decrease weight, investigate prompt patterns |
-| New hook type discovered from viral trends → | Add to this library with initial ⭐⭐⭐ rating |
-| Same hook used 3 days in a row → | Force-switch to next best match (variety rule) |
+示例：极简结果型钩子改为“我以为我会讨厌做家务，直到我发现了这个”
