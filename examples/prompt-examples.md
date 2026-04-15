@@ -127,6 +127,62 @@ Final text centered: "The future costs $14 — Download HuoPan App."
 No Chinese text anywhere.
 ```
 
+### Example 6: Flame Aroma Humidifier ($14.59)
+**Product**: Portable Flame Effect Essential Oil Humidifier
+**Tech reveal**: Realistic flame simulation via ultrasonic mist + LED
+
+```
+Tech reveal ad, 9:16 vertical, dark moody lighting with neon accents.
+HOOK: Extreme close-up of a flickering orange glow inside a dark cylindrical chamber —
+it looks like real fire dancing inside a matte black capsule. Is this a candle? A lamp?
+Camera slowly pulls back revealing: a sleek matte-black cylindrical humidifier —
+the "flame" is ultrasonic mist illuminated by warm LED, creating a stunningly realistic
+fire effect that dances and flickers. No heat, no smoke, completely safe.
+Essential oil drops into the top reservoir — aromatic mist rises through the flame column.
+Close-up: the mist particles catch the LED light, creating mesmerizing warm orange tendrils.
+Person places it on a bedside nightstand — room fills with soft amber glow and lavender scent.
+Split-screen: harsh overhead bedroom light (left) vs warm flame-glow ambiance (right).
+HuoPan UI centered: orange-red rounded square HuoPan logo (white shopping cart
+with u-shaped handle, two white wheels), bold red "$14.59",
+green "Free Shipping Worldwide" badge, orange "BUY NOW!" button.
+All text and UI elements stay in the center 60% of the frame.
+Final text centered: "The future costs $14 — Download HuoPan App."
+No Chinese text anywhere.
+```
+
+---
+
+## Scored Example — Evaluation Walkthrough
+
+Below is a real scoring example demonstrating how to use the evaluation rubric on a generated video.
+
+### Video: LED Neck Beauty Device ($16.18) — Template B
+
+```
+| # | Dimension              | Score | Notes                                              |
+|---|------------------------|-------|-----------------------------------------------------|
+| 1 | Hook Effectiveness     | 4     | Woman touching neck with frustrated expression —     |
+| |   |                        |       | relatable but not instantly shocking. Good, not great.|
+| 2 | Cinematic Quality      | 5     | Beautiful warm lighting, smooth slow-motion, rich    |
+| |   |                        |       | skin tones. No visible AI artifacts.                 |
+| 3 | Product Clarity        | 4     | V-shape recognizable, LED colors visible. Slight     |
+| |   |                        |       | size distortion vs real product (appears larger).    |
+| 4 | Brand Element Render   | 3     | Logo partially visible, price readable, badge        |
+| |   |                        |       | slightly blurred. Could be more prominent.           |
+| 5 | Price Anchoring Impact | 4     | "$500 on creams" hook + "$16.18" creates strong      |
+| |   |                        |       | contrast. Would be 5 if competitor brand was shown.  |
+| 6 | CTA Clarity            | 4     | "Download HuoPan App" visible and centered.          |
+| |   |                        |       | Font slightly small but readable.                    |
+| 7 | Safety Zone Compliance | 5     | All text comfortably in center 60%. No edge issues.  |
+| 8 | Overall Ad Effectiveness| 4    | Would confidently run as paid ad. Professional feel. |
+| |   | **TOTAL**              |**33/40**| Decision: ✅ USE (Good — above 28 threshold)       |
+```
+
+**Key takeaways from this score:**
+- Dimension 4 (Brand Elements) scored lowest → next prompt should add more detail to logo description and use larger, bolder price text
+- Dimension 1 (Hook) could improve → try a more dramatic opening action (e.g. showing a receipt for $500 neck cream, tearing it up)
+- Overall 33/40 = solidly in "Good" range, use as-is
+
 ---
 
 ## Ad Copy Examples (Matched to Videos Above)
@@ -151,11 +207,21 @@ Download HuoPan App
 #HuoPan #HomeGadgets #BeautyTech #TikTokMadeMeBuyIt #FactoryPrice #FreeShipping
 ```
 
-### Copy for Bladeless Neck Fan (Template C)
+### Copy for Bladeless Neck Fan (Template C — Example 5)
 ```
 "Why is nobody talking about this $14 bladeless neck fan?"
 360° hands-free cooling — no blades, no noise, 8-hour battery. Perfect for summer.
 Only $14.51 (retail $45) | Free Shipping Worldwide
+Download HuoPan App
+
+#HuoPan #HomeGadgets #BeautyTech #TikTokMadeMeBuyIt #FactoryPrice #FreeShipping
+```
+
+### Copy for Flame Humidifier (Template C — Example 6)
+```
+"Is that real fire inside a humidifier? No — it's a $14 LED flame mist diffuser."
+Ultrasonic mist + warm LED creates a stunningly realistic flame effect. Zero heat, pure ambiance.
+Only $14.59 (retail $49) | Free Shipping Worldwide
 Download HuoPan App
 
 #HuoPan #HomeGadgets #BeautyTech #TikTokMadeMeBuyIt #FactoryPrice #FreeShipping
