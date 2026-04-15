@@ -1,243 +1,226 @@
-# Seedance 2.0 提示词示例库 (Prompt Examples) v2.1
+# 产品追踪与爆款复盘模板 (Product Tracker & Viral Post-Mortem) v2.1
 
-> **用途**：为 Skill 提供可直接参考或微调的 Seedance 2.0 提示词模板。所有示例均针对 9:16 竖屏、15 秒时长优化，并采用 v2.1 双镜头叙事语法与音频同步指令。
-> **使用方式**：根据产品类目和选定的钩子类型，选取最接近的示例进行变量替换（产品名、动作、环境）。
-> **更新版本**：v2.1 (2026.04) —— 全部示例升级为双镜头结构，融入音频同步指令，对齐 v2.1 钩子库与词汇表。
-
----
-
-## 一、按钩子类型分类的提示词示例
-
-### 1. 认知失调型 (Cognitive Dissonance)
-
-**适用产品**：清洁神器、黑科技小家电、解压玩具
-**核心特征**：违背常识的视觉效果，让人产生“这不可能”的惊讶感
-
-#### 示例 1.1：清洁海绵 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-High CTR style, Viral TikTok aesthetic, Cinematic macro shot, Snappy motion.
-
-[0-7s] Wide POV shot scanning across a greasy messy stove after cooking dinner, thick yellow grease stains visible, handheld breathing motion, frustration implied.
-
-[7s] Quick whip pan transition.
-
-[8-15s] Extreme macro close-up of blue cleaning sponge wiping the same grease, stains instantly vanish on contact revealing mirror-like stainless steel underneath, no scrubbing needed. Visual beats sync with heavy bass drops, slight camera shake on each beat.
-
-Freeze frame on perfectly clean reflective surface for 2 seconds with clear space for "How is this possible?" text overlay.
-
-Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Comment-worthy moment, Shareable ending.
-```
-
-**中文提示词参考**：
-```
-高CTR风格，病毒式TikTok美学，电影级微距，干脆利落的运镜。
-
-[0-7秒] 广角第一人称视角扫过做完饭后油腻杂乱的灶台，厚重黄色油垢清晰可见，手持呼吸感，隐含挫败感。
-
-[7秒] 快速摇摄转场。
-
-[8-15秒] 蓝色清洁海绵擦拭同一油垢的极近特写，污渍接触瞬间消失露出镜面般反光的不锈钢表面，无需擦洗。画面随重低音节奏轻微震动。
-
-动作最后定格在完美干净的灶台反光面2秒，留有“这怎么可能？”文字叠加空间。
-
-干净明亮布光，4k超高清，9:16竖屏，15秒无缝循环，评论引导时刻，分享结尾。
-```
+> **用途**：记录每个产品的选品理由、视频生成参数、发布表现与归因分析，为 Skill 的自我迭代提供数据支撑。
+> **填写频率**：每个产品建立一条主记录，每个生成的视频作为子记录追加。
+> **更新版本**：v2.1 (2026.04) —— 新增脚本结构、音频类型、叙事评分字段，对齐双镜头评估体系。
 
 ---
 
-### 2. 极简结果型 (Instant Result)
+## 一、产品主记录
 
-**适用产品**：收纳用品、厨房工具、美妆速成
-**核心特征**：Before/After 极速切换，强调“一步到位”“懒人友好”
+### 产品信息
+| 字段 | 内容 |
+| :--- | :--- |
+| **产品 ID** | [自动生成，格式：PROD-YYYYMMDD-XXX] |
+| **产品名称** | [如：纳米清洁海绵] |
+| **产品类目** | [如：家居清洁 / 厨房用品] |
+| **核心卖点** | [一句话总结，如：无需清洁剂，清水即可去油污] |
+| **目标客群** | [如：25-45 岁家庭主妇/煮夫，租房党] |
+| **价格区间** | [如：$9.9 - $19.9] |
+| **选品日期** | [YYYY-MM-DD] |
 
-#### 示例 2.1：厨房收纳神器 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-High CTR style, Viral TikTok aesthetic, Snappy motion.
-
-[0-7s] Whip pan across a cluttered kitchen counter with scattered spice jars, messy utensil drawer, and chaotic coffee station, showing overwhelming chaos, handheld POV.
-
-[7s] Hand wipes across lens as natural transition.
-
-[8-15s] Timelapse transition from messy to clean, items magically snapping into a sleek bamboo organizer tray within seconds, everything perfectly aligned. Smooth camera movement flowing with upbeat tempo.
-
-Freeze frame on the immaculately organized counter with product centered, clear space for "One tray fixes everything" text.
-
-Clean bright minimal lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Shareable ending.
-```
-
----
-
-### 3. 价格锚点型 (Price Anchor)
-
-**适用产品**：日用百货、服饰配饰、工厂直发品
-**核心特征**：通过视觉化的价格对比，制造“超值感”
-
-#### 示例 3.1：工厂直发收纳盒 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-High-end commercial look, High CTR style, Snappy motion.
-
-[0-7s] A luxury branded storage bin on a marble kitchen counter, elegant setting, text space for "$199 ???" subtly implied. Slow orbit shot around the single bin.
-
-[7s] Match cut on the hand movement reaching for the bin.
-
-[8-15s] Same hand picks up one of our bamboo organizers from a stack of 10 identical bins. Macro close-up of premium wood grain, smooth edges, and precise joinery. Text space for "Factory direct. Same quality. $19.9." Visual beats sync with subtle click sounds.
-
-Freeze frame on the stack of 10 bins with value comparison text space.
-
-Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Value-first visual.
-```
-
----
-
-### 4. 情感绑架型 (Emotional Bond)
-
-**适用产品**：节日礼品、女性护理、宠物用品
-**核心特征**：触发愧疚、爱意、关怀等情感，驱动分享和送礼行为
-
-#### 示例 4.1：女性护理礼品 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-Authentic lived-in feel, Warm cozy tones, Cinematic soft focus.
-
-[0-7s] Soft focus shot of a tired woman in her 30s rubbing her neck after a long day, messy home office background, genuine exhaustion visible, warm but tired lighting. Ambient sound implied.
-
-[7s] Gift box enters frame from a loved one's hands, covering lens gently.
-
-[8-15s] Cut to her opening the box with genuine surprise, revealing luxurious bath products. She applies a hydrating face mask, expression shifting from tired to relaxed content smile. Natural unscripted reaction.
-
-Freeze frame on her peaceful happy face with product visible, clear space for "You deserve this" text overlay.
-
-Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Shareable heartwarming moment.
-```
-
----
-
-### 5. 视觉奇观型 (Visual Spectacle)
-
-**适用产品**：食品饮料、文具、切割工具
-**核心特征**：极致解压、强迫症舒适、ASMR 级视觉享受
-
-#### 示例 5.1：爆浆芝士汉堡 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-Oddly satisfying visual, Cinematic macro shot, Snappy motion.
-
-[0-7s] Slow orbit shot around a perfectly golden crispy fried chicken sandwich, steam rising gently, anticipation building. Visual beats sync with ambient hunger-inducing sounds.
-
-[7s] Sharp knife enters frame from right.
-
-[8-15s] Cinematic macro shot of sandwich being slowly cut in half, crunchy breading texture visible cracking, slow motion cheese pull stretching into long gooey strands, steam billowing from the cross-section. Macro close-up emphasizing the crisp sound of the crunch.
-
-Freeze frame on perfect cross-section with steam still rising, clear space for "Listen to the crunch" text.
-
-Warm cozy lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Oddly satisfying.
-```
-
----
-
-### 6. 身份认同型 (Identity Recognition)
-
-**适用产品**：垂直品类、兴趣社群产品
-**核心特征**：精准命中特定人群痛点，建立“你懂我”的归属感
-
-#### 示例 6.1：租房党收纳 (全平台通投 · 双镜头版)
-
-**英文 Prompt**：
-```
-Viral TikTok renter aesthetic, Handheld POV shot.
-
-[0-7s] POV walking through a cramped rental apartment kitchen, whip pan across ugly outdated cabinets, zero counter space, and cluttered corners. Text overlay space for "Renter's biggest struggle". Frustration palpable.
-
-[7s] Quick whip pan to product in hand.
-
-[8-15s] Hand reaches up and effortlessly peels off the backing of a renter-friendly adhesive shelf. Timelapse of shelf being installed without drilling, items instantly organized. Space transforms from chaos to functional kitchen.
-
-Freeze frame on the organized shelf with product visible, text space for "Landlord begged me to leave it".
-
-Natural realistic lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Relatable moment.
-```
-
----
-
-## 二、按平台分类的快速索引
-
-| 平台 | 推荐示例 | 专属尾缀 | 特别说明 |
-| :--- | :--- | :--- | :--- |
-| **TikTok** | 所有示例 | `Comment-worthy moment, Shareable ending` | 音频同步务必添加 |
-| **YouTube Shorts** | 1.1, 2.1, 5.1 | `Search-friendly visual` | 首镜头含关键词视觉 |
-| **Instagram Reels** | 3.1, 4.1 | `Authentic real-life moment, True interest content` | 前 3 秒亮品牌 |
-| **Facebook Reels** | 3.1, 4.1 | `Value-first visual, Brand trust moment` | 节奏可略慢 10% |
-| **Pinterest** | 2.1, 5.1 | `Self-explanatory visual, Bold text overlay space, Muted playback friendly` | 每镜头大字幕 |
-| **Snapchat Spotlight** | 1.1, 5.1 | `Fast-paced no-filler, Pure satisfaction loop` | 第一帧即核心动作 |
-
----
-
-## 三、快速替换变量清单
-
-| 变量名 | 说明 | 替换示例 |
+### 选品依据
+| 维度 | 评估 | 备注 |
 | :--- | :--- | :--- |
-| `[产品名称]` | 具体产品名 | "Nanosponge" / "Bamboo Organizer" |
-| `[具体动作]` | 产品使用动作 | "wiping a greasy stove" / "peeling and sticking" |
-| `[环境描述]` | 使用场景 | "in a cramped rental kitchen" / "on a messy office desk" |
-| `[核心效果]` | 产品产生的视觉变化 | "grease instantly dissolves" / "clutter snaps into order" |
-| `[定格画面]` | 结尾停留的具体画面 | "perfectly clean counter" / "organized shelf" |
-| `[CTA 文字]` | 行动呼吁的文案 | "Get 50% Off" / "Link in Bio" / "Tag a friend" |
-| `[音频指令]` | 音频同步指令 | "Visual beats sync with heavy bass drops" |
+| **视觉表现力** | [强 / 中 / 弱] | 产品是否适合短视频展示 |
+| **问题解决力** | [强 / 中 / 弱] | 是否解决明确痛点 |
+| **钩子匹配度** | [预判最佳钩子类型] | 参考 viral-hook-patterns |
+| **竞争热度** | [高 / 中 / 低] | 同类视频在平台的饱和程度 |
+| **利润率** | [预估毛利率] | 支撑广告投放 ROI |
+
+### 爆款预判
+| 预判结论 | 理由 |
+| :--- | :--- |
+| [S级-强烈推荐 / A级-值得测试 / B级-观望] | [简述] |
 
 ---
 
-## 四、提示词质量自检清单 (v2.1 更新)
+## 二、视频生成记录 (每条视频一条)
 
-在将提示词提交给 Seedance 2.0 前，请逐项核对：
+### 视频 #001
 
-**基础结构**
-- [ ] 是否包含爆款前缀（High CTR style / Oddly satisfying 等）？
-- [ ] 是否明确指定 9:16 vertical 和 15 seconds？
-- [ ] 是否包含去 AI 味指令（Handheld POV / Snappy motion / Avoid slow pans）？
-- [ ] 是否在结尾指定 Freeze frame 并留出文字空间？
+#### 生成参数
+| 字段 | 内容 |
+| :--- | :--- |
+| **视频 ID** | [自动生成，格式：VID-产品ID-序号] |
+| **生成日期** | [YYYY-MM-DD] |
+| **使用钩子类型** | [认知失调 / 极简结果 / 价格锚点 / 情感绑架 / 视觉奇观 / 身份认同] |
+| **脚本结构** | [单镜头 / 双镜头(0-7s痛点+8-15s解决) / 多镜头] |
+| **转场方式** | [Whip pan / Match cut / 手部遮挡 / 无] |
+| **音频同步类型** | [重低音节奏 / 轻快旋律 / 氛围音乐 / ASMR触发 / 无] |
+| **Seedance 2.0 提示词** | [完整 Prompt] |
+| **图文测试结果** | [A/B/C 哪版被选中，或直接跳过的原因] |
+| **消耗积分** | [X] |
+| **生成耗时** | [分钟] |
 
-**双镜头结构 (v2.1 新增)**
-- [ ] 是否明确标注了 [0-7s] 和 [8-15s] 的镜头分段？
-- [ ] 两个镜头之间的转场方式是否明确（Whip pan / Match cut / 手部遮挡）？
-- [ ] 两个镜头的光影和色调是否一致（或有意对比）？
+#### 质量评估 (基于 evaluation-rubric.md v2.1)
 
-**音频同步 (v2.1 新增)**
-- [ ] 是否根据目标平台添加了音频同步指令？
-- [ ] TikTok 目标：是否包含 `Visual beats sync with heavy bass drops`？
-- [ ] YouTube/Reels 目标：是否包含 `Smooth camera movement flowing with upbeat tempo`？
-
-**平台适配**
-- [ ] 针对目标平台，是否添加了专属尾缀？
-- [ ] 是否避免了负面词表中出现的概念（如 Slow motion、Text overlays）？
-- [ ] 产品主体是否始终是画面的清晰焦点？
-
----
-
-## 五、失败案例与修正对照 (v2.1 扩充)
-
-| 失败表现 | 原提示词问题 | 修正后提示词改进 |
+| 维度 | 得分 | 评语 |
 | :--- | :--- | :--- |
-| 双镜头切换处人物变形 | 未明确转场方式 | 添加 `Quick whip pan transition` 或 `Match cut on hand movement` |
-| 两个镜头光影不一致，画面割裂 | 未统一光影描述 | 在两段描述中都加入 `Clean bright lighting` 或在总述中加入 `Maintain consistent lighting` |
-| 音频与画面不同步 | 未添加音频同步指令 | 添加 `Visual beats sync with heavy bass drops` |
-| 第二镜头开场拖沓 | 未控制第二镜头的入画节奏 | 在 [8-15s] 描述中强调 `immediately` 或 `instantly` |
-| 转场处出现 AI 形变 | 转场方式过于复杂 | 改用简单转场：`Hand wipes across lens` 或 `Quick cut to` |
-| 静音用户看不懂 | 未预留文字空间 | 添加 `clear space for text overlay` 并在发布时叠加字幕 |
+| **技术质量 (25)** | /25 | |
+| 　画面清晰度 (8) | /8 | |
+| 　运镜流畅度 (8) | /8 | |
+| 　AI 瑕疵控制 (9) | /9 | |
+| **爆款钩子 (35)** | /35 | |
+| 　前 3 秒留存 (12) | /12 | |
+| 　完播率潜力 (12) | /12 | |
+| 　互动引导力 (11) | /11 | |
+| **平台适配 (25)** | /25 | |
+| 　TikTok (8) | /8 | |
+| 　YouTube Shorts (6) | /6 | |
+| 　Meta Reels (6) | /6 | |
+| 　Pinterest (5) | /5 | |
+| **进阶叙事 (15)** | /15 | |
+| 　多镜头结构 (6) | /6 | |
+| 　音频同步 (5) | /5 | |
+| 　转场质量 (4) | /4 | |
+| **总分** | **/100** | |
+| **发布决策** | [✅ 发布 / ⚠️ 优化后发布 / ❌ 废弃] |
+
+#### 发布平台与时间
+| 平台 | 发布日期 | 发布账号 | 发布链接 |
+| :--- | :--- | :--- | :--- |
+| TikTok | | | |
+| YouTube Shorts | | | |
+| Instagram Reels | | | |
+| Facebook Reels | | | |
+| Pinterest | | | |
 
 ---
 
-## 六、新增示例提交记录
+## 三、发布后数据追踪 (发布后 24h / 72h / 7d 填写)
 
-| 日期 | 产品品类 | 新增提示词关键创新 | 验证效果 |
-| :--- | :--- | :--- | :--- |
-| 2026.04.15 | 清洁用品 | 双镜头 0-7s 痛点扫描 + 8-15s 微距解决 | 完播率提升 22% |
-| 2026.04.16 | 收纳用品 | 手部遮挡镜头转场 + 延时归位 | 转场自然，无 AI 形变 |
-| | | | |
+### TikTok 数据
+
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 收藏 | 完播率 | 互动率 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | | |
+| 72h | | | | | | | |
+| 7d | | | | | | | |
+
+### YouTube Shorts 数据
+
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 平均观看时长 | 点击率 (CTR) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | |
+| 72h | | | | | | |
+| 7d | | | | | | |
+
+### Meta Reels 数据 (Instagram / Facebook 分开记录)
+
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 保存 | 覆盖率 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | |
+| 72h | | | | | | |
+| 7d | | | | | | |
+
+### Pinterest 数据
+
+| 时间节点 | 展示量 | 点击量 | 保存量 | 点击率 | 引导转化数 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | |
+| 72h | | | | | |
+| 7d | | | | | | |
+
+---
+
+## 四、爆款归因分析 (Viral Post-Mortem)
+
+> **填写时机**：视频发布 7 天后，或播放量达到显著层级（如 100K+ 或低于 1K）时填写。
+
+### 整体表现判定
+
+| 播放量层级 | 判定结果 | 核心结论 |
+| :--- | :--- | :--- |
+| 1M+ | 大爆款 ✅ | |
+| 100K - 1M | 小爆款 ✅ | |
+| 10K - 100K | 中等表现 ⚠️ | |
+| 1K - 10K | 表现不佳 ❌ | |
+| <1K | 限流/内容问题 ❌ | |
+
+### 归因分析表
+
+| 分析维度 | 成功因素 (若爆) / 失败原因 (若扑) | 证据来源 |
+| :--- | :--- | :--- |
+| **钩子有效性** | [前 3 秒是否触发留存？钩子类型是否与产品匹配？] | 完播率曲线 / 评论反馈 |
+| **脚本结构表现** | [单镜头/双镜头结构是否有效？转场是否自然？] | 完播率分段数据 / 用户反馈 |
+| **音频同步效果** | [音频是否增强了观看体验？是否有重播驱动？] | 重播率 / 评论提及音频 |
+| **平台算法响应** | [TikTok 评论分享是否达标？YouTube 搜索流量占比？Meta 是否判定真实兴趣？] | 平台数据面板 |
+| **视觉呈现** | [画面冲击力、AI 瑕疵、构图美感] | 质量评估得分 / 用户评论 |
+| **互动设计** | [CTA 是否有效激发互动？] | 互动率数据 |
+| **发布时间** | [是否在目标客群活跃时段发布？] | 平台分析工具 |
+| **竞品环境** | [同期是否有同类爆款分流？] | 手动搜索观察 |
+
+### 提炼的可复用特征
+
+| 类型 | 具体特征 | 建议权重调整 |
+| :--- | :--- | :--- |
+| ✅ **保留放大** | [如：双镜头 0-7s 痛点扫描 + 8-15s 微距解决 效果极佳] | 在 Skill 中提升该结构的推荐优先级 |
+| ✅ **保留放大** | [如：重低音音频同步在 TikTok 上显著提升完播] | 在 TikTok 目标中默认开启音频同步 |
+| ⚠️ **谨慎使用** | [如：手部遮挡转场在特定光线下产生 AI 形变] | 在强光场景中改用 Whip pan |
+| ❌ **规避禁词** | [如：特定 Prompt 词汇导致双镜头切换处崩坏] | 加入负面词表 |
+
+---
+
+## 五、成本效益分析
+
+### 单视频成本
+
+| 成本项 | 金额/积分 |
+| :--- | :--- |
+| Seedance 2.0 生成积分 | [X] |
+| 图文测试成本 (如有) | [X] |
+| 人力时间成本 (按分钟估算) | [X] |
+| **单视频总成本** | **[X]** |
+
+### ROI 预估 (若产生销售)
+
+| 指标 | 数值 |
+| :--- | :--- |
+| 视频带来点击量 | [X] |
+| 转化率 (估算) | [X%] |
+| 预估销售额 | [X] |
+| **ROI** | **[X]** |
+
+---
+
+## 六、Skill 迭代建议汇总
+
+> **目的**：将本产品的所有视频归因转化为 Skill 的系统性升级建议。
+
+| 建议 ID | 建议类型 | 具体内容 | 优先级 | 状态 |
+| :--- | :--- | :--- | :--- | :--- |
+| ITER-001 | 钩子权重调整 | [如：清洁类产品中“认知失调型”爆款指数提升至五星] | P0 | 待执行 |
+| ITER-002 | 脚本结构优化 | [如：收纳类产品默认推荐双镜头结构] | P1 | 待执行 |
+| ITER-003 | 音频同步策略 | [如：TikTok 目标强制添加重低音同步指令] | P1 | 待执行 |
+| ITER-004 | Prompt 词汇优化 | [如：增加 “Match cut on hand movement” 以提升转场自然度] | P2 | 待执行 |
+| ITER-005 | 平台策略微调 | [如：Pinterest 双镜头每镜头独立加字幕] | P2 | 待执行 |
+| | | | | |
+
+---
+
+## 七、产品总复盘
+
+> **填写时机**：当该产品累计发布 ≥3 条视频，或决定暂停/放弃该产品时填写。
+
+### 综合评估
+
+| 评估项 | 结论 |
+| :--- | :--- |
+| **是否值得继续投流** | [是 / 否] |
+| **最佳钩子类型** | [经过验证表现最好的钩子] |
+| **最佳脚本结构** | [单镜头 / 双镜头 / 多镜头] |
+| **最佳音频类型** | [重低音 / 轻快旋律 / ASMR / 无] |
+| **最佳平台** | [数据最好的平台] |
+| **最佳发布时间段** | [数据支撑的结论] |
+| **该产品核心经验** | [一句话总结，供后续选品参考] |
+
+---
+
+## 使用说明
+
+1. **产品主记录**在新选品时填写。
+2. **视频生成记录**在每次调用 Seedance 2.0 后立即填写，务必记录脚本结构、转场方式和音频类型。
+3. **发布后数据**建议设置日历提醒，分别在 24h、72h、7d 回填。
+4. **爆款归因分析**是 Skill 自我迭代的核心燃料，务必认真填写，特别关注双镜头结构和音频同步的表现。
+5. 积累 5 条以上产品的归因数据后，即可触发 `SKILL.md` 中的“阶段 6：数据回流与 Skill 自我迭代”。
