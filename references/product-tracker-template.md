@@ -1,105 +1,215 @@
-# Product Usage Tracker Template
+# 产品追踪与爆款复盘模板 (Product Tracker & Viral Post-Mortem) v2.0
 
-Use this table to track all products featured in ad videos. Before selecting a new product,
-check this list to avoid repeats.
-
----
-
-## Tracking Table
-
-| Day | Date | Product Name | Price | Category | Template | Score | Status |
-|-----|------|-------------|-------|----------|----------|-------|--------|
-| 1 | YYYY-MM-DD | [Product Name] | $X.XX | Home/Beauty | A/B/C | /40 | ✅/❌ |
-| 2 | YYYY-MM-DD | [Product Name] | $X.XX | Home/Beauty | A/B/C | /40 | ✅/❌ |
-
-### Column Definitions
-- **Day**: Sequential production day number
-- **Date**: Calendar date of generation
-- **Product Name**: English product name (same as used in prompt)
-- **Price**: App price in USD
-- **Category**: Home Gadget / Beauty Tech / Personal Care / Kitchen Tech / Lifestyle
-- **Template**: A (Price Anchoring) / B (Lifestyle Transformation) / C (Tech Reveal)
-- **Score**: Evaluation rubric total score out of 40
-- **Status**: Used (submitted & accepted) / Rejected (regenerated) / Pending
+> **用途**：记录每个产品的选品理由、视频生成参数、发布表现与归因分析，为 Skill 的自我迭代提供数据支撑。
+> **填写频率**：每个产品建立一条主记录，每个生成的视频作为子记录追加。
+> **更新版本**：v2.0 (2026.04) —— 新增平台维度归因、钩子表现评分、成本追踪模块。
 
 ---
 
-## How to Maintain
+## 一、产品主记录
 
-### Adding New Entries
-After each daily video generation:
-1. Add a new row with the product details
-2. Score the video using the evaluation rubric
-3. Mark status based on whether the video was accepted
+### 产品信息
+| 字段 | 内容 |
+| :--- | :--- |
+| **产品 ID** | [自动生成，格式：PROD-YYYYMMDD-XXX] |
+| **产品名称** | [如：纳米清洁海绵] |
+| **产品类目** | [如：家居清洁 / 厨房用品] |
+| **核心卖点** | [一句话总结，如：无需清洁剂，清水即可去油污] |
+| **目标客群** | [如：25-45 岁家庭主妇/煮夫，租房党] |
+| **价格区间** | [如：$9.9 - $19.9] |
+| **选品日期** | [YYYY-MM-DD] |
 
-### Checking for Repeats
-Before selecting a new product:
-1. Search this table for the product name (or similar products)
-2. Also search for the product category — avoid over-indexing on one sub-category
-3. Rule: No exact product repeat. Similar products (e.g. two different facial massagers) 
-   should be spaced at least 14 days apart.
+### 选品依据
+| 维度 | 评估 | 备注 |
+| :--- | :--- | :--- |
+| **视觉表现力** | [强 / 中 / 弱] | 产品是否适合短视频展示 |
+| **问题解决力** | [强 / 中 / 弱] | 是否解决明确痛点 |
+| **钩子匹配度** | [预判最佳钩子类型] | 参考 viral-hook-patterns |
+| **竞争热度** | [高 / 中 / 低] | 同类视频在平台的饱和程度 |
+| **利润率** | [预估毛利率] | 支撑广告投放 ROI |
 
-### Storage Recommendations
-- Store as product-tracker.md in the project directory
-- Update after every production run
-- The AI agent should read this file at the start of each daily execution
-- Keep in MEMORY.md as a reference pointer: "See product-tracker.md for full list"
-
----
-
-## Category Balance Guide
-
-Track category distribution to maintain variety:
-
-| Category | Count | % of Total | Target % |
-|----------|-------|-----------|----------|
-| Beauty Tech | X | X% | 30-40% |
-| Home Gadgets | X | X% | 30-40% |
-| Personal Care | X | X% | 10-20% |
-| Kitchen Tech | X | X% | 5-15% |
-| Lifestyle | X | X% | 5-15% |
-
-**Rule**: No single category should exceed 50% of total videos. If a category is overrepresented, 
-prioritize other categories in the next selection cycle.
+### 爆款预判
+| 预判结论 | 理由 |
+| :--- | :--- |
+| [S级-强烈推荐 / A级-值得测试 / B级-观望] | [简述] |
 
 ---
 
-## Competitor Price Research Checklist
+## 二、视频生成记录 (每条视频一条)
 
-When selecting a product, research the competitor retail price using this process:
+### 视频 #001
 
-1. **Amazon US** — Search product name → Note "retail price" or top brand price
-2. **Walmart** — Cross-reference for price confirmation
-3. **Brand website** — If the product has a known brand equivalent (e.g. Dyson, SkinGym)
-4. **Google Shopping** — Quick price comparison
+#### 生成参数
+| 字段 | 内容 |
+| :--- | :--- |
+| **视频 ID** | [自动生成，格式：VID-产品ID-序号] |
+| **生成日期** | [YYYY-MM-DD] |
+| **使用钩子类型** | [认知失调 / 极简结果 / 价格锚点 / 情感绑架 / 视觉奇观 / 身份认同] |
+| **Seedance 2.0 提示词** | [完整 Prompt] |
+| **图文测试结果** | [A/B/C 哪版被选中，或直接跳过的原因] |
+| **消耗积分** | [X] |
+| **生成耗时** | [分钟] |
 
-### Price Anchoring Validation
-- App price must be **< 30%** of competitor retail price
-- Document both prices in the tracker
-- If no clear competitor exists, use "typical retail" as baseline
+#### 质量评估 (基于 evaluation-rubric.md)
+| 维度 | 得分 | 评语 |
+| :--- | :--- | :--- |
+| 技术质量 (30) | /30 | |
+| 爆款钩子 (40) | /40 | |
+| 平台适配 (30) | /30 | |
+| **总分** | **/100** | |
+| **发布决策** | [✅ 发布 / ⚠️ 优化后发布 / ❌ 废弃] |
 
-Example:
-- HuoPan LED neck device: $16.18
-- SkinGym/CurrentBody equivalent: $89
-- Ratio: $16.18 / $89 = 18% (well below 30% threshold)
+#### 发布平台与时间
+| 平台 | 发布日期 | 发布账号 | 发布链接 |
+| :--- | :--- | :--- | :--- |
+| TikTok | | | |
+| YouTube Shorts | | | |
+| Instagram Reels | | | |
+| Facebook Reels | | | |
+| Pinterest | | | |
 
 ---
 
-## File Naming Convention for Downloaded Videos
+## 三、发布后数据追踪 (发布后 24h / 72h / 7d 填写)
 
-When the user downloads the generated video, use this naming pattern:
+### TikTok 数据
 
-```
-[APP]_ad_[DAY]_[TEMPLATE]_[PRODUCT-SHORT]_[DATE].mp4
-```
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 收藏 | 完播率 | 互动率 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | | |
+| 72h | | | | | | | |
+| 7d | | | | | | | |
 
-Examples:
-- huopan_ad_d8_B_led-neck-device_20260415.mp4
-- huopan_ad_d9_C_smart-humidifier_20260416.mp4
-- huopan_ad_d10_A_skin-scrubber_20260417.mp4
+### YouTube Shorts 数据
 
-This makes it easy for the ad placement team to:
-- Identify which app the video is for
-- Know the template style (for A/B testing analysis)
-- Find the product quickly
-- Sort chronologically
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 平均观看时长 | 点击率 (CTR) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | |
+| 72h | | | | | | |
+| 7d | | | | | | |
+
+### Meta Reels 数据 (Instagram / Facebook 分开记录)
+
+| 时间节点 | 播放量 | 点赞 | 评论 | 分享 | 保存 | 覆盖率 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | | |
+| 72h | | | | | | |
+| 7d | | | | | | |
+
+### Pinterest 数据
+
+| 时间节点 | 展示量 | 点击量 | 保存量 | 点击率 | 引导转化数 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 24h | | | | | |
+| 72h | | | | | |
+| 7d | | | | | |
+
+---
+
+## 四、爆款归因分析 (Viral Post-Mortem)
+
+> **填写时机**：视频发布 7 天后，或播放量达到显著层级（如 100K+ 或低于 1K）时填写。
+
+### 整体表现判定
+
+| 播放量层级 | 判定结果 | 核心结论 |
+| :--- | :--- | :--- |
+| 1M+ | 大爆款 ✅ | |
+| 100K - 1M | 小爆款 ✅ | |
+| 10K - 100K | 中等表现 ⚠️ | |
+| 1K - 10K | 表现不佳 ❌ | |
+| <1K | 限流/内容问题 ❌ | |
+
+### 归因分析表
+
+| 分析维度 | 成功因素 (若爆) / 失败原因 (若扑) | 证据来源 |
+| :--- | :--- | :--- |
+| **钩子有效性** | [前 3 秒是否触发留存？钩子类型是否与产品匹配？] | 完播率曲线 / 评论反馈 |
+| **平台算法响应** | [TikTok 评论分享是否达标？YouTube 搜索流量占比？Meta 是否判定真实兴趣？] | 平台数据面板 |
+| **视觉呈现** | [画面冲击力、AI 瑕疵、构图美感] | 质量评估得分 / 用户评论 |
+| **互动设计** | [CTA 是否有效激发互动？] | 互动率数据 |
+| **发布时间** | [是否在目标客群活跃时段发布？] | 平台分析工具 |
+| **竞品环境** | [同期是否有同类爆款分流？] | 手动搜索观察 |
+
+### 提炼的可复用特征
+
+| 类型 | 具体特征 | 建议权重调整 |
+| :--- | :--- | :--- |
+| ✅ **保留放大** | [如：手持 POV + 认知失调钩子 效果极佳] | 在 Skill 中提升该组合的推荐优先级 |
+| ⚠️ **谨慎使用** | [如：慢动作开场的视频完播率显著偏低] | 在 Skill 中标记为“高风险”，触发时提醒 |
+| ❌ **规避禁词** | [如：特定 Prompt 词汇导致 AI 画面崩坏] | 加入 cinematic-vocabulary 的负面词表 |
+
+---
+
+## 五、成本效益分析
+
+### 单视频成本
+
+| 成本项 | 金额/积分 |
+| :--- | :--- |
+| Seedance 2.0 生成积分 | [X] |
+| 图文测试成本 (如有) | [X] |
+| 人力时间成本 (按分钟估算) | [X] |
+| **单视频总成本** | **[X]** |
+
+### ROI 预估 (若产生销售)
+
+| 指标 | 数值 |
+| :--- | :--- |
+| 视频带来点击量 | [X] |
+| 转化率 (估算) | [X%] |
+| 预估销售额 | [X] |
+| **ROI** | **[X]** |
+
+---
+
+## 六、Skill 迭代建议汇总
+
+> **目的**：将本产品的所有视频归因转化为 Skill 的系统性升级建议。
+
+| 建议 ID | 建议类型 | 具体内容 | 优先级 | 状态 |
+| :--- | :--- | :--- | :--- | :--- |
+| ITER-001 | 钩子权重调整 | [如：清洁类产品中“认知失调型”爆款指数提升至五星] | P0 | 待执行 |
+| ITER-002 | Prompt 词汇优化 | [如：增加 “Crisp highlights” 以提升反光材质表现] | P1 | 待执行 |
+| ITER-003 | 平台策略微调 | [如：TikTok 结尾提问句式模板化] | P2 | 待执行 |
+| | | | | |
+
+---
+
+## 七、产品总复盘
+
+> **填写时机**：当该产品累计发布 ≥3 条视频，或决定暂停/放弃该产品时填写。
+
+### 综合评估
+
+| 评估项 | 结论 |
+| :--- | :--- |
+| **是否值得继续投流** | [是 / 否] |
+| **最佳钩子类型** | [经过验证表现最好的钩子] |
+| **最佳平台** | [数据最好的平台] |
+| **最佳发布时间段** | [数据支撑的结论] |
+| **该产品核心经验** | [一句话总结，供后续选品参考] |
+
+---
+
+## 使用说明
+
+1. **产品主记录**在新选品时填写。
+2. **视频生成记录**在每次调用 Seedance 2.0 后立即填写。
+3. **发布后数据**建议设置日历提醒，分别在 24h、72h、7d 回填。
+4. **爆款归因分析**是 Skill 自我迭代的核心燃料，务必认真填写。
+5. 积累 5 条以上产品的归因数据后，即可触发 `SKILL.md` 中的“阶段 6：数据回流与 Skill 自我迭代”。
+
+---
+
+这是 **`product-tracker-template.md`** 的完整优化内容。主要变化：
+
+1. **结构化分层**：产品主记录 → 视频生成记录 → 发布数据 → 归因分析 → 成本分析 → 迭代建议 → 总复盘，形成完整闭环。
+2. **增加平台数据表格**：覆盖 TikTok、YouTube Shorts、Meta Reels、Pinterest 的核心指标。
+3. **归因分析细化**：从钩子、算法、视觉、互动、时间、竞品六维度拆解成败原因。
+4. **提炼可复用特征**：将单次经验转化为 Skill 可识别的“保留放大/谨慎使用/规避禁词”三类指令。
+5. **新增 Skill 迭代建议汇总表**：将产品层面的洞察转化为系统级升级任务。
+6. **成本追踪模块**：支撑“花最小的成本办最大的事”的核心目标。
+
+
+是否需要我帮你生成 `CHANGELOG.md` 来记录本次 v2.0 的所有变更？
