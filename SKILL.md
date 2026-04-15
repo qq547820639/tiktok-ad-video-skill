@@ -116,6 +116,25 @@ This is NOT organic content creation. This is **paid ad creative production**. T
 5. Calculate price anchoring ratio — is the retail equivalent 3x+ more expensive?
 6. Select the single best candidate
 
+### Competitor Price Research
+To validate price anchoring, check competitor retail prices using these sources (in order):
+1. **Amazon US** — Search product name → Note top brand price or "List Price"
+2. **Walmart.com** — Cross-reference for confirmation
+3. **Brand official website** — If a known brand equivalent exists (e.g. Dyson, SkinGym, CurrentBody)
+4. **Google Shopping** — Quick multi-retailer price scan
+
+**Validation rule**: App price must be **< 30%** of the best competitor retail price found.
+Document both prices for the ad copy (e.g. "retail $89" vs "only $16.18").
+
+### Product Usage Tracking
+Maintain a running log of all products used to prevent repeats. See `references/product-tracker-template.md` for the full tracking table format.
+
+**Minimum tracking per product**: Product name, date, price, category, template used, score.
+
+**Category balance**: No single category should exceed 50% of total videos. If Beauty Tech dominates, shift to Home Gadgets for the next cycle.
+
+**Similar product spacing**: The same *type* of product (e.g. two different facial massagers) should be spaced at least 14 days apart, even if they are technically different products.
+
 ### Red Flags — Skip These Products
 - Commodities with no visual differentiation (plain cables, basic containers)
 - Products that look identical across brands (generic phone cases)
@@ -244,12 +263,28 @@ Final frame: [CTA text centered on screen].
 No Chinese text anywhere.
 ```
 
+### Prompt Length Guide
+| Element | Recommended Length |
+|---------|-------------------|
+| Full prompt | **150–300 words** (sweet spot for Seedance 2.0) |
+| Hook description | 2–3 sentences |
+| Product demo section | 3–5 sentences |
+| Price/brand overlay | 2–3 sentences |
+| CTA + safety rules | 2–3 fixed sentences |
+
+- **Too short** (<100 words): Seedance fills blanks with generic, uncontrolled content
+- **Too long** (>400 words): Model ignores later instructions, produces incoherent results
+- **Sweet spot** (150–300 words): Enough detail for cinematic quality, consistent execution
+
+> See `references/cinematic-vocabulary.md` for a full library of camera, lighting, transition, material, and scene-setting terms to build prompts from.
+
 ### What NOT To Do
 - ❌ "Make a TikTok video about this product" — too vague, Seedance will produce generic content
 - ❌ Including Chinese characters anywhere — causes rendering issues
 - ❌ Describing abstract concepts — "show the value proposition" means nothing to a video model
 - ❌ Requesting specific fonts or exact text rendering — AI video models don't reliably render text
 - ❌ Uploading images as reference — Jimeng blocks automated uploads (security policy)
+- ❌ Using more than 400 words — model loses coherence in later sections
 
 ---
 
@@ -475,6 +510,20 @@ This is platform-universal — every short-form video platform overlays UI on th
    → User action items (download + handoff)
 ```
 
+### Video Download & File Naming
+After the user downloads the generated video from Jimeng, use this naming convention:
+```
+[APP]_ad_d[DAY]_[TEMPLATE]_[product-short-name]_[YYYYMMDD].mp4
+```
+Examples:
+- `huopan_ad_d8_B_led-neck-device_20260415.mp4`
+- `huopan_ad_d9_C_flame-humidifier_20260416.mp4`
+
+This ensures the ad placement team can:
+- Sort videos chronologically
+- Identify the template style for A/B testing analysis
+- Match the video to its ad copy quickly
+
 ### Daily Output Checklist Template
 ```markdown
 ## ✅ AI Completed Today
@@ -513,6 +562,7 @@ This is platform-universal — every short-form video platform overlays UI on th
 - **🟡 200-499 points**: Warn user to plan recharge
 - **🔴 < 200 points**: Only 1 video possible, must recharge before next session
 - **⛔ < 120 points**: Cannot generate, STOP and notify user
+
 ---
 
 ## Troubleshooting & Lessons Learned
