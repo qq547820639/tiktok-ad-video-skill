@@ -1,138 +1,253 @@
-# Multi-Platform Ad Specs Reference
+# 全平台短视频技术规格与算法禁忌 (Platform Specs & Algorithm Rules) v2.0
 
-Quick reference for deploying the same 9:16 / 15s video across all major ad platforms.
-
----
-
-## Video Specs Compatibility Matrix
-
-| Platform | Format | Ratio | Duration | Min Budget | App Install Ads |
-|----------|--------|-------|----------|-----------|-----------------|
-| TikTok Ads | MP4 | 9:16 ✅ | 5-60s ✅ | $50/campaign, $20/ad group | ✅ Full support |
-| Meta (FB/IG) | MP4 | 9:16 ✅ | 1-60s ✅ | $1-5/day | ✅ Full support |
-| Google Ads | MP4 | 9:16 ✅ | 6-60s ✅ | $20+/day recommended | ✅ App Campaigns |
-| Snapchat | MP4 | 9:16 ✅ | 3-180s ✅ | $5/day | ✅ App Install |
-| Pinterest | MP4 | 9:16 ✅ | 4-15min ✅ | $1/day | ⚠️ Limited |
-| X (Twitter) | MP4 | 9:16 ✅ | 0-140s ✅ | Varies | ⚠️ Less optimized |
-
-**Result**: 9:16 / 15s works on ALL platforms without re-editing.
+> **用途**：为 Seedance 2.0 生成的视频提供精准的跨平台发布指南。所有参数均为 2026 年最新官方标准。
+> **更新版本**：v2.0 (2026.04) —— 全面更新 TikTok、Meta、YouTube 算法规则，新增 Pinterest、Snapchat 细分参数。
 
 ---
 
-## Platform-Specific Ad Copy Formats
+## 一、核心平台速查总表
 
-### TikTok Ads
-```
-[Hook sentence]
-[Product benefit]
-Only $X.XX (retail $XX) | Free Shipping Worldwide
-Download [App] App 👇
-
-#Hashtag1 #Hashtag2 #TikTokMadeMeBuyIt #FactoryPrice #FreeShipping
-```
-- Max: 2,200 characters
-- Use as-is from universal copy
-
-### Instagram / Facebook (Meta)
-```
-[Hook sentence]
-[Product benefit]
-
-Only $X.XX (retail $XX)
-🚚 Free Shipping Worldwide
-📲 Download [App] App — Link in bio
-
-#Hashtag1 #Hashtag2 #TikTokMadeMeBuyIt #FactoryPrice #FreeShipping
-```
-- Max: 2,200 characters
-- Add App Store / Google Play link
-
-### YouTube Shorts (via Google Ads)
-```
-[Hook — 1 sentence max]
-Only $X.XX | Free Shipping | Download [App] App
-```
-- Title: 100 chars max
-- Description: 5,000 chars
-- Google App Campaigns auto-generate most copy
-
-### Pinterest
-```
-[Hook sentence]
-[Product benefit — 2 sentences max]
-Only $X.XX | Free Shipping Worldwide
-Download [App] App
-
-Tags: [Product Name], [Category], [Material], [Use Case], [Gift Idea]
-```
-- Max: 500 characters
-- Add 5-10 product keyword tags for search discovery
-
-### X (Twitter)
-```
-[Compressed hook + benefit — must fit 280 chars total]
-Only $X.XX | Free shipping
-Download [App] App
-#Hashtag1 #Hashtag2
-```
-- Strict 280 character limit
-- Prioritize hook + price + CTA
-
-### Snapchat
-```
-[Hook sentence]
-[Product benefit]
-Only $X.XX | Free Shipping
-Download [App] App 👇
-```
-- Max: 200 characters for caption
-- Use as-is from universal copy (shorten if needed)
+| 平台 | 视频规格 | 时长限制 | 文件大小 | 声音策略 | 2026 算法核心信号 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TikTok** | 9:16, 1080x1920 | 5-60s (推荐 9-15s) | ≤500MB | 声音优先 | **评论 + 分享** (收藏权重降低) |
+| **YouTube Shorts** | 9:16, 1080x1920 | ≤3min (推荐 15-60s) | ≤256GB | 声音可选 | **重播率 + 关键词搜索** |
+| **Instagram Reels** | 9:16, 1080x1920 | ≤90s | ≤4GB | 声音重要 | **有效完播 + 真实兴趣** |
+| **Facebook Reels** | 9:16, 1080x1920 | ≤90s | ≤4GB | 声音重要 | **真实兴趣 + 品牌信任** |
+| **Snapchat Spotlight** | 9:16, 1080x1920 | 5-60s (推荐 15-30s) | ≤500MB | 声音优先 | **完播率唯一王者** |
+| **Pinterest** | 9:16, 1080x1920 | 4s-15min (推荐 6-15s) | ≤2GB | 默认静音 | **视觉自解释力 + 点击率** |
 
 ---
 
-## Platform Priority Matrix
+## 二、平台详细规格与算法深度解析
 
-| Priority | Platform | Why |
-|----------|----------|-----|
-| 🔴 HIGH | TikTok Ads | Discovery engine, best for new app awareness |
-| 🔴 HIGH | Meta (FB/IG) | Largest audience, most sophisticated targeting |
-| 🟠 HIGH | Snapchat | Underrated for discount shopping audience |
-| 🟡 MEDIUM | Google/YouTube | App Campaigns automate everything |
-| 🟢 LOW | Pinterest | Good for lifestyle, slower conversion cycle |
-| 🟢 LOW | X (Twitter) | Less optimized for e-commerce app installs |
+### 🎬 TikTok
+
+#### 技术规格
+| 参数 | 要求 |
+| :--- | :--- |
+| 分辨率 | 1080x1920 (9:16)，最低 540x960 |
+| 帧率 | 24/25/30fps (推荐 24fps) |
+| 编码格式 | H.264 或 H.265 |
+| 容器格式 | MP4 / MOV |
+| 比特率 | ≥3 Mbps (推荐 6-8 Mbps) |
+| 色彩空间 | Rec. 709 |
+
+#### 2026 算法核心变化
+1. **互动权重重塑**：
+   - ✅ 高权重信号：**评论 (Comment)**、**分享 (Share)**
+   - ⚠️ 降权信号：收藏 (Save)、点赞 (Like)
+   - 💡 策略：在视频结尾或评论区置顶设置开放性问题，引导用户发表观点；内容本身需具备“转发理由”。
+
+2. **搜索权重提升**：
+   - TikTok 搜索功能被高频使用，标题和描述中的关键词成为流量入口。
+   - 字幕中的文字也可被搜索索引。
+
+3. **完播率精细化**：
+   - 15 秒视频的完播阈值约为 11 秒以上（75%）。
+   - 前 3 秒流失率是最关键的负向信号。
+
+#### 发布优化清单
+- 标题含 1-2 个核心关键词 + 1 个热门标签。
+- 评论区置顶引导互动的提问（如“你遇到过这种情况吗？”）。
+- 避免纯文本封面，使用视频中最具冲击力的一帧作为封面。
+- 背景音乐选择 Trending 榜单前 20。
 
 ---
 
-## Safety Zone Overlay Map
+### ▶️ YouTube Shorts
 
-```
-┌──────────────────────────────────┐
-│  ████ DANGER ZONE (top 20%) ████ │  ← Status bar, notch, time
-│                                  │
-│      ┌──────────────────┐        │
-│      │                  │        │
-│      │   SAFE ZONE      │   ██   │  ← Right: Like/Share/
-│      │   (center 60%)   │   ██   │     Comment buttons
-│      │                  │   ██   │
-│      │  Place ALL text  │   ██   │
-│      │  and UI here     │        │
-│      │                  │        │
-│      └──────────────────┘        │
-│                                  │
-│  ████ DANGER ZONE (bot 20%) ████ │  ← Caption, progress bar
-└──────────────────────────────────┘
-```
+#### 技术规格
+| 参数 | 要求 |
+| :--- | :--- |
+| 分辨率 | 1080x1920 (9:16) |
+| 帧率 | 24/30/60fps |
+| 编码格式 | H.264 |
+| 容器格式 | MP4 / MOV |
+| 比特率 | ≥3.5 Mbps |
+| 音频 | AAC 或 MP3，≥128kbps |
 
-Every platform overlays UI differently, but the center 60% is universally safe.
+#### 2026 算法核心变化
+1. **搜索成为关键流量来源**：
+   - 用户可以专门筛选搜索 Shorts 视频。
+   - 标题、描述、标签（Hashtag）中的关键词决定搜索排名。
+
+2. **重播率是推荐核心**：
+   - 用户反复观看或拖动进度条回看的视频获得巨大加权。
+   - 内容设计上需预留“再看一遍”的动机（如细节彩蛋、信息差）。
+
+3. **长视频联动**：
+   - Shorts 可以关联一个长视频。若用户通过 Shorts 进入长视频并停留，对 Shorts 也有反哺加权。
+
+#### 发布优化清单
+- 标题必须做 SEO：核心关键词 + 结果承诺句式（如“How to X in Y Seconds”）。
+- 描述区前 100 字符包含核心关键词，并添加 3-5 个相关标签。
+- 标签使用具体的长尾关键词而非宽泛词（如用 “kitchen cleaning hack 2026” 而非 “cleaning”）。
+- 视频末尾 2 秒添加“订阅”动画按钮。
 
 ---
 
-## Pre-Launch Checklist (for Ad Team)
+### 📷 Instagram Reels
 
-Before running app install ads on any platform:
-- [ ] App is live on App Store AND Google Play
-- [ ] App Store listing has screenshots, description, ratings
-- [ ] MMP integrated (AppsFlyer / Adjust / platform SDK) for install tracking
-- [ ] Business account / ad account created on each platform
-- [ ] Payment method added to each ad platform
-- [ ] Review timeline: expect 24-48h for ad approval (longer for Chinese cross-border apps)
+#### 技术规格
+| 参数 | 要求 |
+| :--- | :--- |
+| 分辨率 | 1080x1920 (9:16) |
+| 帧率 | 24/30fps |
+| 编码格式 | H.264 |
+| 容器格式 | MP4 / MOV |
+| 比特率 | ≥3.5 Mbps |
+| 音频 | 推荐使用 Instagram 音乐库内版权音乐 |
+
+#### 2026 算法核心变化
+1. **“真实兴趣 (True Interest)” 转向**：
+   - Meta 算法不再奖励纯粹的高互动病毒内容，而是分析观众是否**真正对该主题感兴趣**。
+   - 互动农场、诱导互动行为会被降权。
+
+2. **有效完播密度**：
+   - 不仅看是否播完，还看用户在播放过程中是否有**分心行为**（如快速划过又被拉回不算有效）。
+   - 内容需在每 3 秒内提供一个“小钩子”维持注意力。
+
+3. **原创性检测加强**：
+   - 纯搬运、低创模板化内容分发大幅下降。
+   - AI 生成内容需有明确的人工创意痕迹（如原创脚本、独特视觉风格）。
+
+#### 发布优化清单
+- 前 3 秒亮明品牌/产品名，建立信任预期。
+- 执行“3秒冲突 + 10秒解决 + 2秒品牌”黄金结构。
+- 文案强调“真实价值”，避免空洞的病毒式煽动。
+- 使用 Instagram 内置文字工具添加字幕（平台偏好原生功能）。
+
+---
+
+### 👥 Facebook Reels
+
+#### 技术规格
+与 Instagram Reels 完全一致。
+
+#### 2026 算法核心变化
+1. **熟人社交优先**：
+   - Facebook Reels 优先分发给用户的**好友网络**，而非泛流量池。
+   - 内容需要具备“转发给朋友/家人”的天然动机。
+
+2. **价值输出型内容受宠**：
+   - 教程、科普、生活技巧类视频获得更多推荐。
+   - 纯娱乐搞笑类视频分发下降。
+
+3. **品牌透明度要求**：
+   - 前 5 秒内必须明确呈现品牌/产品信息，否则会被判定为“模糊内容”限制分发。
+
+#### 发布优化清单
+- 前 5 秒以字幕或特写形式清晰展示品牌/产品名。
+- 文案采用“解决问题”或“传授知识”的口吻。
+- 引导用户标记朋友（如“Tag a friend who needs this”）。
+
+---
+
+### 👻 Snapchat Spotlight
+
+#### 技术规格
+| 参数 | 要求 |
+| :--- | :--- |
+| 分辨率 | 1080x1920 (9:16)，最低 720x1280 |
+| 帧率 | 30fps |
+| 编码格式 | H.264 |
+| 容器格式 | MP4 / MOV |
+| 比特率 | ≥3 Mbps |
+| 音频 | 立体声，≥128kbps |
+| 水印 | 禁止包含任何水印（包括 TikTok 水印） |
+
+#### 2026 算法核心
+1. **完播率是唯一王者**：
+   - Spotlight 算法极其单纯：用户看完了 = 好内容；划走了 = 差内容。
+   - 互动信号（点赞、评论）权重极低。
+
+2. **年轻化审美**：
+   - 核心用户年龄 13-24 岁，偏好快节奏、无废话、直接满足的“纯享”内容。
+
+3. **禁止内容**：
+   - 禁止含外部链接引导、二维码、其他平台水印。
+
+#### 发布优化清单
+- 视频前 1 秒内必须进入核心动作，零铺垫。
+- 时长控制在 15-25 秒为最佳区间。
+- 不使用慢动作开场，全程保持高能量节奏。
+- 去除所有水印后再上传。
+
+---
+
+### 📌 Pinterest
+
+#### 技术规格
+| 参数 | 要求 |
+| :--- | :--- |
+| 分辨率 | 1080x1920 (9:16)，也支持 1080x1080 (1:1) |
+| 帧率 | 25/30fps |
+| 编码格式 | H.264 |
+| 容器格式 | MP4 / MOV |
+| 比特率 | ≥3 Mbps |
+| 音频 | **不重要**，默认静音播放 |
+
+#### 2026 算法核心
+1. **视觉自解释力**：
+   - 90% 用户在静音状态下浏览 Pinterest。
+   - 视频必须在不依赖音频的情况下让用户立刻理解内容。
+
+2. **点击率为王**：
+   - Pinterest 是图片搜索引擎。视频作为 Pin 出现，点击率是推荐的第一信号。
+
+3. **长期生命力**：
+   - 与 TikTok 的即时爆款不同，Pinterest 视频可被持续搜索推荐数月甚至数年。
+   - 关键词优化决定长尾流量。
+
+#### 发布优化清单
+- 强制叠加醒目的大号文字标题（占画面 1/4 到 1/3）。
+- 选择视频中对比最强烈的画面作为 Pin 封面。
+- 标题和描述包含 2-3 个长尾搜索关键词。
+- 视频内容侧重“结果展示”和“教程步骤”。
+- 添加指向商品/网站的链接（Pinterest 支持直接导购）。
+
+---
+
+## 三、跨平台通投策略
+
+### 3.1 统一素材标准
+由于所有主流平台均支持 **9:16 (1080x1920)** 且推荐时长交集为 **15 秒**，建议：
+- 母版视频统一按此规格制作。
+- 根据不同平台要求调整**发布文案**和**标签策略**，而非重制视频。
+
+### 3.2 平台差异化发布清单
+
+| 发布要素 | TikTok | YouTube Shorts | Reels (IG/FB) | Pinterest |
+| :--- | :--- | :--- | :--- | :--- |
+| **标题风格** | 口语化 + 引导评论 | SEO 优化 + 结果承诺 | 价值陈述 + 信任建立 | 关键词堆叠 + 灵感描述 |
+| **标签数量** | 3-5 个 | 3-5 个长尾 | 2-3 个垂直 | 5-10 个关键词 |
+| **音乐** | 必选热门音 | 可选 | 推荐版权库 | 不重要 |
+| **文字叠加** | 适量 | 适量 | 推荐原生工具 | 必须加粗大字 |
+| **发布频率** | 每日 1-3 条 | 每日 1-2 条 | 每周 3-5 条 | 每周 5-10 条 |
+
+### 3.3 避免跨平台禁忌
+- **水印问题**：任何含 TikTok 水印的视频不要直接上传至 Reels 或 Spotlight，会被严重限流。
+- **音乐版权**：TikTok 热门音乐在 Reels 上可能无版权，发布前检查 Instagram 音乐库。
+- **时长兼容**：虽然各平台支持更长时长，但 15 秒是唯一在所有平台都能完整播放且获得完播率加权的长度。
+
+---
+
+## 四、算法更新追踪记录
+
+| 日期 | 平台 | 变化内容 | 对 Skill 的影响 |
+| :--- | :--- | :--- | :--- |
+| 2026.01 | TikTok | 互动权重从“收藏+评论”转为“评论+分享” | 视频 CTA 需调整，减少“收藏”引导 |
+| 2026.02 | YouTube | Shorts 支持关键词搜索筛选 | 标题和描述必须做 SEO 优化 |
+| 2026.03 | Meta | Reels 算法转向“真实兴趣” | 避免空洞病毒内容，强化真实价值展示 |
+| 2026.04 | Snapchat | Spotlight 对水印检测更严格 | 上传前必须去水印 |
+
+---
+
+## 五、平台官方资源链接
+
+- TikTok 创作中心：https://www.tiktok.com/creators/portal
+- YouTube Shorts 帮助：https://support.google.com/youtube/answer/10343433
+- Instagram Reels 最佳实践：https://creators.instagram.com/reels
+- Facebook Reels 指南：https://www.facebook.com/creators/reels
+- Snapchat Spotlight 指南：https://snap.com/spotlight
+- Pinterest 视频规格：https://help.pinterest.com/article/video-specs
