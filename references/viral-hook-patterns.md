@@ -1,8 +1,8 @@
-# 爆款钩子特征库 (Viral Hook Pattern Library) v2.1
+# 爆款钩子特征库 (Viral Hook Pattern Library) v2.2
 
 > **用途**：在生成 Seedance 2.0 提示词前进行策略匹配。Skill 应根据产品类型，从本库中选取至少 1 个高爆款指数钩子作为视频前 3 秒的核心叙事。
-> **迭代规则**：每当某个钩子类型连续 3 次获得用户正向反馈（选择或数据验证），可在内部日志中提升其“爆款指数”权重。
-> **更新版本**：v2.1 (2026.04) —— 新增多镜头脚本结构、与 cinematic-vocabulary v2.1 词汇联动、平台适配细化。
+> **迭代规则**：每当某个钩子类型连续 3 次获得用户正向反馈，可在内部日志中提升其“爆款指数”权重。
+> **更新版本**：v2.2 (2026.04) —— 新增复播引导技巧、深度评论激发策略、收藏/分享权重提升。
 
 ---
 
@@ -19,171 +19,165 @@
 
 ---
 
-## 二、平台算法适配指南 (2026 细化版)
+## 二、2026 算法新权重：复播率与深度互动
 
-> 不同平台对同一钩子的接受度和推荐权重不同。请在生成内容时参考以下适配策略。
+> **关键变化**：2026 年 TikTok 和 YouTube Shorts 算法已将 **复播率** 和 **收藏/分享** 作为最高权重信号，深度评论取代浅层 emoji 互动。
 
-| 钩子类型 | TikTok (评论+分享导向) | YouTube Shorts (SEO导向) | Meta Reels (真实兴趣导向) | Pinterest (静音自解释) |
-| :--- | :--- | :--- | :--- | :--- |
-| **认知失调型** | ✅ 强适配。结尾加提问激发评论。 | ✅ 适配。标题含对比关键词。 | ⚠️ 谨慎。需补充原理避免虚假夸张。 | ⚠️ 中等。需用大字幕解释“为什么”。 |
-| **极简结果型** | ✅ 强适配。结尾引导转发。 | ✅ 强适配。标题直接承诺结果。 | ✅ 强适配。展示真实使用场景。 | ✅ 强适配。Before/After 大字幕。 |
-| **价格锚点型** | ✅ 适配。结尾加“你觉得值吗？” | ⚠️ 中等。标题避免纯价格数字。 | ✅ 适配。强调性价比真实理由。 | ✅ 适配。用文字标出价格对比。 |
-| **情感绑架型** | ✅ 强适配。结尾引导分享。 | ⚠️ 中等。标题侧重情感关键词。 | ✅ 强适配。真实情感优先于煽情。 | ⚠️ 中等。需文字传达情感。 |
-| **视觉奇观型** | ✅ 强适配。适合合拍/二创。 | ✅ 强适配。标题用感官词。 | ✅ 适配。确保奇观与功能相关。 | ✅ 强适配。视觉自解释力强。 |
-| **身份认同型** | ✅ 适配。评论引导“扣1集合”。 | ⚠️ 中等。标题加入人群标签。 | ✅ 强适配。真实痛点展示。 | ✅ 适配。文字直击人群痛点。 |
+### 2.1 复播率引导技巧（各钩子通用）
+
+| 技巧 | 实施方式 | 提示词/脚本配合 |
+| :--- | :--- | :--- |
+| **信息差彩蛋** | 在视频中放置一个快速闪过或需要仔细看才能发现的细节 | 添加文字：“只有1%的人能一次看懂” / “Watch again to spot the trick” |
+| **前后矛盾** | 制造一个逻辑上需要回看才能理解的瞬间 | 在 0-3 秒埋下一个与 10-15 秒结果相悖的视觉元素 |
+| **节奏中断** | 在关键动作处突然停顿或跳帧，制造“我是不是错过了什么”的感觉 | Prompt 中加入 `Brief freeze frame at the moment of action, then resume` |
+| **双重结局** | 结尾留两种解读可能，诱导用户回看验证 | 结尾文字：“你看到的是A还是B？评论区告诉我” |
+
+### 2.2 深度评论激发策略（各钩子通用）
+
+| 策略 | 实施方式 | 示例话术 |
+| :--- | :--- | :--- |
+| **开放式提问** | 避免“是不是”，用“你觉得...？”“如果是你，你会...？” | “你觉得这个技巧实用吗？评论区聊聊你的看法” |
+| **争议性观点** | 提出一个轻微违背常识但可自圆其说的观点 | “很多人不知道，其实清洁剂反而伤灶台” |
+| **求助式互动** | 假装向观众请教，激发表达欲 | “你们还有什么收纳妙招？教教我” |
+| **投票式引导** | 给出两个选项让观众选择 | “A方案还是B方案？评论区扣1或2” |
+
+### 2.3 收藏/分享引导策略
+
+| 策略 | 实施方式 | 示例话术 |
+| :--- | :--- | :--- |
+| **实用价值锚定** | 强调内容的“下次还会用到”属性 | “下次做饭前记得翻出来看” / “Save this for your next cleaning day” |
+| **社交货币** | 暗示转发后能帮助朋友或显得自己专业 | “转给那个总说厨房乱的人” / “Share with a friend who needs this” |
+| **信息差独占** | 制造“这个技巧很少人知道”的稀缺感 | “这个收纳技巧，家具店不会告诉你” |
 
 ---
 
-## 三、各钩子的多镜头脚本结构 (Seedance 2.0 适配)
-
-> **新特性**：每个钩子均提供“单镜头版”和“双镜头版”两种结构。双镜头版利用 Seedance 2.0 的多镜头能力，增强叙事张力。
+## 三、各钩子的多镜头脚本结构（含复播与互动引导）
 
 ### 1. 认知失调型
-
-#### 单镜头版（15 秒连续画面）
-- **0-3s**：特写产品产生违背常识的效果。
-- **3-10s**：快切展示普通方法 vs 本产品的悬殊对比。
-- **10-15s**：放大使用者的惊讶表情，定格产品 Logo。
 
 #### 双镜头版（0-7s 建立认知 + 8-15s 颠覆认知）
 - **镜头 1 (0-7s)**：广角 POV 展示“正常情况下的糟糕状态”，手持呼吸感。
 - **转场**：快速摇摄 (Whip pan) 或匹配动作转场。
 - **镜头 2 (8-15s)**：微距特写产品介入后产生的反常识效果，画面定格在惊人结果上。
 
-#### 提示词片段（双镜头版）
+#### 复播彩蛋植入
+在 3-4 秒处，画面边缘闪过一个与后续结果相矛盾的细节（如灶台上原本没有的某样东西突然出现又消失），激发回看验证。
+
+#### 提示词片段
 ```
-[0-7s] Wide POV shot of a person struggling to clean a greasy stove with a regular cloth, frustration visible, Handheld breathing motion.
+[0-7s] Wide POV shot of a person struggling to clean a greasy stove, frustration visible. Brief flash of a surprising detail at 3s that contradicts the ending.
 [7s] Quick whip pan transition.
-[8-15s] Cinematic macro shot of blue sponge wiping same grease, stains instantly vanish revealing mirror-like surface, Freeze frame on clean reflection.
+[8-15s] Cinematic macro shot of blue sponge wiping grease, stains instantly vanish. Freeze frame with text: "Watch again. Did you catch it?"
 ```
+
+#### 互动引导
+- **评论激发**：结尾文字 “你觉得这是真的吗？评论区告诉我”
+- **收藏引导**：字幕 “下次大扫除前记得翻出来看”
+- **分享引导**：字幕 “转给那个说洗碗很累的人”
 
 ---
 
 ### 2. 极简结果型
 
-#### 单镜头版
-- **0-3s**：一只手拿着产品，一只手展示脏乱场景。
-- **3-8s**：产品轻轻接触污渍，瞬间溶解/吸附/变形。
-- **8-15s**：镜头拉远，展示整个区域焕然一新。
-
-#### 双镜头版（0-6s 问题展示 + 7-15s 一键解决）
-- **镜头 1 (0-6s)**：杂乱场景的快速摇摄，展示多个痛点（如台面乱、抽屉满、地上堆）。
+#### 双镜头版（0-7s 问题展示 + 8-15s 一键解决）
+- **镜头 1 (0-7s)**：杂乱场景的快速摇摄，展示多个痛点。
 - **转场**：手部入画遮挡镜头作为自然转场。
-- **镜头 2 (7-15s)**：产品介入，延时摄影效果展示物品自动归位，结尾全景展示整洁空间。
+- **镜头 2 (8-15s)**：产品介入，延时摄影效果展示物品自动归位。
 
-#### 提示词片段（双镜头版）
-```
-[0-6s] Whip pan across a cluttered kitchen counter, messy desk, and overflowing drawer, showing chaos.
-[6s] Hand wipes across lens as transition.
-[7-15s] Timelapse transition from messy to clean, items snapping into organizer tray, Freeze frame on perfectly organized space.
-```
+#### 复播彩蛋植入
+在延时摄影过程中，让某个物品以“不可能”的路径归位（如穿过另一个物体），制造需要回看才能确认的视觉错觉。
+
+#### 互动引导
+- **评论激发**：结尾文字 “你还有什么收纳妙招？教教我”
+- **收藏引导**：字幕 “下次整理前，记得回来看”
+- **分享引导**：字幕 “转给你的收纳搭子”
 
 ---
 
 ### 3. 价格锚点型
 
-#### 单镜头版
-- **0-3s**：屏幕上打出高价被划掉。
-- **3-8s**：堆叠展示 10 件同款产品，打出低价。
-- **8-15s**：快速展示产品质量细节。
-
 #### 双镜头版（0-7s 高端场景对比 + 8-15s 本品质感展示）
-- **镜头 1 (0-7s)**：展示一个类似的高端产品在奢华场景中，屏幕浮现高价。
-- **转场**：匹配动作转场（同一只手拿起产品）。
-- **镜头 2 (8-15s)**：同一只手拿起本品，微距展示材质细节，屏幕浮现工厂直发价。
+- **镜头 1 (0-7s)**：展示高端产品在奢华场景中，屏幕浮现高价。
+- **转场**：匹配动作转场。
+- **镜头 2 (8-15s)**：本品细节展示，屏幕浮现工厂直发价。
 
-#### 提示词片段（双镜头版）
-```
-[0-7s] A luxury branded organizer on a marble counter, text space for "$199 ???" crossed out.
-[7s] Match cut on the hand movement.
-[8-15s] Same hand picks up our bamboo organizer, macro close-up of premium wood grain and smooth edges, text space for "Factory direct $19.9", Freeze frame.
-```
+#### 复播彩蛋植入
+在两个镜头的衔接处，让一个价格数字快速闪烁变化，只有回看才能发现“原来价格差这么多”。
+
+#### 互动引导
+- **评论激发**：结尾文字 “你觉得值这个价吗？评论区打分”
+- **收藏引导**：字幕 “收藏起来，下次买之前对比”
+- **分享引导**：字幕 “转给正在装修的朋友”
 
 ---
 
 ### 4. 情感绑架型
 
-#### 单镜头版
-- **0-3s**：女性疲惫地揉肩，桌上杂乱。
-- **3-8s**：镜头转向送礼者递上礼盒。
-- **8-15s**：使用产品后舒展笑容，定格字幕。
-
 #### 双镜头版（0-7s 疲惫状态 + 8-15s 被治愈时刻）
-- **镜头 1 (0-7s)**：柔焦镜头展现人物疲惫细节（揉肩、看手机、杂乱背景）。
+- **镜头 1 (0-7s)**：柔焦镜头展现人物疲惫细节。
 - **转场**：礼物盒入画遮挡镜头。
-- **镜头 2 (8-15s)**：开箱后产品使用特写，人物表情从疲惫转为放松微笑，定格在温馨画面。
+- **镜头 2 (8-15s)**：开箱后产品使用特写，人物表情从疲惫转为放松微笑。
 
-#### 提示词片段（双镜头版）
-```
-[0-7s] Soft focus shot of a tired woman rubbing her neck at a messy desk, warm but exhausted lighting.
-[7s] Gift box enters frame, covering lens.
-[8-15s] Cut to her opening box with genuine surprise, applying hydrating face mask, expression shifts to relaxed content smile, Freeze frame with "You deserve this" text space.
-```
+#### 复播彩蛋植入
+在背景中放置一个与情感主题相关的小物件（如一张老照片），第一次观看不易察觉，回看时发现并引发情感共鸣。
+
+#### 互动引导
+- **评论激发**：结尾文字 “你最想送给谁？@ 出来”
+- **收藏引导**：字幕 “下次不知道送什么，回来看这个”
+- **分享引导**：字幕 “转给那个总说'我没事'的人”
 
 ---
 
 ### 5. 视觉奇观型
 
-#### 单镜头版
-- **0-3s**：微距镜头下酱汁流过食物。
-- **3-10s**：切开食物，爆浆慢动作。
-- **10-15s**：咬下第一口的脆响特写。
-
-#### 双镜头版（0-6s 完整外观 + 7-15s 内部奇观）
-- **镜头 1 (0-6s)**：产品完整外观的缓慢旋转展示，营造期待。
+#### 双镜头版（0-7s 完整外观 + 8-15s 内部奇观）
+- **镜头 1 (0-7s)**：产品完整外观的缓慢旋转展示。
 - **转场**：刀切入画面的瞬间作为转场。
-- **镜头 2 (7-15s)**：极近微距拍摄切开瞬间，慢动作捕捉爆浆/拉丝，定格在最诱人的切面。
+- **镜头 2 (8-15s)**：极近微距拍摄切开瞬间，慢动作捕捉爆浆/拉丝。
 
-#### 提示词片段（双镜头版）
-```
-[0-6s] Slow orbit shot around a perfectly golden crispy chicken sandwich, steam rising.
-[6s] Sharp knife enters frame.
-[7-15s] Cinematic macro shot of sandwich being cut, crunchy breading texture visible, slow motion cheese pull stretching endlessly, Freeze frame on perfect cross-section with steam.
-```
+#### 复播彩蛋植入
+在切开瞬间，让内部结构呈现出与外观不一致的隐藏图案（如芝士拉丝形成的形状），制造“再看一次”的动机。
+
+#### 互动引导
+- **评论激发**：结尾文字 “你看到芝士拉成了什么形状？”
+- **收藏引导**：字幕 “深夜慎点，收藏了白天看”
+- **分享引导**：字幕 “转给你的饭搭子”
 
 ---
 
 ### 6. 身份认同型
 
-#### 单镜头版
-- **0-3s**：屏幕大字：“租房党最大的痛”。
-- **3-8s**：展示出租屋典型拥挤角落。
-- **8-15s**：产品出现，瞬间释放空间。
-
 #### 双镜头版（0-7s 痛点共情 + 8-15s 解决方案）
-- **镜头 1 (0-7s)**：第一人称 POV 走过狭小出租屋，镜头扫过各种拥挤痛点，屏幕浮现痛点文字。
+- **镜头 1 (0-7s)**：第一人称 POV 走过狭小出租屋，扫过各种拥挤痛点。
 - **转场**：快速摇摄至产品。
-- **镜头 2 (8-15s)**：产品安装/使用过程延时，空间瞬间变大变整洁，定格字幕“搬走时房东求我留下它”。
+- **镜头 2 (8-15s)**：产品使用过程延时，空间瞬间变大变整洁。
 
-#### 提示词片段（双镜头版）
-```
-[0-7s] POV walking through a cramped rental kitchen, whip pan across zero counter space and ugly cabinets, text overlay "Renter's biggest struggle".
-[7s] Quick whip pan to product.
-[8-15s] Timelapse of renter-friendly shelf being installed, space instantly transforms into organized functional kitchen, Freeze frame with "Landlord begged me to leave it" text space.
-```
+#### 复播彩蛋植入
+在痛点扫描时，让一个非目标人群的“凡尔赛”物品一闪而过（如大豪宅的钥匙），制造身份对比的反讽效果，激发租房党回看确认。
 
----
-
-## 四、钩子与提示词词汇联动表
-
-> 使用本表将钩子类型与 `cinematic-vocabulary.md` 中的词汇快速匹配。
-
-| 钩子类型 | 推荐爆款前缀 | 推荐运镜方式 | 推荐光影风格 | 推荐音频同步 |
-| :--- | :--- | :--- | :--- | :--- |
-| **认知失调型** | Visual impact, Oddly satisfying | Macro detail, Snap zoom | High contrast shadows | Heavy bass drops |
-| **极简结果型** | Fast-paced editing feel | Timelapse transition, Whip pan | Clean and bright | Upbeat tempo sync |
-| **价格锚点型** | High-end commercial look | Match cut, Smooth orbit | Softbox lighting | Voiceover pacing |
-| **情感绑架型** | Authentic lived-in feel | Soft focus, Handheld breathing | Warm cozy tones | Ambient sound |
-| **视觉奇观型** | Oddly satisfying, Immersive | Slow motion, Macro detail | Crisp highlights | ASMR trigger |
-| **身份认同型** | Viral TikTok aesthetic | POV shot, Tracking shot | Natural window light | Relatable audio |
+#### 互动引导
+- **评论激发**：结尾文字 “租房党评论区集合🙋 说说你的痛”
+- **收藏引导**：字幕 “下次搬家前记得回来看”
+- **分享引导**：字幕 “转给你的房东，让他看看”
 
 ---
 
-## 五、钩子迭代记录表 (内部使用)
+## 四、钩子与算法信号联动表（v2.2 新增）
 
-| 日期 | 产品品类 | 使用钩子 | 脚本结构 | 平台 | 用户反馈/数据表现 | 钩子指数调整建议 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 2026.04.15 | 清洁用品 | 认知失调型 | 双镜头版 | TikTok | 评论量高于平均30% | ⬆️ 维持五星 |
-| 2026.04.16 | 收纳用品 | 极简结果型 | 双镜头版 | Meta Reels | 完播率提升25% | ⬆️ 提升至五星 |
-| (示例) | 美妆工具 | 极简结果型 | 单镜头版 | Pinterest | 静音完播率偏低 | 需加大字幕 |
-| | | | | | | |
+| 钩子类型 | 推荐复播技巧 | 推荐评论激发策略 | 推荐收藏/分享引导 |
+| :--- | :--- | :--- | :--- |
+| **认知失调型** | 信息差彩蛋 | 开放式提问 | 实用价值锚定 |
+| **极简结果型** | 节奏中断 | 求助式互动 | 社交货币 |
+| **价格锚点型** | 前后矛盾 | 投票式引导 | 实用价值锚定 |
+| **情感绑架型** | 双重结局 | 开放式提问 | 社交货币 |
+| **视觉奇观型** | 信息差彩蛋 | 开放式提问 | 实用价值锚定 |
+| **身份认同型** | 前后矛盾 | 求助式互动 | 社交货币 |
+
+---
+
+## 五、钩子迭代记录表
+
+| 日期 | 产品品类 | 使用钩子 | 脚本结构 | 复播率 | 评论质量 | 收藏/分享 | 钩子指数调整建议 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026.04.15 | 清洁用品 | 认知失调型 | 双镜头 | 22% | 深度评论占比45% | 分享率8% | ⬆️ 维持五星 |
+| | | | | | | | |
