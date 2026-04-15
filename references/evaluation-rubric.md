@@ -1,83 +1,198 @@
-# Video Quality Evaluation Rubric — Quick Reference
+# 视频质量与爆款潜力评分表 (Evaluation Rubric) v2.0
 
-Use this rubric to score generated videos on 8 dimensions (1-5 each, max 40).
+> **用途**：对 Seedance 2.0 生成的视频进行标准化评估，判断是否达到发布标准，并为迭代提供数据依据。
+> **评分原则**：满分 100 分，分为“技术质量”“爆款钩子”“平台适配”三大维度。
+> **更新版本**：v2.0 (2026.04) —— 新增平台适配维度，调整 TikTok/Meta/YouTube 专项评分权重。
 
-## Scoring Sheet Template
+---
 
-```
-Video: [Product Name] — $[Price]
-Date:  [YYYY-MM-DD]
-Template: [A/B/C]
+## 一、评分总览
 
-| # | Dimension              | Score (1-5) | Notes |
-|---|------------------------|-------------|-------|
-| 1 | Hook Effectiveness     |             |       |
-| 2 | Cinematic Quality      |             |       |
-| 3 | Product Clarity        |             |       |
-| 4 | Brand Element Render   |             |       |
-| 5 | Price Anchoring Impact |             |       |
-| 6 | CTA Clarity            |             |       |
-| 7 | Safety Zone Compliance |             |       |
-| 8 | Overall Ad Effectiveness|            |       |
-| |   **TOTAL**              | **/40**     |       |
+| 维度 | 分值 | 评估重点 |
+| :--- | :--- | :--- |
+| **技术质量** | 30 分 | 画面清晰度、运镜稳定性、AI 生成瑕疵 |
+| **爆款钩子** | 40 分 | 前 3 秒冲击力、完播率潜力、互动引导力 |
+| **平台适配** | 30 分 | TikTok 评论/分享引导、YouTube SEO 潜力、Meta 真实价值感 |
+| **总分** | **100 分** | ≥75 分可发布；60-74 分需优化；<60 分废弃重做 |
 
-Decision: [ ] USE  [ ] REGENERATE  [ ] REVISE PROMPT
-```
+---
 
-## Decision Thresholds
+## 二、技术质量评分细则 (30 分)
 
-| Score Range | Decision | Action |
-|-------------|----------|--------|
-| 35-40 | ✅ Excellent | Use immediately, no changes needed |
-| 28-34 | ✅ Good | Use as-is, note improvements for future prompts |
-| 20-27 | ⚠️ Acceptable | Consider regenerating if points budget allows |
-| Below 20 | ❌ Reject | Must regenerate — revise prompt addressing weak dimensions |
+### 2.1 画面清晰度与分辨率 (10 分)
 
-## Common Failure Patterns & Fixes
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 10 分 | 画面锐利，1080x1920 满分辨率，无模糊、马赛克、噪点 |
+| 7-9 分 | 轻微柔化但主体清晰，分辨率达标 |
+| 4-6 分 | 局部模糊，边缘有锯齿，影响观感 |
+| 0-3 分 | 大面积模糊、变形、画质低劣，不可用 |
 
-### Pattern: Low Hook Score (1-2)
-**Symptom**: Opening scene is generic, doesn't create curiosity
-**Fix**: Add more dramatic/specific action to the HOOK section. Use concrete visual actions, not abstract descriptions.
-- ❌ "Show someone using the product"
-- ✅ "Extreme close-up of glowing LED nodes activating one by one in darkness"
+### 2.2 运镜流畅度与构图 (10 分)
 
-### Pattern: Low Cinematic Score (1-2)
-**Symptom**: Flat lighting, amateur look, visible AI artifacts
-**Fix**: Add lighting and camera instructions:
-- "premium studio lighting with soft key light and rim light"
-- "warm cinematic color grading with slight orange tint"
-- "slow-motion at 120fps equivalent"
-- "shallow depth of field with bokeh background"
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 10 分 | 运镜丝滑自然，主体始终处于视觉中心，构图符合 9:16 竖屏美学 |
+| 7-9 分 | 轻微抖动但不影响观看，主体位置基本合理 |
+| 4-6 分 | 晃动明显或构图失衡，主体被裁切 |
+| 0-3 分 | 剧烈抖动、眩晕感、主体出画 |
 
-### Pattern: Low Product Clarity (1-2)
-**Symptom**: Product looks wrong or unrecognizable
-**Fix**: Add material and physical detail:
-- Specify exact materials: "brushed aluminum", "matte silicone", "translucent acrylic"
-- Specify colors: "cream white body with rose gold accents"
-- Specify key features: "three LED lights: red, blue, green — each 5mm diameter"
+### 2.3 AI 生成瑕疵控制 (10 分)
 
-### Pattern: Low Brand Element Score (1-2)
-**Symptom**: Logo, price, or CTA not visible
-**Fix**: Make the logo description MORE detailed and add explicit positioning:
-- Add "centered on screen" to every text element
-- Make the logo description longer and more specific
-- Separate brand elements into their own sentence
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 10 分 | 无人物手脸变形、物体形变、鬼影、闪烁等 AI 常见瑕疵 |
+| 7-9 分 | 轻微瑕疵但不被普通观众察觉（如指尖略糊） |
+| 4-6 分 | 明显瑕疵引起注意（如手指数量异常、物体融化解体） |
+| 0-3 分 | 严重畸变、恐怖谷效应，直接劝退观众 |
 
-### Pattern: Low Safety Zone Score (1-2)
-**Symptom**: Text/CTA hidden behind platform UI
-**Fix**: Add explicit instruction AND position qualifiers:
-- "All text and UI elements stay in the center 60% of the frame"
-- Add "centered" before every text overlay instruction
-- Add "lower-third centered" for brand UI elements
+---
 
-## Benchmark: What Good Looks Like
+## 三、爆款钩子评分细则 (40 分)
 
-A 35+ score video typically has:
-- Opening shot that makes you pause and watch
-- Smooth, cinematic camera movements (no jarring cuts)
-- Product clearly recognizable with correct proportions
-- At least partial logo visibility and correct colors
-- Price number readable and prominently displayed
-- "Download [App]" text clearly visible
-- All text comfortably within center area
-- Would not look out of place in a paid ad feed
+### 3.1 前 3 秒留存预测 (15 分)
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 13-15 分 | 首帧即含“认知失调”或“视觉奇观”，让人本能停止划动 |
+| 9-12 分 | 有明显视觉冲击或悬念，但不够极致 |
+| 5-8 分 | 平淡开场，需要观众耐心等待信息 |
+| 0-4 分 | 前 3 秒完全是空镜、黑屏、无关画面，必划走 |
+
+### 3.2 完播率潜力 (15 分)
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 13-15 分 | 15 秒内信息密度高，无冗余帧，每 3 秒有“小钩子”，结尾有定格引导 |
+| 9-12 分 | 整体流畅但有 1-2 秒拖沓，结尾无明显停留 |
+| 5-8 分 | 节奏松散，中间有无效空镜，结尾仓促 |
+| 0-4 分 | 大量无效时长，观众无法坚持看完 |
+
+### 3.3 互动引导力 (10 分)
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 9-10 分 | 内置自然互动钩子（如开放式提问、悬念结果、合拍挑战），观众有强烈回应冲动 |
+| 6-8 分 | 有互动引导但略显生硬或不够突出 |
+| 3-5 分 | 仅有“点赞关注”式口号，无实质引导 |
+| 0-2 分 | 无任何互动设计 |
+
+---
+
+## 四、平台适配评分细则 (30 分)
+
+> **说明**：本维度根据视频的目标平台进行选择性评分。若视频为全平台通投，则取各项均分。
+
+### 4.1 TikTok 适配 (10 分) —— 若目标含 TikTok 则必评
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 9-10 分 | 内容天然具备**评论**或**分享**动机（如争议性观点、可标记好友的痛点、合拍潜力），结尾有明确引导 |
+| 6-8 分 | 有一定讨论价值，但引导不明确 |
+| 3-5 分 | 内容看完即走，无评论/分享理由 |
+| 0-2 分 | 内容封闭，无互动可能 |
+
+### 4.2 YouTube Shorts 适配 (10 分) —— 若目标含 YouTube 则必评
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 9-10 分 | 视频画面中包含**可搜索的关键词视觉元素**（如特定产品名、教程步骤字幕），标题/描述 SEO 潜力高 |
+| 6-8 分 | 内容可被搜索但关键词不够突出 |
+| 3-5 分 | 内容泛化，难以匹配具体搜索意图 |
+| 0-2 分 | 纯氛围内容，无搜索价值 |
+
+### 4.3 Meta Reels 适配 (10 分) —— 若目标含 Instagram/Facebook 则必评
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 9-10 分 | 内容传递**真实价值**（解决具体问题、传授知识、展示真实效果），前 5 秒亮明品牌/产品，无空洞煽动 |
+| 6-8 分 | 有价值输出但品牌露出不足或略夸张 |
+| 3-5 分 | 偏病毒式娱乐，真实价值感弱 |
+| 0-2 分 | 空洞口号、过度夸张、无实质信息 |
+
+### 4.4 Pinterest 适配 (10 分) —— 若目标含 Pinterest 则必评
+
+| 得分 | 标准描述 |
+| :--- | :--- |
+| 9-10 分 | 静音状态下完全可懂，画面有大号文字叠加，封面帧具备高点击率 |
+| 6-8 分 | 静音可懂但文字偏小或不突出 |
+| 3-5 分 | 依赖音频理解内容 |
+| 0-2 分 | 无音频则完全不知所云 |
+
+---
+
+## 五、评分卡模板 (可直接复制使用)
+
+### 视频评估卡
+
+| 视频 ID | [自动生成] |
+| :--- | :--- |
+| **产品品类** | [如：厨房清洁] |
+| **使用钩子类型** | [认知失调/极简结果/...] |
+| **目标平台** | [TikTok / YouTube Shorts / Meta Reels / Pinterest / 全平台] |
+
+#### 评分明细
+
+| 维度 | 子项 | 得分 | 备注 |
+| :--- | :--- | :--- | :--- |
+| **技术质量 (30)** | 画面清晰度 (10) | /10 | |
+| | 运镜流畅度 (10) | /10 | |
+| | AI 瑕疵控制 (10) | /10 | |
+| **爆款钩子 (40)** | 前 3 秒留存 (15) | /15 | |
+| | 完播率潜力 (15) | /15 | |
+| | 互动引导力 (10) | /10 | |
+| **平台适配 (30)** | TikTok (10) | /10 | |
+| | YouTube Shorts (10) | /10 | |
+| | Meta Reels (10) | /10 | |
+| | Pinterest (10) | /10 | (如适用) |
+| **总分** | | **/100** | |
+
+#### 评估结论
+
+- [ ] ≥75 分：✅ 可发布
+- [ ] 60-74 分：⚠️ 需优化后重评
+- [ ] <60 分：❌ 废弃，重新生成
+
+#### 优化建议
+
+| 薄弱项 | 建议措施 |
+| :--- | :--- |
+| (示例) 前 3 秒冲击力不足 | 在提示词中增加 “Visual impact, Eye-catching opening” 并缩短钩子入画时间 |
+| (示例) AI 手部畸变 | 添加负向词 “Well-formed hands, No extra fingers” |
+| | |
+
+---
+
+## 六、失败模式及修复方案速查表
+
+> 当视频评分低于阈值时，对照此表快速定位问题并给出修复指令。
+
+| 失败表现 | 可能原因 | 提示词修复方案 |
+| :--- | :--- | :--- |
+| 前 3 秒平淡 | 钩子类型选择错误或提示词未强调开场 | 强制使用爆款前缀：`High CTR style, Viral TikTok aesthetic, Eye-catching opening` |
+| 完播率低，中间划走 | 信息密度不足，有空镜 | 增加指令：`Snappy motion, No empty frames, Every second matters` |
+| 人物面部/手部崩坏 | Seedance 对人物细节处理不稳定 | 添加负向控制：`Well-formed hands, Natural facial features, No distortion` |
+| 画面抖动眩晕 | “手持真实感”过度 | 降权手持词，改为：`Smooth camera motion, Subtle handheld breathing` |
+| 静音看不懂 | 未添加文字叠加层 | 提示词中加入：`Clear space for bold text overlay, Self-explanatory visual` |
+| TikTok 评论少 | 内容缺乏讨论点 | 脚本层面增加开放式结尾，如“你觉得呢？” |
+| YouTube 无搜索流量 | 标题/描述未做 SEO | 发布阶段补关键词，画面中加入关键词视觉元素 |
+| Meta 限流 | 内容过于病毒式煽动 | 减少夸张前缀，增加 `Authentic real-life moment, True interest content` |
+
+---
+
+## 七、评分数据追踪表 (内部迭代用)
+
+| 日期 | 视频 ID | 产品 | 钩子 | 技术分 | 钩子分 | 平台分 | 总分 | 结论 | 关键问题 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 2026.04.15 | V001 | 清洁片 | 认知失调 | 26 | 35 | 22 | 83 | ✅ 发布 | 平台分略低，TikTok 引导不足 |
+| | | | | | | | | | |
+
+---
+
+这是 **`evaluation-rubric.md`** 的完整优化内容。主要变化：
+
+1. **重构评分维度**：从原来单一维度改为“技术质量(30) + 爆款钩子(40) + 平台适配(30)”三层结构，强化钩子权重。
+2. **平台适配细化**：分别为 TikTok、YouTube Shorts、Meta Reels、Pinterest 设立独立评分项，对齐 2026 算法变化。
+3. **新增失败模式速查表**：将常见失败表现、原因、修复方案一一对应，实现“评分→诊断→修复”闭环。
+4. **评分卡模板标准化**：可直接复制填写，便于每次任务后归档。
+5. **新增数据追踪表**：用于长期积累评估数据，支撑 Skill 自我迭代。
