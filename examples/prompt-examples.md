@@ -1,249 +1,233 @@
-# Seedance 2.0 提示词示例库 (Prompt Examples) v2.0
+# Seedance 2.0 提示词示例库 (Prompt Examples) v2.3
 
-> **用途**：为 Skill 提供可直接参考或微调的 Seedance 2.0 提示词模板。所有示例均针对 9:16 竖屏、15 秒时长优化，并标注适用平台与钩子类型。
-> **使用方式**：根据产品类目和选定的钩子类型，选取最接近的示例进行变量替换（产品名、动作、环境）。
-> **更新版本**：v2.0 (2026.04) —— 新增平台专属变体、Meta 真实兴趣适配、去 AI 味强化指令。
+> **用途**：为 Skill 提供可直接参考或微调的 Seedance 2.0 提示词模板。所有示例均采用 **五维提示词架构**（技术基底 + 镜头运动 + 视觉元素 + 光影系统 + 动态设计），并匹配 **品类场景化多镜头模板**。
+> **使用方式**：根据产品品类和选定的钩子类型，选取最接近的示例进行变量替换。
+> **更新版本**：v2.3 (2026.04) —— 全部示例升级为五维架构，对齐 v2.3 多镜头模板与收藏/分享互动策略。
 
 ---
 
-## 一、按钩子类型分类的提示词示例
+## 一、功能效果型模板（清洁、美甲灯、美容仪等）
 
-### 1. 认知失调型 (Cognitive Dissonance)
+**叙事逻辑**：痛点快切 → 过程微距 → 惊艳结果（3-4 镜头）
 
-**适用产品**：清洁神器、黑科技小家电、解压玩具
-**核心特征**：违背常识的视觉效果，让人产生“这不可能”的惊讶感
-
-#### 示例 1.1：清洁海绵 (全平台通投版)
+### 示例 1.1：纳米清洁海绵（认知失调钩子·4镜头）
 
 **英文 Prompt**：
+
 ```
-High CTR style, Viral TikTok ad aesthetic, Cinematic macro shot, Snappy motion, Extreme close-up of a blue cleaning sponge wiping across a greasy black stove surface, thick yellow grease instantly dissolves on contact revealing mirror-like stainless steel underneath, no scrubbing required, Handheld POV shot, Organic unscripted feel, Avoid slow cinematic pans, Freeze frame on the perfectly clean reflective surface for 2 seconds with clear space for text overlay, Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, sharp focus on product
+[Shot 1: 0-3s]
+4K UHD, 48fps, 35mm lens. Whip pan across a greasy messy stove after cooking, thick yellow stains visible. Handheld POV shot with subtle breathing motion. Clean bright lighting. Snappy motion.
+
+[Shot 2: 3-4s]
+4K UHD, 48fps, 100mm macro lens. Quick cut to extreme macro close-up of blue cleaning sponge touching the grease. Crisp highlights on the grease surface. Static shot.
+
+[Shot 3: 4-7s]
+4K UHD, 120fps, 100mm macro lens. Extreme macro slow motion: grease instantly dissolves on contact revealing mirror-like stainless steel underneath. Slow orbit around the clean spot. Visual beats sync with crisp "ding" sound. No warping, Stable object geometry.
+
+[Shot 4: 7-15s]
+4K UHD, 50mm lens. Slow dolly-out to wide shot of perfectly clean entire stove. Hand wipes across the reflective surface showing no residue. Freeze frame on mirror-like finish for 2 seconds with clear space for text overlay: "How is this possible? 👇". Text space for "Save for your next deep clean" at bottom left. Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Well-formed hands, No extra fingers. Comment-worthy moment, Shareable ending.
 ```
 
 **中文提示词参考**：
-```
-高CTR风格，病毒式TikTok美学，电影级微距镜头，干脆利落的运镜，蓝色清洁海绵擦拭油腻黑色灶台的极近特写，厚重黄色油污接触瞬间溶解露出镜面般反光的不锈钢表面，无需用力擦洗，手持第一人称视角，生活化真实感，避免缓慢空镜移动，动作最后定格在完美干净的灶台反光面2秒，画面中心留出文字空间，干净明亮布光，4k超高清，9:16竖屏，15秒无缝循环，产品清晰对焦
-```
 
-#### 示例 1.2：清洁海绵 (TikTok 专属变体 - 强化评论引导)
-
-**英文 Prompt** (在通用版基础上追加尾缀)：
 ```
-... [通用版主体] ... Comment-worthy visual twist, Ending with a question implied by the result, Shareable satisfying moment
-```
+[镜头1: 0-3秒]
+4K超高清, 48帧, 35mm镜头。快速摇摄扫过做完饭后油腻杂乱的灶台，厚重黄色油垢清晰可见。手持第一人称视角，轻微呼吸感。干净明亮布光。干脆利落的运镜。
 
-#### 示例 1.3：清洁海绵 (Meta Reels 专属变体 - 真实兴趣适配)
+[镜头2: 3-4秒]
+4K超高清, 48帧, 100mm微距镜头。快速切入蓝色清洁海绵接触油污的极近特写。油垢表面有通透高光。固定镜头。
 
-**英文 Prompt** (减少夸张，增加真实感)：
-```
-Authentic real-life moment, True interest content, Cinematic macro shot, A person's hand using a blue cleaning sponge on a realistically greasy kitchen stove after cooking dinner, grease lifts away effectively showing the sponge's cleaning power, Genuine unscripted reaction of slight surprise, Natural window light, Handheld POV, Freeze frame on the clean stove with subtle brand placement, 9:16 vertical, 15 seconds, Value-first visual
+[镜头3: 4-7秒]
+4K超高清, 120帧, 100mm微距镜头。极近微距慢动作：油污接触瞬间消失，露出镜面般反光的不锈钢底层。围绕洁净点轻微环绕。画面随清脆“叮”声同步。无形变，物体几何稳定。
+
+[镜头4: 7-15秒]
+4K超高清, 50mm镜头。缓慢拉远至整个灶台完美洁净的全景。手在反光表面滑动，无任何残留。定格在镜面般反光灶台2秒，留有文字空间：“这怎么可能？👇”。左下角留出“下次大扫除前收藏”文字空间。柔光箱布光，4k超高清，9:16竖屏，15秒无缝循环，手部完好无多余手指。评论引导时刻，分享结尾。
 ```
 
 ---
 
-### 2. 极简结果型 (Minimalist Result)
-
-**适用产品**：收纳用品、厨房工具、美妆速成
-**核心特征**：Before/After 极速切换，强调“一步到位”“懒人友好”
-
-#### 示例 2.1：厨房收纳神器 (全平台通投版)
+### 示例 1.2：美甲灯（价格锚点钩子·4镜头·功能效果型）
 
 **英文 Prompt**：
-```
-High CTR style, Viral TikTok ad aesthetic, Snappy motion, Quick whip pan transition, Split-second before-and-after comparison, Cluttered messy kitchen counter with scattered spice jars and utensils, hand places a sleek bamboo organizer tray into frame, rapid timelapse effect of everything snapping into perfect order inside the tray within seconds, Ending freeze frame on the immaculately organized counter with product centered, Clean bright minimal lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, sharp focus on product
-```
 
-**中文提示词参考**：
 ```
-高CTR风格，病毒式TikTok美学，干脆利落的运镜，快速摇摄转场，瞬间前后对比，杂乱厨房台面散落香料瓶和厨具，一只手将简约竹制收纳盘放入画面，快进延时效果展现所有物品在几秒内整齐归位，结尾定格在整洁有序的台面且产品居中，干净明亮极简布光，4k超高清，9:16竖屏，15秒无缝循环，产品清晰对焦
-```
+[Shot 1: 0-4s]
+4K UHD, 48fps, 85mm lens. Salon scene: a hand placed under a professional nail lamp, text overlay space for "Salon gel set: $65+". Softbox lighting, clean and bright. Slow dolly-in to close-up.
 
-#### 示例 2.2：美妆速成产品 (YouTube Shorts 专属变体 - SEO 优化)
+[Shot 2: 4-8s]
+4K UHD, 48fps, 35mm lens. Quick whip pan transition to home setting. Same hand painting gel polish, then placing under Rosalind nail lamp. All 15 LED beads light up simultaneously. Natural window light, warm cozy tones. Brief macro flash at 6s of LED beads lighting up (rewatch bait). Well-formed hands.
 
-**英文 Prompt**：
-```
-Search-friendly visual, High CTR style, Cinematic macro shot, Snappy motion, A woman's face half with bare tired skin and half instantly transformed with a brightening CC cream being blended seamlessly, one-swipe application, Before-and-after split screen visible, Clear keyword moment showing the product name on screen space, Softbox lighting, Handheld POV, Freeze frame on the flawless finish, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready
+[Shot 3: 8-12s]
+4K UHD, 120fps, 100mm macro lens. Extreme macro shot, slow orbit around the nail surface. Nail surface transforming from matte wet texture to mirror-like glossy finish under the lamp. Crisp highlights on the glossy surface, rim light contour. Visual beats sync with a crisp "ding" sound.
+
+[Shot 4: 12-15s]
+4K UHD, 50mm lens. Split screen: left side salon bill crossed out in red, right side "HuoPan $8.85" pulsing large. Finger taps bottom of frame where shopping cart icon would be. Freeze frame on glossy nails for 2 seconds. Text space: "Save for your next nail day 💅". Static shot. Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready. Shareable ending.
 ```
 
 ---
 
-### 3. 价格锚点型 (Price Anchor)
+## 二、高性价比型模板（日用百货、服饰、工厂直发品）
 
-**适用产品**：日用百货、服饰配饰、工厂直发品
-**核心特征**：通过视觉化的价格对比，制造“超值感”
+**叙事逻辑**：高端对比 → 操作过程 → 价格揭示（3-4 镜头）
 
-#### 示例 3.1：工厂直发收纳盒 (全平台通投版)
-
-**英文 Prompt**：
-```
-High CTR style, Viral TikTok ad aesthetic, Snappy motion, Pile of 10 identical premium storage bins stacked together, bold "Factory Direct" text space implied, close-up detail shot showing thick durable plastic texture and smooth edges, Quick cuts comparing to a single luxury branded bin with similar look, Ending freeze frame on all 10 bins with implied price comparison space, Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, sharp focus on product
-```
-
-**中文提示词参考**：
-```
-高CTR风格，病毒式TikTok美学，干脆利落的运镜，10个同款高品质收纳盒堆叠摆放，画面隐含“工厂直发”大字空间，特写镜头展示厚实耐用塑料质感和光滑边缘，快速切换对比一个外观相似的昂贵品牌收纳盒，结尾定格在10个产品上并留有价格对比文字空间，干净明亮布光，4k超高清，9:16竖屏，15秒无缝循环，产品清晰对焦
-```
-
-#### 示例 3.2：服饰配饰 (Meta Reels 专属变体 - 真实价值感)
+### 示例 2.1：工厂直发收纳盒（价格锚点钩子·4镜头）
 
 **英文 Prompt**：
+
 ```
-Authentic real-life moment, True interest content, A person holding a well-made minimalist watch, macro close-up of the brushed metal texture and precise stitching on the leather strap, comparing it side-by-side with a similar looking designer watch, no exaggerated claims just visual quality comparison, Natural window light, Handheld organic feel, Brand trust moment with subtle logo placement, Freeze frame on both watches with "Same factory. Different price." implied text space, 9:16 vertical, 15 seconds
+[Shot 1: 0-4s]
+4K UHD, 48fps, 50mm lens. A luxury branded storage bin on a marble kitchen counter, elegant setting. Text space for "$199 ???" subtly implied. Slow orbit around the single bin. Softbox lighting, crisp highlights on marble.
+
+[Shot 2: 4-8s]
+4K UHD, 48fps, 35mm lens. Match cut on hand movement reaching for the bin. Same hand picks up one of our bamboo organizers from a stack of 10 identical bins. Handheld POV, organic unscripted feel. Natural window light.
+
+[Shot 3: 8-12s]
+4K UHD, 48fps, 100mm macro lens. Slow dolly-in to macro close-up of premium wood grain, smooth edges, and precise joinery. Crisp highlights on the bamboo surface. Static shot.
+
+[Shot 4: 12-15s]
+4K UHD, 50mm lens. Split screen price comparison: luxury bin "$199" crossed out, our bin "$19.9 Factory Direct" pulsing. Stack of 10 bins visible. Freeze frame with text space: "Save before price goes up 📌". Clean bright lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready. Value-first visual, Shareable deal.
 ```
 
 ---
 
-### 4. 情感绑架型 (Emotional Bonding)
+## 三、情感共鸣型模板（礼品、护理、宠物用品）
 
-**适用产品**：节日礼品、女性护理、宠物用品
-**核心特征**：触发愧疚、爱意、关怀等情感，驱动分享和送礼行为
+**叙事逻辑**：建立预期 → 意外/翻车 → 救赎反转（3-4 镜头）
 
-#### 示例 4.1：女性护理礼品 (全平台通投版)
-
-**英文 Prompt**：
-```
-High CTR style, Warm cozy tones, Cinematic soft focus, A tired woman in her 30s rubbing her neck after a long day at work, cluttered home office background, hand of a loved one enters frame holding a beautifully wrapped self-care gift box, she opens it to reveal luxurious bath products, genuine soft smile of relief and appreciation, Freeze frame on her relaxed happy face with product visible, space for "You deserve this" text overlay, Softbox lighting, Organic unscripted feel, 9:16 vertical, 15 seconds loop-ready
-```
-
-**中文提示词参考**：
-```
-高CTR风格，暖色调温馨感，电影级柔焦，一位30多岁疲惫的女性在工作一天后揉着脖子，背景是杂乱的居家办公桌，一只爱人的手进入画面递上包装精美的自我护理礼盒，她打开露出奢华沐浴产品，流露出如释重负和感激的真诚微笑，定格在她放松幸福的面容且产品可见，留有“你值得拥有”文字叠加空间，柔光箱布光，生活化真实感，9:16竖屏，15秒无缝循环
-```
-
-#### 示例 4.2：宠物用品 (TikTok 专属变体 - 激发分享)
+### 示例 3.1：美甲灯（情感共鸣·翻车救赎版·4镜头）
 
 **英文 Prompt**：
+
 ```
-High CTR style, Viral TikTok pet aesthetic, Cinematic POV shot from dog's eye level, A scruffy shelter-rescue dog looking slightly anxious, owner's hands enter frame with a premium calming dog bed, the dog hesitantly steps in and immediately curls up with a content sigh, tail wagging, Freeze frame on the peaceful sleeping dog with bed brand visible, Shareable heartwarming moment, Comment-worthy "Tag a dog mom who needs this" implied, Warm natural light, 4k, 9:16 vertical, 15 seconds
+[Shot 1: 0-4s]
+4K UHD, 48fps, 35mm lens. POV shot of freshly painted perfect nails being placed into an old nail lamp. Text overlay space: "Me thinking I ate...". Soft focus, warm cozy tones. Subtle handheld breathing.
+
+[Shot 2: 4-6s]
+4K UHD, 48fps, 100mm macro lens. Lamp turns off, hand pulls out revealing nails covered in wrinkles, fuzz, and smudges. Text overlay: "The reality:". Crash sound implied. Quick whip pan to black.
+
+[Shot 3: 6-10s]
+4K UHD, 48fps, 35mm lens. Hand angrily slaps table, vibration transition. New Rosalind lamp enters frame. Hand repaints one nail, places under lamp. All 15 LED beads light up. Natural window light.
+
+[Shot 4: 10-15s]
+4K UHD, 120fps, 100mm macro lens. Extreme macro slow orbit around nail surface transforming to perfect mirror-like gloss. Pull back to reveal hand flipping confidently, light reflecting beautifully. Freeze frame on satisfied smile with product visible. Text space: "The upgrade I needed. 😩👇". Well-formed hands, Natural facial features. Authentic unscripted reaction. 9:16 vertical, 15 seconds loop-ready. Comment-worthy moment: "Tell me I'm not the only one".
 ```
 
 ---
 
-### 5. 视觉奇观型 (Visual Spectacle)
+## 四、极简结果型模板（收纳、厨房工具、速成美妆）
 
-**适用产品**：食品饮料、文具、切割工具
-**核心特征**：极致解压、强迫症舒适、ASMR 级视觉享受
+**叙事逻辑**：杂乱痛点 → 操作过程 → 整洁结果（3 镜头）
 
-#### 示例 5.1：爆浆芝士汉堡 (全平台通投版)
-
-**英文 Prompt**：
-```
-Oddly satisfying visual, High CTR style, Cinematic macro shot, Snappy motion, A perfectly golden crispy fried chicken sandwich being slowly cut in half with a sharp knife, visible crunchy breading texture, hot steam rising, melted mozzarella cheese stretching into long gooey strands, cross-section reveals juicy chicken and fresh lettuce, Freeze frame on the perfect cross-section with steam still rising, clear space for "Listen to the crunch" text, Warm cozy lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, sharp focus on food
-```
-
-**中文提示词参考**：
-```
-强迫症舒适视觉，高CTR风格，电影级微距镜头，干脆利落的运镜，一把锋利刀缓缓切开金黄酥脆的炸鸡汉堡，可见酥脆面包糠纹理，热气升腾，融化的马苏里拉芝士拉出长长的拉丝，切面展现多汁鸡肉和新鲜生菜，定格在完美切面上热气仍在升腾，留有“听这酥脆声”文字空间，暖色温馨布光，4k超高清，9:16竖屏，15秒无缝循环，食物清晰对焦
-```
-
-#### 示例 5.2：饮品倒入 (Pinterest 专属变体 - 静音自解释)
+### 示例 4.1：竹制厨房收纳盘（极简结果钩子·3镜头）
 
 **英文 Prompt**：
+
 ```
-Self-explanatory visual, Oddly satisfying, Cinematic macro shot, Crystal clear ice cubes clinking into a tall glass, followed by golden amber whiskey being poured slowly over the ice, the liquid cascades beautifully, condensation forming on the glass, Bold text overlay space for recipe or brand name, Clean bright backlighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready, Muted playback friendly, sharp focus on glass
+[Shot 1: 0-5s]
+4K UHD, 48fps, 35mm wide lens. Whip pan across a cluttered kitchen counter: scattered spice jars, messy utensil drawer, chaotic coffee station. Handheld POV shot, organic unscripted feel. Clean bright lighting, slight mess visible.
+
+[Shot 2: 5-9s]
+4K UHD, 48fps, 35mm lens. Hand wipes across lens as natural transition. Bamboo organizer tray enters frame. Timelapse transition: items magically snapping into the tray, perfectly aligned within seconds. Smooth camera movement flowing with upbeat tempo.
+
+[Shot 3: 9-15s]
+4K UHD, 50mm lens. Slow dolly-out to wide shot of immaculately organized counter. Hand gently pushes tray to show product. Freeze frame with text space: "One tray fixes everything." Bottom text: "Save this organization hack 📌". Softbox lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready. Shareable ending: "Tag your messy roommate".
 ```
 
 ---
 
-### 6. 身份认同型 (Identity Recognition)
+## 五、视觉奇观型模板（食品、切割工具）
 
-**适用产品**：垂直品类、兴趣社群产品
-**核心特征**：精准命中特定人群痛点，建立“你懂我”的归属感
+**叙事逻辑**：完整外观 → 切开过程 → 内部奇观（3-4 镜头）
 
-#### 示例 6.1：租房党收纳 (全平台通投版)
-
-**英文 Prompt**：
-```
-High CTR style, Viral TikTok renter aesthetic, Handheld POV shot, Walking into a cramped rental apartment kitchen with ugly outdated cabinets and zero counter space, hand reaches up and peels off a renter-friendly adhesive shelf that instantly creates extra storage without drilling, Quick before-and-after of the organized space, Freeze frame on the transformed functional kitchen with product visible, text space for "Renters, you need this.", Natural realistic lighting, 4k hyper-realistic, 9:16 vertical, 15 seconds loop-ready
-```
-
-**中文提示词参考**：
-```
-高CTR风格，病毒式TikTok租房党美学，手持第一人称视角，走入狭小出租屋厨房，过时丑陋橱柜且毫无台面空间，一只手伸向上方撕下租房友好型免打孔置物架背胶，瞬间创造额外储物空间，快速前后对比展示有序空间，定格在功能升级后的厨房且产品可见，留有“租房党，你需要这个”文字空间，自然真实布光，4k超高清，9:16竖屏，15秒无缝循环
-```
-
-#### 示例 6.2：健身党产品 (YouTube Shorts 专属变体 - 教程式 SEO)
+### 示例 5.1：爆浆芝士汉堡（视觉奇观钩子·4镜头）
 
 **英文 Prompt**：
+
 ```
-Search-friendly visual, High CTR gym aesthetic, Cinematic macro shot, A gym-goer's hand attaching a portable phone mount to a squat rack in seconds, quick POV of recording form check video hands-free, fast cuts showing perfect angles for different exercises, Freeze frame on the mounted phone with clear product branding, "Form check hack" implied text space, Clean gym lighting, 4k, 9:16 vertical, 15 seconds loop-ready
+[Shot 1: 0-6s]
+4K UHD, 48fps, 50mm lens. Slow orbit around a perfectly golden crispy fried chicken sandwich. Steam rising gently. Text space: "Wait for it...". Warm cozy lighting, crisp highlights on the breading.
+
+[Shot 2: 6-7s]
+4K UHD, 48fps, 50mm lens. Sharp knife enters frame from right. Match cut on knife movement.
+
+[Shot 3: 7-12s]
+4K UHD, 120fps, 100mm macro lens. Cinematic macro shot of sandwich being slowly cut in half. Crunchy breading texture visible cracking. Slow motion cheese pull stretching into long gooey strands. Steam billowing from the cross-section. Macro close-up emphasizing the crisp sound of the crunch. Visual beats sync with ASMR crunch sound.
+
+[Shot 4: 12-15s]
+4K UHD, 50mm lens. Freeze frame on perfect cross-section with steam still rising. Clear space for "Listen to the crunch 🔊" text. Pull back to wide shot of the whole sandwich. Oddly satisfying visual. 9:16 vertical, 15 seconds loop-ready. Shareable ending: "Tag your foodie bestie".
 ```
 
 ---
 
-## 二、按平台分类的快速索引
+## 六、身份认同型模板（垂直品类、租房党、健身党）
 
-| 平台 | 推荐示例编号 | 关键适配点 |
-| :--- | :--- | :--- |
-| **TikTok** | 1.2, 4.2 | 追加 Comment-worthy、Shareable 尾缀；结尾设问 |
-| **YouTube Shorts** | 2.2, 6.2 | 使用 Search-friendly visual；画面含关键词元素 |
-| **Meta Reels (IG/FB)** | 1.3, 3.2 | 使用 Authentic、True interest；前 5 秒亮品牌 |
-| **Pinterest** | 5.2 | 使用 Self-explanatory visual；加大号文字空间；静音友好 |
-| **全平台通投** | 1.1, 2.1, 3.1, 4.1, 5.1, 6.1 | 使用通用爆款前缀，发布时再按平台微调文案 |
+**叙事逻辑**：痛点共情 → 产品介入 → 身份解决方案（3 镜头）
+
+### 示例 6.1：租房党免打孔置物架（身份认同钩子·3镜头）
+
+**英文 Prompt**：
+
+```
+[Shot 1: 0-7s]
+4K UHD, 48fps, 35mm lens. POV walking through a cramped rental apartment kitchen. Whip pan across ugly outdated cabinets, zero counter space, cluttered corners. Text overlay space: "Renter's biggest struggle". Handheld POV, subtle breathing motion. Natural window light, lived-in messy background.
+
+[Shot 2: 7-11s]
+4K UHD, 48fps, 35mm lens. Quick whip pan to product in hand. Hand reaches up and effortlessly peels off the backing of a renter-friendly adhesive shelf. Timelapse of shelf being installed without drilling, items instantly organized on the new shelf. Smooth camera movement.
+
+[Shot 3: 11-15s]
+4K UHD, 50mm lens. Slow dolly-out to reveal transformed functional kitchen space. Freeze frame on organized shelf with product visible. Text space: "Landlord begged me to leave it". Bottom text: "Save this renter hack 📌". Authentic unscripted feel. 9:16 vertical, 15 seconds loop-ready. Comment-worthy: "Renters, sound off in the comments! 👇".
+```
 
 ---
 
-## 三、快速替换变量清单
+## 七、按平台分类的快速索引
 
-> 使用示例时，将以下 `[变量]` 替换为实际内容。
+| 平台 | 推荐示例 | 专属尾缀 | 特别说明 |
+| :--- | :--- | :--- | :--- |
+| **TikTok** | 所有示例 | `Comment-worthy moment, Shareable ending` | 收藏/分享引导必加，音频同步务必添加 |
+| **YouTube Shorts** | 1.1, 4.1, 5.1 | `Search-friendly visual` | 首镜头含关键词视觉元素 |
+| **Instagram Reels** | 2.1, 3.1 | `Authentic real-life moment, True interest content` | 前5秒亮品牌 |
+| **Facebook Reels** | 2.1, 3.1 | `Value-first visual, Brand trust moment` | 突出价值输出 |
+| **Pinterest** | 4.1, 5.1 | `Self-explanatory visual, Bold text overlay space, Muted playback friendly` | 每镜头大字幕 |
+| **Snapchat Spotlight** | 1.1, 5.1 | `Fast-paced no-filler, Pure satisfaction loop` | 第一帧即核心动作 |
+
+---
+
+## 八、快速替换变量清单
 
 | 变量名 | 说明 | 替换示例 |
 | :--- | :--- | :--- |
-| `[产品名称]` | 具体产品名 | "Nanosponge" / "Bamboo Organizer" |
-| `[具体动作]` | 产品使用动作 | "wiping a greasy stove" / "peeling and sticking" |
-| `[环境描述]` | 使用场景 | "in a cluttered rental kitchen" / "on a messy office desk" |
-| `[核心效果]` | 产品产生的视觉变化 | "grease instantly dissolves" / "clutter snaps into order" |
-| `[定格画面]` | 结尾停留的具体画面 | "perfectly clean counter" / "organized shelf" |
-| `[CTA 暗示]` | 行动呼吁的文字空间 | "Get 50% Off" / "Link in Bio" / "Tag a friend" |
+| `[产品名称]` | 具体产品名 | "Nanosponge" / "Bamboo Organizer" / "Rosalind Lamp" |
+| `[核心效果]` | 产品产生的视觉变化 | "grease instantly dissolves" / "nails turn mirror-glossy" |
+| `[价格]` | 产品价格 | "$8.85" / "$19.9" |
+| `[CTA 文字]` | 行动呼吁文案 | "Save for your next clean" / "Tag a friend" |
+| `[收藏引导]` | 收藏引导语 | "Save this hack 📌" / "Save before it's gone" |
+| `[分享引导]` | 分享引导语 | "Tag your messy roommate" / "Share with someone who needs this" |
 
 ---
 
-## 四、提示词质量自检清单
+## 九、提示词质量自检清单（五维架构版）
 
 在将提示词提交给 Seedance 2.0 前，请逐项核对：
 
-- [ ] 是否包含爆款前缀（High CTR style / Oddly satisfying 等）？
-- [ ] 是否明确指定 9:16 vertical 和 15 seconds？
-- [ ] 是否包含去 AI 味指令（Handheld POV / Snappy motion / Avoid slow pans）？
-- [ ] 是否在结尾指定 Freeze frame 并留出文字空间？
-- [ ] 针对目标平台，是否添加了专属尾缀？
-- [ ] 是否避免了负面词表中出现的概念（如 Slow motion、Text overlays）？
-- [ ] 产品主体是否始终是画面的清晰焦点？
+**五维架构检查**
+- [ ] 是否明确标注了每个镜头的 `技术基底`（4K UHD, 48fps, 镜头焦段）？
+- [ ] 是否明确标注了每个镜头的 `镜头运动`（推/拉/摇/移/跟/环绕）？
+- [ ] 是否精确描述了 `视觉元素`（产品、动作、文字空间）？
+- [ ] 是否独立指定了 `光影系统`（柔光箱/自然光/侧逆光）？
+- [ ] 是否加入了 `动态设计`（转场方式、音频同步、定格）？
 
----
+**多镜头结构检查**
+- [ ] 是否明确标注了每个镜头的时长（如 [0-4s]）？
+- [ ] 镜头数量是否与品类模板匹配（3-4 个）？
+- [ ] 转场方式是否明确且适合内容？
 
-## 五、失败案例与修正对照
+**互动策略检查**
+- [ ] 是否包含了 `收藏引导` 的文字空间或话术？
+- [ ] 是否包含了 `分享引导` 的文字空间或话术？
+- [ ] TikTok 目标是否添加了音频同步指令？
 
-| 失败表现 | 原提示词问题 | 修正后提示词改进 |
-| :--- | :--- | :--- |
-| 画面全是慢动作，15 秒只展示了一个动作 | 未指定 Snappy motion；含 Slow motion 词 | 改为 Snappy motion + Quick cuts；明确 Avoid slow cinematic pans |
-| 人物手指数异常，观众出戏 | 未添加手脚防畸变指令 | 添加 Well-formed hands, No extra fingers |
-| 画面不停移动，主体模糊 | 未限制运动幅度 | 添加 Stable focus on product, Minimal camera shake |
-| 生成视频自带混乱文字 | 未禁止文字生成 | 添加 No text overlays, Clear space for text overlay |
-| 视频结束突然，无停留 | 未指定定格指令 | 添加 Freeze frame on [结果画面] for 2 seconds |
-
----
-
-## 六、新增示例提交记录
-
-> 当发现新的高效提示词组时，记录在此，供后续版本合并。
-
-| 日期 | 产品品类 | 新增提示词关键片段 | 验证效果 |
-| :--- | :--- | :--- | :--- |
-| 2026.04.15 | 清洁用品 | "grease instantly dissolves on contact" | 对比度极强，前 3 秒留存高 |
-| | | | |
-
----
-
-这是 **`prompt-examples.md`** 的完整优化内容。主要变化：
-
-1. **按六大钩子类型重构示例**，每个类型提供至少一个全平台通投版和一个平台专属变体。
-2. **全部示例更新为 Seedance 2.0 完整英文 Prompt + 中文参考**，确保即拿即用。
-3. **新增平台快速索引表**，方便按发布目标快速定位示例。
-4. **新增变量替换清单**，降低修改门槛。
-5. **新增提示词质量自检清单**，防止提交低质量 Prompt 浪费积分。
-6. **新增失败案例与修正对照表**，提供排错指南。
-7. **每个示例均嵌入 2026 平台算法要求**（评论引导、SEO 元素、真实价值感等）。
-
-
-是否需要我生成 `CHANGELOG.md` 来记录本次全面升级？
+**去AI味检查**
+- [ ] 是否包含 `Well-formed hands, No extra fingers`（如有人物手部）？
+- [ ] 是否包含 `No face distortion, Natural facial features`（如有人物面部）？
+- [ ] 是否避免使用负面词表中的词汇（Slow motion, Text overlays 等）？
