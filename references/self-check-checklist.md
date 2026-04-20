@@ -84,9 +84,3 @@
 ---
 
 **记住**：前 3 秒声音钩子比画面更重要；用户平均 2.8 秒就划走；数据是最好的导演。
-
----
-
-`references/self-check-checklist.md` v1.0 已输出完毕。
-
-**是否继续输出下一个文档（`references/data-driven-iteration.md` v1.0）？**
