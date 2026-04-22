@@ -1,7 +1,7 @@
-# 电影级提示词词汇表 (Cinematic Vocabulary for Seedance 2.0) v2.7
+# 电影级提示词词汇表 (Cinematic Vocabulary for Seedance 2.0) v2.9
 
 > **用途**：构建 Seedance 2.0 的高质量 Prompt。本词汇表采用 **“五维提示词架构”**，将提示词升级为结构化的导演指令，确保画面质感、运动自然、控制精准。
-> **更新版本**：v2.7 (2026.05) —— 完善多模态参考素材输入规范（格式、分辨率、最佳组合），增加 SEO 关键词联想提示，原生感为核心创作原则。
+> **更新版本**：v2.9 (2026.05) —— 统一版本号至 v2.9，新增声音提示词与后期音频的明确分离说明，完善多模态参考素材输入规范。
 
 
 ## 第一部分：五维提示词架构
@@ -19,7 +19,7 @@
 > **混写优势**：Seedance 2.0 对中英文混写提示词理解效果最佳——既能捕捉中文意境，又能精准执行英文专业术语。**推荐日常使用混写格式**。
 
 
-## 第二部分：多模态参考素材准备指南（v2.7 完善）
+## 第二部分：多模态参考素材准备指南
 
 > Seedance 2.0 支持上传多模态参考文件，可大幅提升生成画面的风格一致性和动作精准度。
 
@@ -31,7 +31,7 @@
 | **视频** | **3 个** | 1-2 个 | 控制运镜轨迹、动作方式 |
 | **音频** | **3 个** | 1 个 | 设定节奏风格、环境氛围 |
 
-### 2.2 参考素材格式与分辨率要求（新增）
+### 2.2 参考素材格式与分辨率要求
 
 | 素材类型 | 支持格式 | 推荐分辨率 | 时长/大小限制 | 注意事项 |
 | :--- | :--- | :--- | :--- | :--- |
@@ -39,7 +39,7 @@
 | **视频** | MP4, MOV | ≥720p (推荐1080p) | 5-10秒, ≤100MB/个 | 动作清晰，避免快速跳帧 |
 | **音频** | MP3, WAV | — | ≤30秒, ≤10MB/个 | 纯节奏或氛围音，避免人声干扰 |
 
-### 2.3 最佳组合建议（新增）
+### 2.3 最佳组合建议
 
 | 组合类型 | 参考素材配置 | 适用场景 |
 | :--- | :--- | :--- |
@@ -55,18 +55,6 @@
 [参考图1: 风格参考] + [参考图2: 产品特写] + [五维架构文本指令]
 ```
 
-**示例（美甲灯）**：
-```
-[Reference image 1: Clean bright product photography style, softbox lighting, minimalist aesthetic]
-[Reference image 2: Rosalind nail lamp product shot, white casing, 15 LED beads visible]
-
-4K UHD, 48fps, 100mm macro lens.
-缓慢推近 (Slow dolly-in) 至甲面特写.
-Nail surface transforming from matte to mirror-like gloss under the lamp.
-冷青色主光 (Cool cyan key light), 高对比度 (High contrast).
-Visual beats sync with crisp "ding" sound.
-```
-
 ### 2.5 参考素材最佳实践
 
 | 建议 | 说明 |
@@ -76,7 +64,7 @@ Visual beats sync with crisp "ding" sound.
 | **动作视频时长** | 5-10 秒为宜，过长可能稀释关键动作 |
 | **文件格式** | 图片：JPG/PNG；视频：MP4/MOV；音频：MP3/WAV |
 | **数量控制** | 不超过限制（9图/3视频/3音频），超出可能被截断或报错 |
-| **SEO关键词联想（新增）** | 参考图文件名建议包含核心关键词（如 `nail-lamp-product.jpg`），便于后期素材管理 |
+| **SEO关键词联想** | 参考图文件名建议包含核心关键词（如 `nail-lamp-product.jpg`），便于后期素材管理 |
 
 
 ## 第三部分：Fast 模式提示词技巧
@@ -196,12 +184,14 @@ Visual beats sync with crisp "ding" sound.
 
 ### 6.3 音频同步
 
-| 音频类型 | 混写推荐格式 |
-| :--- | :--- |
-| **重低音** | `画面随重低音节奏轻微震动 (Visual beats sync with heavy bass drops)` |
-| **轻快旋律** | `运镜与轻快节奏同步 (Smooth camera movement flowing with upbeat tempo)` |
-| **ASMR触发** | `微距特写强调清脆音效 (Macro close-up emphasizing crisp sound)` |
-| **提示音** | `画面与清脆提示音同步 (Visual sync with crisp "ding" sound)` |
+> **⚠️ 重要区分（v2.9 新增）**：以下音频同步指令用于控制 **Seedance 2.0 生成的画面节奏**（如画面震动、运镜与节拍同步），**模型本身不生成实际音频**。视频的实际音效（ASMR、BGM、口播）需在后期剪辑中添加。提示词中的声音描述可帮助画面与后期音频更精准地对齐。
+
+| 音频类型 | 画面节奏提示词（混写） | 后期音频建议 |
+| :--- | :--- | :--- |
+| **重低音** | `画面随重低音节奏轻微震动 (Visual beats sync with heavy bass drops)` | 后期添加重低音 BGM，配合画面震动节奏 |
+| **轻快旋律** | `运镜与轻快节奏同步 (Smooth camera movement flowing with upbeat tempo)` | 后期添加轻快音乐，运镜速度与 BPM 对齐 |
+| **ASMR触发** | `微距特写强调清脆音效 (Macro close-up emphasizing crisp sound)` | 后期添加 ASMR 音效（如煎炸声、擦拭声），与画面动作精准对齐 |
+| **提示音** | `画面与清脆提示音同步 (Visual sync with crisp "ding" sound)` | 后期在关键动作处添加“叮”声提示音 |
 
 
 ## 第七部分：原生感（UGC风格）词汇包——核心创作原则
@@ -298,3 +288,8 @@ Visual beats sync with crisp "ding" sound.
 | **视觉元素** | `物品自动归位至收纳产品中` | 同上 |
 | **光影系统** | `干净明亮极简布光 (Clean bright minimal lighting)` | `Clean bright light` |
 | **动态设计** | `运镜与轻快节奏同步 (Smooth camera movement flowing with upbeat tempo)` | `Upbeat sync` |
+
+---
+
+**版本更新记录**：
+- v2.9 (2026.05)：统一版本号，新增音频同步指令与后期音频的明确分离说明（§6.3），完善多模态参考素材格式与分辨率要求。
