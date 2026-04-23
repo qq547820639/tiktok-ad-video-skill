@@ -4,47 +4,70 @@
 > 版本号遵循 [语义化版本](https://semver.org/lang/zh-CN/) 规范：主版本号.次版本号.修订号。
 
 
+## [v2.10] - 2026-05-23
+
+### 🚀 新增
+- **内容形态决策节点（阶段 0.5）**：在 `SKILL.md` 工作流中新增内容形态分流逻辑，根据产品特性、目标市场、历史数据智能切换**直给型（15秒）**与**叙事型（45-60秒）**工作流。
+- **叙事型软广剧本指南**：新建 `references/narrative-ad-playbook.md`，包含 5 种叙事模板（Mystery Object 悬念驱动型、Before You Judge 反转型、Adulting Win 成长叙事型、Secret Ingredient 秘密武器型、Routine Reveal 日常揭秘型）、美国市场“零提及”植入原则、评论区运营 Playbook、分段生成策略、叙事型专用数据迭代决策树。
+- **故事型钩子（第 7 类钩子）**：在 `references/viral-hook-patterns.md` 中新增 5 种故事型钩子（Relatable Struggle、Mystery Object、Plot Twist、Unsolicited Win、Social Proof），覆盖叙事型软广的心理触发点与适用场景。
+- **叙事型内容专项评估**：在 `references/evaluation-rubric.md` 中新增叙事型专项评分（悬念维持度 10 分、情绪弧线完整度 10 分、产品植入自然度 10 分、评论区引导力 10 分、零提及纪律 5 分，共 45 分），叙事型最终得分 = 五维分 + 专项分，满分 145 分。
+- **美国 TikTok 评论区运营规则**：在 `references/platform-specs.md` 中新增 §四，包含评论区运营时间线、小号评论模板库（好奇心型/效果惊叹型/社交分享型/购买意向型）、主号回复话术库、铁律。
+- **叙事型视频自查清单**：在 `references/self-check-checklist.md` 中新增 §三，覆盖钩子与悬念检查、产品植入检查（零提及纪律）、评论区准备、分段生成检查、叙事型专用数据反馈迭代动作。
+- **叙事型案例**：在 `references/case-studies.md` 中新增铸铁元宝锅（美国市场）叙事型软广实战案例，含背景、策略、执行细节、提示词设计、评论区运营、预期数据。
+
+### 🔄 变更
+- **SKILL.md 工作流升级**：阶段 0.5 新增内容形态决策矩阵（账号粉丝量、产品使用效果、目标市场、历史数据、产品外观）；阶段 1-4 增加叙事型分支处理逻辑；阶段 6 增加叙事型专用决策树。
+- **评分体系扩展**：`evaluation-rubric.md` 从单一 100 分制扩展为直给型 100 分制 + 叙事型 145 分制。
+- **平台规格补充**：`platform-specs.md` 时长限制更新为“推荐 9-15s，叙事型 45-60s”；跨平台通投策略增加叙事型分段拼接说明。
+- **自查清单重构**：`self-check-checklist.md` 拆分为通用检查项、直给型自查、叙事型自查三部分，叙事型增加零提及纪律、分段生成、评论区运营等专属检查项。
+- **版本号统一**：`README.md`、`SKILL.md`、`viral-hook-patterns.md`、`evaluation-rubric.md`、`platform-specs.md`、`self-check-checklist.md` 统一至 v2.10。
+
+### 📚 文档更新
+- `SKILL.md` → v2.10
+- `README.md` → v2.10
+- `references/narrative-ad-playbook.md` → v1.0 (新增)
+- `references/viral-hook-patterns.md` → v2.10
+- `references/evaluation-rubric.md` → v2.10
+- `references/platform-specs.md` → v2.10
+- `references/self-check-checklist.md` → v2.10
+- `references/case-studies.md` → v1.2 (新增叙事型案例)
+- `CHANGELOG.md` → v2.10
+
+
 ## [v2.9] - 2026-05-22
 
 ### 🚀 新增
-- **30秒极简加载指南**：在 `README.md` 开头新增极简版加载步骤，降低新手入门门槛，解决用户多次询问“如何加载”的问题。
-- **引流强度选择模式**：在 `SKILL.md` 阶段4新增「软植入型」与「强引流型」两种引流策略，用户可根据投放场景（品牌认知 vs 转化冲刺）自主选择。
-- **实战案例集**：新增独立文档 `references/case-studies.md` (v1.1)，收录铸铁锅、鞋架、不锈钢盆、香水、小白鞋等7个品类的完整实战案例，包含钩子选择、用户反馈迭代过程、最终脚本与提示词、品类经验沉淀。
-- **出海场景前置**：在 `README.md` 常见问题中新增“想生成英文/其他语言视频”入口，高频需求更易触达。
-- **批量生成模式说明**：在 `SKILL.md` 阶段0后增加批量生成提示，用户可一次性提供多个产品，AI 依次输出完整资源包。
-- **提示词字数自检**：在 `SKILL.md` 阶段3增加即梦 AI 2000字符限制自动检查与精简原则，避免用户因超长生成失败。
-- **阶段 -1：竞品爆款拆解**：在 `SKILL.md` 阶段0之前新增可选阶段，引导用户分析同类目 Top 爆款视频的钩子类型、声音策略、字幕节奏、镜头结构，输出共性报告，提升钩子命中率。
-- **数据回传对话模板**：在 `references/data-driven-iteration.md` 中新增 §八，提供标准化数据输入格式和 AI 自动解析逻辑，用户粘贴数据后自动输出诊断与迭代指令。
-- **产品图上传建议**：在 `SKILL.md` 阶段0增加引导用户上传产品实拍图的建议，提升多模态参考利用率。
+- **30秒极简加载指南**：在 `README.md` 开头新增极简版加载步骤。
+- **引流强度选择模式**：在 `SKILL.md` 阶段4新增「软植入型」与「强引流型」两种引流策略。
+- **实战案例集**：新增独立文档 `references/case-studies.md` (v1.1)，收录铸铁锅、鞋架、不锈钢盆、香水、小白鞋等 7 个品类的完整实战案例。
+- **出海场景前置**：在 `README.md` 常见问题中新增“想生成英文/其他语言视频”入口。
+- **批量生成模式说明**：在 `SKILL.md` 阶段0后增加批量生成提示。
+- **提示词字数自检**：在 `SKILL.md` 阶段3增加即梦 AI 2000字符限制自动检查。
+- **阶段 -1：竞品爆款拆解**：在 `SKILL.md` 阶段0之前新增可选阶段。
+- **数据回传对话模板**：在 `references/data-driven-iteration.md` 中新增 §八。
+- **产品图上传建议**：在 `SKILL.md` 阶段0增加引导用户上传产品实拍图的建议。
 
 ### 🔄 变更
-- **SKILL.md 工作流增强**：阶段4增加引流强度选择逻辑；阶段3增加提示词字数自检；阶段0增加产品图上传建议；新增阶段-1竞品拆解。
-- **README.md 结构优化**：30秒极简指南前置；常见问题增加出海场景入口；新增 `case-studies.md` 到仓库结构与文件功能说明。
-- **案例集版本迭代**：`case-studies.md` 从 v1.0 迭代至 v1.1，CS-004 补充完整第二轮优化细节与合规检查，CS-005 补充英文版完整方案，新增 CS-006（香水）、CS-007（小白鞋）。
-- **版本号统一**：`README.md`、`SKILL.md` 徽章与文档头部版本号统一为 v2.9。
+- `SKILL.md` 工作流增强，`README.md` 结构优化，案例集版本迭代至 v1.1。
 
 ### 📚 文档更新
 - `README.md` → v2.9
 - `SKILL.md` → v2.9
-- `references/case-studies.md` → v1.1 (新增，后迭代)
+- `references/case-studies.md` → v1.1
 - `CHANGELOG.md` → v2.9
-- 其他文档保持 v2.8 不变（`evaluation-rubric.md`、`viral-hook-patterns.md`、`cinematic-vocabulary.md`、`platform-specs.md`、`data-driven-iteration.md`、`self-check-checklist.md`、`failure-case-library.md` 等）
 
 
 ## [v2.8] - 2026-05-20
 
 ### 🚀 新增
 - **声音钩子优先原则**：在 `SKILL.md` 核心铁律中新增“前 3 秒优先使用声音钩子（ASMR/音效/环境音），口播第 3 秒后才进入”。
-- **品类钩子选型对照表（实战版）**：在 `viral-hook-patterns.md` 中新增 §二，基于 80+ 条视频实战数据，明确香水/美妆、锅具/厨房、3C/家电、鞋服/百货、清洁用品等品类的推荐钩子、避免钩子、前 3 秒核心动作及声音策略。
-- **数据驱动迭代指南**：新增独立文档 `references/data-driven-iteration.md`，含核心指标健康基准、诊断决策树、分数据表现迭代动作表、品类专属迭代建议。
-- **发布前自查清单**：新增独立文档 `references/self-check-checklist.md`，可打印逐项核对。
+- **品类钩子选型对照表（实战版）**：在 `viral-hook-patterns.md` 中新增 §二。
+- **数据驱动迭代指南**：新增独立文档 `references/data-driven-iteration.md`。
+- **发布前自查清单**：新增独立文档 `references/self-check-checklist.md`。
 - **声音钩子执行度评分项**：在 `evaluation-rubric.md` 导演执行维度中新增“声音钩子执行度”子项（3 分）。
-- **长期内容矩阵建议**：在 `SKILL.md` 和 `self-check-checklist.md` 中强调每个产品至少准备 3 条不同钩子方向视频同时跑。
 
 ### 🔄 变更
-- 多镜头模板融入声音策略，各钩子完整脚本融入声音钩子。
-- SKILL.md 工作流升级，评分表权重微调，前 3 秒留存评分标准更新。
-- 失败模式扩充，新增“钩子类型选错”“声音钩子缺失”。
+- 多镜头模板融入声音策略，SKILL.md 工作流升级，评分表权重微调。
 
 ### 📚 文档更新
 - `SKILL.md` → v2.8
@@ -169,20 +192,10 @@
 | 版本类型 | 说明 | 示例 |
 | :--- | :--- | :--- |
 | **主版本号** | 重大架构变更，不兼容旧版 | v1.0 → v2.0（评分体系重构、新增钩子库） |
-| **次版本号** | 功能新增，向下兼容 | v2.8 → v2.9（引流强度选择、竞品拆解、数据回传模板、实战案例集） |
+| **次版本号** | 功能新增，向下兼容 | v2.9 → v2.10（内容形态分流、叙事型软广、故事型钩子） |
 | **修订号** | 问题修复、文档优化 | — |
 
 ---
 
-**当前版本：v2.9**  
-**最后更新：2026-05-22**
-
----
-
-至此，v2.9 版本的全部核心文档已输出完毕：
-- ✅ `README.md` (v2.9)
-- ✅ `SKILL.md` (v2.9)
-- ✅ `references/case-studies.md` (v1.1)
-- ✅ `CHANGELOG.md` (v2.9)
-
-**v2.9 迭代完成。** 🎉
+**当前版本：v2.10**  
+**最后更新：2026-05-23**
