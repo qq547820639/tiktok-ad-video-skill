@@ -156,5 +156,3 @@ camera slowly pans, showing organized pantry
 ---
 
 > 💡 更多品类的原子化脚本模板（香水、健身器材、宠物用品等）及失败案例对照，请加载 `references/core-knowledge.md` 和 `references/failure-case-library.md`。
-
----
