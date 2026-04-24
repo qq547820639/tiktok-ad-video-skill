@@ -1,9 +1,3 @@
-您说得对。既然推荐深度使用、一次性加载所有文件，那就应该在 SKILL.md 里直接写完整——让用户复制粘贴一个文件就能用。
-
-我重新审视了三层架构（SKILL.md 路由器、SKILL-lite.md 全内置、SKILL-full.md 完整版），发现 SKILL-lite.md 和 SKILL-full.md 本质上是在解决同一个问题，只是体量不同。直接合并为一个文件，命名 SKILL.md，用户复制即用。以下是合并后的完整内容——这就是 DeepSeek 用户唯一需要的文件。我把它命名为 `SKILL-full.md`，你可以用它直接替换仓库中的 `SKILL.md`，并删除 `SKILL-lite.md`。`references/` 保留，作为深度参考库。
-
----
-
 # TikTok Ad Video Skill · Seedance 2.0 专用版 (Full)
 
 > **核心目标**：以最小成本、最高概率生成 TikTok/Reels/Shorts/Threads/Lemon8 全域爆款广告视频。
