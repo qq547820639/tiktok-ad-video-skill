@@ -1,5 +1,3 @@
-# Changelog
-
 ## v4.1-Adaptive (2026-04-24)
 
 ### 新增
