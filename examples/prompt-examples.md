@@ -210,3 +210,4 @@
 
 ---
 *examples/prompt-examples.md v4.0-Adaptive · 每个示例都是一次贝叶斯试验*
+---
