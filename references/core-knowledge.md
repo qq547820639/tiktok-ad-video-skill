@@ -1,4 +1,4 @@
-# 核心知识库 · 深度扩展 (v4.0-Adaptive)
+# 核心知识库 · 深度扩展 (v4.0.1-Adaptive)
 
 > **加载条件**：当用户需要完整 40+ Hook 变体、动态权重校准规则、平台算法细节或多语言策略时加载。
 > **依赖关系**：本文件依赖 `failure-case-library.md` 提供先验参数，依赖 `cultural-tensor.md` 提供跨文化维度。
@@ -88,7 +88,7 @@
 
 ---
 
-## 四、动态权重引擎（🆕 v4.0 完整实现）
+## 四、动态权重引擎（🆕 v4.0.1 完整实现）
 
 > 本模块实现《数学决策纲要》锁定的自适应数学骨架。所有公式为工程硬约束，不可随意修改。
 
@@ -99,9 +99,10 @@
 - `w_narrative_rate`：叙事节奏权重
 - `w_platform`：平台适配权重
 
-### 4.2 更新规则（核心方程）
+### 4.2 更新规则（核心方程 · v4.0.1 步长裁剪）
 ```
-w_i(t+1) = w_i(t) · (CTR_actual / CTR_predicted) · exp(-λ · Δt)
+ctr_ratio = min(2.0, CTR_actual / CTR_predicted)
+w_i(t+1) = w_i(t) × ctr_ratio × exp(-λ · Δt)
 ```
 其中：
 - `w_i(t)`：第 i 个权重在 t 时刻的值
@@ -109,6 +110,7 @@ w_i(t+1) = w_i(t) · (CTR_actual / CTR_predicted) · exp(-λ · Δt)
 - `CTR_predicted`：系统预测的留存率
 - `λ = 0.0462`：遗忘因子（半衰期 15 天）
 - `Δt`：距离上次更新的天数
+- **步长裁剪**：`min(2.0, ratio)` 防止单次异常反馈（如突发流量倾斜）造成权重过冲。上限 2.0 允许一次正向反馈最多将权重翻倍，已足够捕捉真实趋势变化。裁剪仅影响步长，不改变更新方向。
 
 ### 4.3 衰减曲线
 | 天数 | 衰减因子 | 含义 |
@@ -170,8 +172,7 @@ w_i(t+1) = w_i(t) · (CTR_actual / CTR_predicted) · exp(-λ · Δt)
 - ANT-01 至 ANT-05：反脆弱型
 - URG-01 至 URG-05：紧急/稀缺型
 
-> 完整内容请参见原始 `core-knowledge.md` v3.0 附录部分，在 v4.0 中不做删改，仅添加动态权重引擎模块。
+> 完整内容请参见原始 `core-knowledge.md` v3.0 附录部分，在 v4.0.1 中不做删改，仅添加动态权重引擎模块。
 
 ---
-*references/core-knowledge.md v4.0-Adaptive · Dynamic Weight Engine v1.0 Active*
-```
+*references/core-knowledge.md v4.0.1-Adaptive · Dynamic Weight Engine v1.1 Active (步长裁剪已启用)*
