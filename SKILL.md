@@ -1,9 +1,3 @@
-好的，我将按照精简方案，从最核心的文件开始，逐步输出 v3.0 精简版的完整内容。
-
----
-
-## 文档 1/5：`SKILL.md` v3.0（核心入口 · 全内置版）
-
 # TikTok Ad Video Skill · Seedance 2.0 专用版 (v3.0)
 
 > **核心目标**：以最小成本、最高概率生成 TikTok/Reels/Shorts/Threads/Lemon8 全域爆款广告视频。
