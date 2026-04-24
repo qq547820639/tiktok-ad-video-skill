@@ -1,5 +1,3 @@
-## 文档 1/6：`README.md` v2.15
-
 # TikTok 广告视频生成 Skill · Seedance 2.0 专用版
 
 > **核心目标**：以最小成本、最高概率生成 TikTok/Reels/Shorts/Threads/Lemon8 全域爆款广告视频。
