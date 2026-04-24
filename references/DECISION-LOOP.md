@@ -1,6 +1,6 @@
-# 核心决策循环 · Bayesian Decision Loop (v4.0-Adaptive)
+# 核心决策循环 · Bayesian Decision Loop (v4.0.1-Adaptive)
 
-> **文件定位**: v4.0 系统的“心脏”。本文档不是知识库，而是**可执行的算法流程图**。
+> **文件定位**: v4.0.1 系统的"心脏"。本文档不是知识库，而是**可执行的算法流程图**。
 >   - 当系统需要在 16 个失败案例、8 类 Hook、动态权重之间做决策时，本文档是唯一的导航图。
 >   - 阅读顺序：Loop 1 (初始化) → Loop 2 (选择) → Loop 3 (更新) → 收敛判定。
 > 
@@ -271,6 +271,7 @@ FEEDBACK = {
 def update_weights(feedback: dict):
     """
     单个视频反馈触发的完整权重更新
+    v4.0.1: 增加步长裁剪 min(2.0, ratio)
     """
     key = f"{feedback.category}_{feedback.market}_{feedback.hook_type}"
     old_weights = STATE.hook_weights.get(key, {"w": 1.0, "α": 1, "β": 1, "last_update": None})
@@ -281,15 +282,16 @@ def update_weights(feedback: dict):
     else:
         old_weights.β += 1
     
-    # ──── 更新 2: 动态权重 (核心方程) ────
-    # w_new = w_old × (CTR_actual / CTR_predicted) × exp(-λ·Δt)
+    # ──── 更新 2: 动态权重 (核心方程 · v4.0.1 步长裁剪) ────
+    # w_new = w_old × min(2.0, CTR_actual / CTR_predicted) × exp(-λ·Δt)
     
     if old_weights.last_update is not None:
         delta_t = (today() - old_weights.last_update).days
     else:
         delta_t = 0
     
-    ctr_ratio = feedback.ctr_actual / max(feedback.ctr_predicted, 0.01)  # 防除零
+    # 步长裁剪：防止单次异常反馈造成权重过冲
+    ctr_ratio = min(2.0, feedback.ctr_actual / max(feedback.ctr_predicted, 0.01))
     decay = exp(-STATE.LAMBDA * delta_t)
     
     old_weights.w = old_weights.w * ctr_ratio * decay
@@ -306,7 +308,7 @@ def update_weights(feedback: dict):
         STATE.prior[failure_type].β += 1
     else:
         # 成功则略微降低失败概率估计
-        STATE.prior["core"].α += 0.5  # 成功 = 核心层缺陷概率的信号
+        STATE.prior["core"].α += 0.5  # 成功 = 核心层缺陷概率降低的信号
     
     return {
         "new_weight": old_weights.w,
@@ -324,7 +326,7 @@ def update_weights(feedback: dict):
     │    ├─ 爆款 → α += 1
     │    └─ 非爆款 → β += 1
     │
-    ├─ 2. 权重方程: w *= (CTR_actual/CTR_predicted) × e^(-λ·Δt)
+    ├─ 2. 权重方程: w *= min(2.0, CTR_actual/CTR_predicted) × e^(-λ·Δt)
     │
     ├─ 3. 更新全局先验 (fatal/core/hygiene/culture)
     │    ├─ 非爆款 → 对应失败层 β += 1
@@ -437,7 +439,7 @@ t=90:   → 移除
 > A: Loop 1 自动退回 Beta(1,1) 无信息先验。Thompson Sampling 此时等价于随机选择，随着用户反馈积累（3-5 次盲测后），优势臂自然浮现。
 
 ### Q: 某个品类在某个市场一直跑不出爆款，如何判断是否该放弃？
-> A: Loop 2 收敛判定中：若所有臂的 P(Viral) 均 < 0.40，触发“放弃本轮 Hook 方向”建议。不自动放弃的原因：可能只是 Hook 文案设计问题，而非品类-市场不匹配。
+> A: Loop 2 收敛判定中：若所有臂的 P(Viral) 均 < 0.40，触发"放弃本轮 Hook 方向"建议。不自动放弃的原因：可能只是 Hook 文案设计问题，而非品类-市场不匹配。
 
 ### Q: 权重更新后，旧的最佳臂反而被降权了，这是 bug 吗？
 > A: 不是。这恰恰是遗忘因子 λ 的工作——说明该臂在过去 15 天内没有产生正向反馈，系统正在自动淡出过时策略。
@@ -446,4 +448,4 @@ t=90:   → 移除
 > A: 基于 Hofstede 六维向量的欧氏距离。经过标准化后，全距约 0-1.5，< 0.3 意味着两个市场在 6 个文化维度上的差异平均不到 5%。例如美国-澳大利亚 (距离 0.15)，韩国-日本 (距离 0.22)。
 
 ---
-*DECISION-LOOP.md v1.0 · v4.0-Adaptive 心脏 · 三个回路驱动一个贝叶斯生命体*
+*DECISION-LOOP.md v1.0 · v4.0.1-Adaptive 心脏 · 三个回路驱动一个贝叶斯生命体*
