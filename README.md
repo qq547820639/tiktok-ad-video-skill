@@ -1,7 +1,7 @@
-# TikTok 广告视频生成 Skill · Seedance 2.0 专用版 (v1.0.0-Aetos)
+# TikTok 广告视频生成 Skill · Seedance 2.0 专用版 (v1.1.0-Aetos)
 
 > **核心目标**：以最小积分消耗，通过多维效用函数与动态权重机制，收敛出全域（TikTok/Reels/Shorts/Threads/Lemon8）最高综合价值的视频策略。
-> **v1.0.0 语言**：单文件全包含。动态先验、域匹配检测、抗性测试+量化对抗审查、弹性权重、Token安全硬约束、Zeigarnik强制触发、GLOBAL HARD LOCK权重前置、SMPTE时间码+KEYFRAME LOCK音画同步、多维效用函数U(V)、对抗性惩罚项δ、Jensen-Shannon散度收敛、对数成本约束、不可压缩区块保护。零外部依赖。
+> **v1.1.0 语言**：单文件全包含。在封闭系统自洽收敛的基础上，补全标准数据回传接口的完整数学定义——贝叶斯更新方程、遗忘因子机制、反事实推断框架、观测变量到内部指标的精确映射。零外部依赖。
 
 ## 〇、系统初始化
 
@@ -51,6 +51,18 @@ PRIORS:
 | 核心层 | Beta(α=9, β=7) | 约43.75% |
 | 卫生层 | Beta(α=12, β=4) | 约25% |
 | 文化层 | Beta(α=15, β=1) | 约6.25% |
+
+**遗忘因子机制**：
+```
+λ = 0.0462  # 半衰期 15 天，对齐 TikTok 创意疲劳周期
+
+每次接收新数据前，历史先验参数自动衰减：
+α_prior_decayed = α_prior × exp(-λ × Δt_days)
+β_prior_decayed = β_prior × exp(-λ × Δt_days)
+
+然后应用新观测数据更新后验。
+若连续 30 天无新数据注入，权重衰减至原值的 25%；连续 60 天衰减至 6.25%；连续 90 天自动移除该品类的 USER_HISTORY 先验，回退至 COLD_START。
+```
 
 ---
 
@@ -274,7 +286,7 @@ U(V) = w₁ · R₃ₛ + w₂ · C_rate + w₃ · S_rate − λ · C_prod
 • R₃ₛ (3秒留存分): 脚本前3秒的Hook强度原始评分 (1-10)，应用对抗性惩罚项
 • C_rate (完播分): 节奏图谱的完播潜力评分 (1-10)
 • S_rate (分享分): 社交货币含量评分 (1-10)
-• C_prod (制作成本): log₁₀(TokenCount) - 1，TokenCount 为脚本总词数
+• C_prod (制作成本): log₁₀(TokenCount) − 1，TokenCount 为脚本总词数
 • λ (成本敏感系数): 客单价<$20 → 0.5, $20-$100 → 0.3, >$100 → 0.1
 
 权重默认值: w₁=0.5, w₂=0.3, w₃=0.2
@@ -354,10 +366,10 @@ R₃ₛ = R₃ₛ_raw × (1 − δ)
 | 卫生层 | ✅/⚠️ | [N]/6 | [如有问题，逐项描述+自动修正方案] |
 
 ### 多维效用函数 U(V)
-- **R₃ₛ (3秒留存分)**: [R₃ₛ_raw] × (1 − [δ]) = [最终值]
-- **C_rate (完播分)**: [值]
-- **S_rate (分享分)**: [值]
-- **C_prod (成本)**: log₁₀([TokenCount]) − 1 = [值]
+- **R₃ₛ (3秒留存分)**: [R₃ₛ_raw] × (1 − [δ]) = [最终值]（边际贡献: ±[值]）
+- **C_rate (完播分)**: [值]（边际贡献: ±[值]）
+- **S_rate (分享分)**: [值]（边际贡献: ±[值]）
+- **C_prod (成本)**: log₁₀([TokenCount]) − 1 = [值]（边际贡献: ±[值]）
 - **λ (成本系数)**: [值]
 - **U(V)**: w₁·R₃ₛ + w₂·C_rate + w₃·S_rate − λ·C_prod = [最终效用值]
 
@@ -434,6 +446,7 @@ face deformation, clothing change, [核心产品] missing, text blur, price erro
 |:---|:---|:---|
 | 采样胜率收敛 | 主判据 | 虚拟 Thompson Sampling 中胜出臂的采样胜率 > 95% |
 | 脚本 JSD 收敛 | 主判据 | 相邻两轮脚本 Token 分布 Jensen-Shannon 散度 < 0.05 |
+| ΔU(V) 收敛 | 辅助判据 | 相邻两轮 U(V) 变化量 < 0.02 |
 | 全局跟踪 | 保护判据 | 最近2轮相邻 JSD < 0.05 但累计 JSD > 0.2 → 建议重启搜索 |
 | 振荡检测 | 保护判据 | 最近3轮 U(V) 呈升→降→升或降→升→降 → 强制回溯 |
 | 硬性上限 | 兜底判据 | 第5轮强制终止 |
@@ -482,13 +495,13 @@ face deformation, clothing change, [核心产品] missing, text blur, price erro
 | C | ... | 败者+β | ... | ... |
 
 ### 收敛状态
-**状态**: [✅采样胜率收敛 / ✅JSD收敛 / ⚠️全局跟踪建议重启 / ⚠️振荡回溯至第[N]轮 / ⚠️已达上限(5轮) / 🔄继续迭代]
+**状态**: [✅采样胜率收敛 / ✅JSD收敛 / ✅ΔU(V)收敛 / ⚠️全局跟踪建议重启 / ⚠️振荡回溯至第[N]轮 / ⚠️已达上限(5轮) / 🔄继续迭代]
 
 ### JSD 跟踪
-| 比较 | JSD | 判定 |
-|:---|:---|:---|
-| 第[N-1]轮 → 第[N]轮 | [值] | [<0.05 = 收敛 / ≥0.05 = 继续] |
-| 第1轮 → 第[N]轮 (累计) | [值] | [跟踪中] |
+| 比较 | JSD | ΔU(V) | 判定 |
+|:---|:---|:---|:---|
+| 第[N-1]轮 → 第[N]轮 | [值] | [值] | [<0.05 = 收敛 / ≥0.05 = 继续] |
+| 第1轮 → 第[N]轮 (累计) | [值] | — | [跟踪中] |
 ```
 
 **不可中断区在阶段6.5输出完毕后结束。**
@@ -504,31 +517,126 @@ face deformation, clothing change, [核心产品] missing, text blur, price erro
 - 多市场Prompt变体（使用§3.5文化适配矩阵）
 - 首评/评论区互动话术
 
-### 阶段8：数据回收与闭环迭代指南
+### 阶段8：数据回收与闭环迭代指南（v1.1.0 标准数据接口）
 
-**动作**：指导用户如何在投放7天后回收数据，并更新 USER_HISTORY 先验参数。
-**标准数据回传格式**：
+**动作**：指导用户如何在投放7天后回收数据，并基于标准数学接口更新系统先验。
+
+#### 8.1 标准数据回传格式（JSON Schema）
+
+投放 7 天后，用户回传以下 JSON：
+
 ```json
 {
   "video_id": "VID_001",
   "platform": "TikTok",
+  "impressions": 10000,
   "ctr": 0.032,
   "retention_3s": 0.62,
+  "completion_rate": 0.45,
   "share_rate": 0.008,
-  "cost_usd": 6.02
+  "conversion_rate": 0.015,
+  "cost_usd": 6.02,
+  "revenue_usd": 24.50
 }
+```
+
+#### 8.2 观测变量到内部指标的映射函数
+
+| 外部观测 | 内部变量 | 映射函数 |
+|:---|:---|:---|
+| `retention_3s` | R₃ₛ_raw | `min(10, retention_3s × 16)` — 将 [0, 1] 映射到 [0, 10] |
+| `completion_rate` | C_rate | `min(10, completion_rate × 20)` — 完播率敏感度更高 |
+| `share_rate` | S_rate | `min(10, share_rate × 100)` — 分享率基数小，放大映射 |
+| `cost_usd / impressions` | C_prod_actual | 实际 CPC，用于替代预估 C_prod |
+| `revenue_usd / cost_usd` | ROI_actual | 真实 ROI，用于阶段 8.5 的反事实推断 |
+
+#### 8.3 贝叶斯更新方程
+
+当用户回传真实数据后，系统使用 Beta-Binomial 共轭模型更新 Hook 类型的后验参数。
+
+**保留率更新**：
+```
+retention_success = retention_3s × 100
+retention_fail = 100 - retention_success
+
+α'_hook = α_hook + retention_success
+β'_hook = β_hook + retention_fail
+```
+
+**分享率更新**：
+```
+share_success = share_rate × 100
+share_fail = 100 - share_success
+
+α'_share = α_share + share_success
+β'_share = β_share + share_fail
+```
+
+**复合更新（CTR）**：
+```
+click_success = ctr × impressions
+click_fail = impressions - click_success
+
+α'_ctr = α_ctr + click_success
+β'_ctr = β_ctr + click_fail
+```
+
+#### 8.4 遗忘因子应用
+
+每次接收新数据前，先衰减历史先验参数，再应用新观测：
+
+```
+α_prior_decayed = α_prior × exp(-0.0462 × Δt_days)
+β_prior_decayed = β_prior × exp(-0.0462 × Δt_days)
+
+α_new = α_prior_decayed + retention_success
+β_new = β_prior_decayed + retention_fail
+```
+
+#### 8.5 反事实推断
+
+当阶段 3 的 Hook 盲测输出了臂 A/B/C，且用户投放了其中一臂（如臂 A）：
+
+```
+观测到: 臂 A 的 retention_3s = 0.62
+未观测: 臂 B、臂 C 的 retention_3s
+
+反事实估计:
+  臂 B 的反事实 retention_3s = α_B / (α_B + β_B)
+  臂 C 的反事实 retention_3s = α_C / (α_C + β_C)
+
+输出:
+  "观测结果: 臂 A retention_3s = 0.62"
+  "反事实: 若当时选臂B，预估 retention_3s = [值]，差异 = [值 - 0.62]"
+  "反事实: 若当时选臂C，预估 retention_3s = [值]，差异 = [值 - 0.62]"
+  "结论: 臂 A 是/不是当前最优选择"
+```
+
+#### 8.6 系统状态转换规则
+
+```
+COLD_START → USER_HISTORY:
+  当任一 Hook 类型的 (α + β) > 10 时，该品类的 PRIOR_MODE 自动切换
+
+USER_HISTORY 模式下游变化:
+  1. P(Viral) 后验均值使用更新后的 α/(α+β)
+  2. Bootstrap CI 可尝试估算（样本量 > 10 时）
+  3. 域匹配检测不再强制切换——真实数据优先于文化相似度
+
+连续收敛判定:
+  连续 10 条视频 P(Viral) 中位数变化 < 0.05 → 降低盲测频率至每 5 条一次
 ```
 
 ---
 
 ## 五、版本信息
 
-- **版本**: v1.0.0-Aetos
-- **架构**: 硬编码单体·单文件全包含·多维效用函数U(V)·对抗性惩罚项δ·Jensen-Shannon散度收敛·对数成本约束·不可压缩区块保护
+- **版本**: v1.1.0-Aetos
+- **架构**: 硬编码单体·单文件全包含·多维效用函数U(V)·对抗性惩罚项δ·Jensen-Shannon散度收敛·对数成本约束·不可压缩区块保护·标准数据回传接口·贝叶斯更新方程·遗忘因子·反事实推断
 - **依赖**: 无外部文件依赖，SKILL.md 是唯一需要的文件
 - **评分**: 9.95/10
 - **达成率**: 99%
 
 ---
 
-**v1.0.0-Aetos · 效用函数已激活 · 对抗性惩罚已部署 · JSD收敛就绪 · 不可压缩区块已锁定。**
+**v1.1.0-Aetos · 标准数据接口已定义 · 贝叶斯更新方程就绪 · 遗忘因子激活 · 反事实推断框架就绪。系统等待第一个真实观测以完成从封闭系统到开放系统的相变。**
