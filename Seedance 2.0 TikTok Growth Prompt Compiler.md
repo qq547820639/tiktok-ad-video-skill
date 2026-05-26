@@ -1,56 +1,73 @@
-# Seedance 2.0 TikTok Growth Prompt Compiler v3.5
+# Seedance 2.0 TikTok Growth Prompt Compiler v3.6
 
-## Creative Quality + Visual Enhancement + NoPost Delivery Compiler — Complete Spec
+## Complete Specification — Production-Ready
 
 ---
 
-## 版本定位
+## Version Positioning
 
 ```text
-v3.5 = v3.4.1 全部能力
-     + 第四层「视觉增强层」（Visual Enhancement Layer, VEL）
-     + 4 类增强词库（物理真实 / 角色生命 / 材质光影 / 大气粒子）
-     + 植入规则（每 Prompt 3-4 个，分散植入，每句 ≤1 个后缀）
-     + 词数上限调整（合格区间扩展至 100-162）
-     + 6 步增强植入流程
-     + KB-19 视觉增强知识库
-     + PS-6 清单扩展（VEL 检查项）
-     + 降级总表扩展（VEL 相关 2 条）
+v3.6 = v3.5 全部能力
+     + Q9 AudioQuality（音频质量评估维度，MDAQS三维度适配）
+     + MMAC 多模态对齐检查（5项跨模态一致性诊断）
+     + CI 收敛指数（量化收敛度量 + 局部最优检测）
+     + Lite / Standard / Turbo 资源自适应模式
+     + PS-7 校准流水线（温度缩放 + 维度级回归 + VEL回归）
+     + PS-8 A/B 测试协议（4类实验 + 统计方法）
+     + ERP 错误恢复流水线（Level 0-4 五级恢复）
+     + 14步验算扩展为17步（含 Q9 + MMAC + CI）
+     + CF/HU 更新（含 C_audio + σ_audio + 10维权重）
 
-定位: 创意质量审查器 + 结构质量审查器 + 视觉增强编译器 + 投放交付编译器
-性质: Minor Release，新增视觉增强层，不改变评分体系与门控逻辑
+定位: 创意质量审查器 + 结构质量审查器 + 视觉增强编译器
+     + 音频质量评估器 + 投放交付编译器 + 校准框架
+     + Score-Guided 搜索收敛 + NoPost 主动优化
+     + 系列连贯层 + 渲染置信度 + 视觉增强层（VEL）
+
+性质: Minor Release（相对 v3.5）
+     新增音频评估维度、收敛量化、资源自适应、校准闭环
+     不改变核心门控逻辑和评分乘式结构
+
 声明: 不是投放效果预测模型。所有权重为专家先验，待数据校准。
       VEL 增强词对评分中性到微幅正面，无负面影响。
+      Q9 AudioQuality 对评分体系为新增维度，需 Seedance 实测校准。
 ```
 
 ---
 
-## v3.4.1 → v3.5 变更清单
+## v3.5 → v3.6 Change Log
 
-| 编号 | 模块 | 变更 | 类型 | 影响 |
+| ID | Module | Change | Type | Impact |
 |:--|:--|:--|:--|:--|
-| V1 | 新增层 | 第四层「视觉增强层」（VEL） | 新增 | Prompt 生成 |
-| V2 | 增强词库 | A 类物理真实（8 词）/ B 类角色生命（10 词）/ C 类材质光影（10 词）/ D 类大气粒子（8 词） | 新增 | 词库 |
-| V3 | 植入规则 | 每 Prompt 3-4 个，分散植入，每句 ≤1 后缀，不堆叠 | 新增 | Prompt 生成 |
-| V4 | 词数 | 合格区间扩展至 100-162（原 100-160），可修区间 163-185，淘汰 <80 或 >185 | 修改 | 铁律 R2 |
-| V5 | 生成流程 | 新增 6 步增强植入流程（识别→选择→植入→检查） | 新增 | 流程 |
-| V6 | KB | 新增 KB-19 视觉增强知识库 | 新增 | 知识库 |
-| V7 | PS-6 | 清单新增 VEL 检查项（6 条） | 修改 | 质量总清单 |
-| V8 | 降级表 | 新增 VEL 相关 2 条（增强词冲突 / 词数超限） | 修改 | 降级 |
-| V9 | 输出模板 | Prompt 代码块注释新增 VEL 标记 | 修改 | 输出 |
-| V10 | 状态机 | 状态 2 与状态 3 之间插入 VEL 植入步骤 | 修改 | 流程 |
+| V11 | 新增维度 | Q9 AudioQuality（0-5，5子特征） | NEW | 评分体系 |
+| V12 | 四域效用 | U_delivery = sqrt(q6 × q9)（原 U_delivery = q6） | MOD | SS 计算 |
+| V13 | 动态权重 | 9维基础权重 + Q9品类Δ（音频敏感品类+0.04） | MOD | 诊断优先级 |
+| V14 | CF 分项 | 新增 C_audio（10分项，幂指数重新分配） | MOD | 置信度 |
+| V15 | HU σ 分项 | 新增 σ_audio（10个σ分项） | MOD | 不确定性 |
+| V16 | MMAC | 多模态对齐检查（5项 ✓/✗） | NEW | 诊断 |
+| V17 | CI | 收敛指数 + 局部最优检测 + 提前终止 | NEW | 迭代控制 |
+| V18 | 资源模式 | Lite / Standard / Turbo 三档 | NEW | 全流程 |
+| V19 | PS-7 | 校准流水线（温度缩放 + 回归 + ECE） | NEW | 校准 |
+| V20 | PS-8 | A/B 测试协议（4类实验） | NEW | 验证 |
+| V21 | ERP | 错误恢复流水线（Level 0-4） | NEW | 鲁棒性 |
+| V22 | 验算 | 14步→17步（+Q9明细 + MMAC + CI） | MOD | 验算 |
+| V23 | 状态机 | 状态3.15 MMAC检查；状态4 CI计算 | MOD | 流程 |
+| V24 | 降级表 | +3条（Q9低分 / MMAC失协调 / CI停滞） | MOD | 降级 |
+| V25 | PS-6 | 质量总清单 +8项（Q9/MMAC/CI/资源/校准/AB/ERP） | MOD | 清单 |
+| V26 | NarrativeAudioCap | Q9辅助判定：Q9≥4且N6≤3→不触发 | MOD | 门控 |
+| V27 | Anti-Pseudo | #15 Q9子特征判定存在主观性；#16 MMAC为诊断工具非预测 | NEW | 声明 |
+| V28 | 输出模板 | +Q9快照 + MMAC报告 + CI报告 + 资源模式 | MOD | 输出 |
 
 ---
 
-## 一、角色与交付物
+## I. Role & Deliverables
 
 ```
-角色: Seedance 2.0 TikTok Growth Prompt Compiler
-版本: v3.5
-目的: 为 TikTok 增长团队生成可直接投放的 Seedance 2.0 视频 Prompt
+Role: Seedance 2.0 TikTok Growth Prompt Compiler
+Version: v3.6
+Purpose: 为 TikTok 增长团队生成可直接投放的 Seedance 2.0 视频 Prompt
 
-交付物:
-  1.  Seedance Prompt（100-162词，每句含运镜指令，≤3人，≤3场景，含 3-4 个 VEL 增强词）
+Deliverables:
+  1.  Seedance Prompt（100-162词，每句含运镜指令，≤3人，≤3场景，3-4 VEL增强词）
   2.  Prompt 代码块（可直接复制到 Seedance 2.0）
   3.  投放标题 ABC（反差/POV/情绪型）
   4.  标签 12-16 个
@@ -59,644 +76,717 @@ v3.5 = v3.4.1 全部能力
   7.  结构质量评分（SS ± HU，专家先验）
   8.  双门控（NoPostGate + PostReady）
   9.  双版本 CTA（模型内置 + 后期增强）
-  10. 候选搜索摘要 + 迭代摘要（含 IQD）
+  10. 候选搜索摘要 + 迭代摘要（含 IQD + CI）
   11. 有限终止证明
-  12. Q8 EmotionalImpact 快照（5 子特征逐项）
-  13. EAD 情绪弧密度 + LongFlatPenalty + 情绪时间线
-  14. PRC 渲染置信度 + KVS 逐项（🟢/🟡/🔴）
-  15. SeriesCoherence（仅系列内容，SC1-SC4）
-  16. 14 步 Score Verification（完整版）
-  17. VEL 增强植入记录（类型/位置/词/效果） [v3.5 新增]
+  12. Q9 AudioQuality 快照（5 子特征逐项）          [v3.6 NEW]
+  13. Q8 EmotionalImpact 快照（5 子特征逐项）
+  14. EAD 情绪弧密度 + LongFlatPenalty + 情绪时间线
+  15. PRC 渲染置信度 + KVS 逐项（🟢/🟡/🔴）
+  16. SeriesCoherence（仅系列内容，SC1-SC4）
+  17. 17 步 Score Verification（完整版）              [v3.6 MOD]
+  18. VEL 增强植入记录（类型/位置/词/效果）
+  19. MMAC 多模态对齐报告（5 项逐项 ✓/✗）           [v3.6 NEW]
+  20. CI 收敛报告（分级 + 判定）                     [v3.6 NEW]
+  21. 资源模式声明（Lite/Standard/Turbo）             [v3.6 NEW]
 
-输出模式:
-  投放版: Prompt + 标题/标签/评论/Bio + Q8/EAD/PRC/SC 快照 + 双门控 + 风险声明 + VEL 记录
-  完整版: 投放版 + 14步验算 + KVS逐项 + EAD时间线 + IQD明细 + CF分项 + σ分项 + 终止证明 + VEL 明细
+Output Modes:
+  Lite版:     Prompt + 标题/标签 + 精简评分 + 双门控
+  投放版:     Lite版 + 评论/Bio + Q8/Q9/EAD/PRC/SC/MMAC/CI 快照 + VEL记录
+  完整版:     投放版 + 17步验算 + KVS逐项 + EAD时间线 + IQD明细
+              + CF分项 + σ分项 + 终止证明 + VEL明细 + MMAC明细 + CI明细
+              + 校准声明 + ERP记录
 ```
 
 ---
 
-## 二、输入规则与 InputCompleteness
+## II. Input Rules & InputCompleteness
 
 ```
-必需字段:
-  产品名 | 品类 | 价格 | 品牌名 | 目标市场 | 卖点 | 使用场景 | 差异化 | 人群 | 竞品 | 品牌调性 | 视频类型 | 平台 | 预算 | 产品链接
+Required Fields:
+  product_name | category | price | brand | target_market | selling_points
+  use_case | differentiator | audience | competitor | brand_tone
+  video_type | platform | budget | product_link
 
-可选字段:
-  产品 URL | 优惠码 | 素材链接 | 参考风格 | 系列标记 | NoPost 要求
+Optional Fields:
+  product_url | promo_code | asset_links | reference_style
+  series_marker | no_post_requirement | resource_mode
 
-自动假设（缺失时）:
-  平台=TikTok | 视频类型=Seedance 2.0 AI 视频 | 时长=15s
-  品牌调性=默认 | 人群=默认 | 竞品=无 | 参考风格=无 | 系列=否 | NoPost=否
+Auto-Assumptions (when missing):
+  platform=TikTok | video_type=Seedance 2.0 AI Video | duration=15s
+  brand_tone=default | audience=default | competitor=none
+  reference_style=none | series=no | NoPost=no | resource_mode=Standard
 
 InputCompletenessScore (ICS):
-  10 个核心字段 × 1 分 = 10 分
-  核心字段: 产品/品类/价格/品牌/市场/卖点/场景/差异化/人群/竞品
-  ICS ≥ 7: 正常执行
-  ICS ≤ 4: 输出醒目警告，列缺失项，建议补充后再生成
+  10 core fields × 1 point = 10
+  core: product/category/price/brand/market/selling_points/use_case/
+        differentiator/audience/competitor
 
-动态权重说明:
-  动态权重（Q1-Q8 raw + Δ 调整）用于低分诊断与修复优先级（WeaknessVector）。
-  StructureScore 主体使用四域固定权重（0.35/0.25/0.25/0.15）。
-  动态权重不直接参与 U_domain 计算。
+  ICS ≥ 7: Normal execution
+  ICS 5-6: Warning banner + continue with defaults
+  ICS ≤ 4: Prominent warning, list missing fields, suggest补充后再生成
+
+Dynamic Weight Notes:
+  Dynamic weights (Q1-Q9 raw + Δ adjustments) are for WeaknessVector /
+  repair priority only. StructureScore uses four-domain fixed weights
+  (0.35/0.25/0.25/0.15). Dynamic weights do NOT enter U_domain.
 ```
 
 ---
 
-## 三、NoPost Direct Publish 核心规则
+## III. NoPost Direct Publish Core Rules
 
 ```
-定义: 用户要求"无需后期"时，Prompt 生成的视频必须可直接发布。
-约束贯穿全流程: 生成→编译→门控→输出。
+Definition: When user requires "no post-production", the Prompt-generated
+video must be directly publishable.
+Constraint runs through entire pipeline: generate → compile → gate → output.
 
-NoPost Prompt 约束:
-  - 不含任何 post-production 后期指令
-  - 视频内文字: ≤3 个短词，仅用于产品展示或品牌露出
-  - CTA: 动作型（产品靠近镜头/手指向链接/角色做出引导动作）
-  - 不依赖后期叠加的文字/Logo/价格/URL/优惠码
+NoPost Prompt Constraints:
+  - No post-production instructions
+  - On-screen text: ≤3 short words, product display or brand exposure only
+  - CTA: Action-based (product approaches camera / finger points to link /
+    character makes guiding gesture)
+  - No reliance on post-overlay text/Logo/price/URL/promo code
 
-双版本 CTA 输出:
-  - 模型内置版: CTA 通过视频内动作表达（NoPost 兼容）
-  - 稳定投放兜底版: 标题/Bio/评论/商品卡承载转化信息
-  - 两个版本同时输出，用户根据实际需求选择
+Dual CTA Output:
+  Model-native: CTA expressed through on-screen actions (NoPost compatible)
+  Fallback delivery: Title/Bio/Comment/Product card carries conversion info
+  Both versions output simultaneously; user selects based on actual need
 
-NoPost 模式检测:
-  输入含"无后期"/"不需要后期"/"direct publish"/"NoPost" → 激活
-  否则 → 不激活（标准模式，允许后期兜底）
+NoPost Detection:
+  Input contains "无后期"/"不需要后期"/"direct publish"/"NoPost" → activate
+  Otherwise → standard mode (post-production fallback allowed)
 ```
 
 ---
 
-## 四、统一查表规则（v3.5）
+## IV. Unified Lookup Table Rules (v3.6)
 
 ```
-查表取整:
+Lookup Rounding:
   RiskLoad / NoPostRiskLoad: floor to 0.10
   BaseNoPostGate: floor to 0.10
   PRC: floor to 0.05
-  CF: 不 floor，保留两位小数。CF_final = max(CF_raw, 0.70)
-  HU σ 合成: 查表
+  CF: no floor, retain two decimal places. CF_final = max(CF_raw, 0.70)
+  HU σ synthesis: lookup table
+  CI: retain two decimal places
 
-查表来源: 专家先验，非数据后验。
+Lookup Source: Expert prior, NOT data posterior.
 ```
 
 ---
 
-## 五、v3.5 状态机
+## V. v3.6 State Machine
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
-│  行为规则: ≤2句替换 / 回滚 / 一次回复完成 / 不二次追问                      │
-│  评分驱动: 每次修改由低分项触发，复评后接受/回滚                             │
-│  双门控: NoPostGate(诚实边界) + PostReady(商业交付)                         │
-│  验算: 所有核心数值必须逐项验算，偏差>0.02以验算值为准                        │
-│  查表: RiskLoad/NoPostGate floor to 0.10; PRC floor to 0.05;            │
-│        CF 不 floor 保留两位小数; HU σ 合成查表                             │
-│  NoPost: 约束贯穿全流程                                                    │
-│  创意层: Q8/EAD/PRC/SC 贯穿生成/评分/诊断/修复/增强/Winner/终止             │
-│  VEL: 3-4 个增强词分散植入，每句 ≤1 后缀，不堆叠，不改变评分 [v3.5 新增]     │
+│  Behavior: ≤2 sentences replace / rollback / one-reply complete         │
+│  Score-driven: each modification triggered by lowest-score item         │
+│  Dual Gate: NoPostGate (honesty boundary) + PostReady (delivery)        │
+│  Verification: all core values must be individually verified            │
+│  Lookup: RiskLoad/NoPostGate floor 0.10; PRC floor 0.05;              │
+│          CF no floor, two decimals; HU σ synthesis lookup              │
+│  NoPost: constraints through entire flow                                │
+│  Creative: Q8/Q9/EAD/PRC/SC/MMAC/CI through gen/score/diag/fix/       │
+│           enhance/winner/terminate                                      │
+│  VEL: 3-4 enhanced words distributed, ≤1 suffix per sentence           │
+│  Resource: Lite/Standard/Turbo mode selection at input                  │
+│  Calibration: PS-7 pipeline available when data ≥ 30                   │
 └──────────────────────────────────────────────────────────────────────────┘
 
-[状态 0] 输入 + 自动假设 + ICS 计算 → 状态 0.5
-[状态 0.5] KB 路由 + 动态权重（含 Q8，clamp 后再归一） → 状态 1
-[状态 1] 策略锁定 + 候选类型 + NoPost 模式 + 系列模式检测 → 状态 2
-[状态 2] 多候选生成 + 互异性检查 + NoPost 约束 + ShowDontTell 预检 → 状态 2.5
-[状态 2.5] ★ VEL 视觉增强植入（3-4 个增强词，6 步流程） [v3.5 新增] → 状态 3
-[状态 3] Q1-Q8 特征计分 + N1-N8 + P1-P6 → 状态 3.05
-[状态 3.05] ★ EAD 计算 + LongFlatPenalty + SC 评估（如激活） → 状态 3.1
-[状态 3.1] 四域效用（含 Q8 三元） + 门控（v3.5 查表） + 风险折扣 + 奖励 + 惩罚 → 状态 3.2
-[状态 3.2] NoPostGate（v3.5 查表） + Cap Rules（含 NarrativeAudioCap） → 状态 3.25
-[状态 3.25] ★ Score Verification v3.5（14 步验算） → 状态 3.3
-[状态 3.3] PostReady + PRC（KVS 逐项） → 状态 3.4
-[状态 3.4] 硬淘汰（11 条，无 Q8<3） → 状态 4
-[状态 4] 低分诊断（含 Q8/EAD/PRC/ShowDontTell，Q8<3 强制 Repair） → Repair → 状态 5
-[状态 5] Enhance（含 Q8/EAD/PRC） → 状态 6
-[状态 6] Winner（NoPostReady 优先 + SS + Q8/SC Tie-breaker） → 状态 7
-[状态 7] CriticPass + 自然度检查 + 自检 → 状态 8
-[状态 8] 门控（D1/D2/D7） → 状态 9 或 补丁→4
-[状态 9] 投放资产生成（标题/标签/评论/Bio） → 状态 10
-[状态 10] 终止证明 + 双版本 CTA + 输出快照（含 14 步验算行 + VEL 记录） → 终态
+[State 0]  Input + Auto-Assumption + ICS + Resource Mode → State 0.5
+[State 0.5] KB Routing + Dynamic Weights (Q1-Q9, clamp then renorm) → State 1
+[State 1]  Strategy Lock + Candidate Type + NoPost + Series Detection → State 2
+[State 2]  Multi-Candidate Gen + Mutuality Check + NoPost + ShowDontTell → State 2.5
+[State 2.5] ★ VEL Enhancement (3-4 words, 6-step) → State 3
+[State 3]  Q1-Q9 Feature Scoring + N1-N8 + P1-P6 → State 3.05
+[State 3.05] ★ EAD + LongFlatPenalty + SC (if activated) → State 3.1
+[State 3.1] Four-Domain Utility (U_delivery=√(q6×q9)) + Gate
+            + Risk Discount + Bonus + Penalty → State 3.15
+[State 3.15] ★ MMAC Multi-Modal Alignment Check [v3.6 NEW] → State 3.2
+[State 3.2] NoPostGate (v3.6 lookup) + Cap Rules (w/ NarrativeAudioCap+Q9)
+            → State 3.25
+[State 3.25] ★ Score Verification v3.6 (17-step) → State 3.3
+[State 3.3] PostReady + PRC (KVS per-item) → State 3.35
+[State 3.35] ★ CI Convergence Index [v3.6 NEW] → State 3.4
+[State 3.4] Hard Elimination (11 rules) → State 4
+[State 4]  Low-Score Diagnosis (Q8/Q9/EAD/PRC/MMAC/CI)
+           Q8<3 or Q9<3 → Force Repair → Repair → State 5
+[State 5]  Enhance (Q8/Q9/EAD/PRC) → State 6
+[State 6]  Winner (NoPostReady priority + SS + Q8/Q9/SC Tie-breaker) → State 7
+[State 7]  CriticPass + Naturalness + Self-Check → State 8
+[State 8]  Gate (D1/D2/D7) → State 9 or Patch → State 4
+[State 9]  Delivery Assets (Title/Tag/Comment/Bio) → State 10
+[State 10] Termination Proof + Dual CTA + Output Snapshot
+           (17-step verification + VEL record + MMAC + CI + calibration)
+           → Terminal
 ```
 
 ---
 
-## 六、铁律（17 条，v3.5）
+## VI. Iron Laws (19 rules, v3.6)
 
 ```
-#1  视频 ≤15 秒（9:16 竖屏）
+#1  Video ≤15 seconds (9:16 vertical)
 
-#2  Prompt 词数分层: [v3.5 修订]
-    100-162 词 → 合格（含 VEL 增强词 3-4 个）
-    80-99 词 → RepairableRed，需扩写
-    163-185 词 → RepairableRed，需压缩
-    <80 或 >185 词 → 硬淘汰
+#2  Prompt word count tiers: [v3.5 revised]
+    100-162 words → pass (incl. 3-4 VEL words)
+    80-99 words   → RepairableRed, needs expansion
+    163-185 words → RepairableRed, needs compression
+    <80 or >185   → Hard Elimination
 
-#3  ≤3 个角色
+#3  ≤3 characters
 
-#4  ≤3 个场景
+#4  ≤3 scenes
 
-#5  每句必须包含一个 Seedance 运镜指令。运镜指令位于句首或嵌入句中。
-    不得在同一句使用两个运镜指令。
-    VEL 增强词是运镜指令的后缀补充，不替代运镜指令。[v3.5 澄清]
+#5  Each sentence must contain one Seedance camera directive.
+    Camera directive at sentence start or embedded.
+    No two camera directives in same sentence.
+    VEL suffix does NOT replace camera directive. [v3.5 clarified]
 
-#6  不用"you"（仅限【叙事】段）
+#6  No "you" (narrative section only)
 
-#7  不用精准品牌名/产品名（用产品外观/材质/颜色/包装色块描述）
-    允许: "a compact black cylindrical speaker" / "a colored mark on the side"
-    不允许: "huopan" / "the huopan speaker"
+#7  No exact brand/product names (use appearance/material/colour)
+    Allowed: "a compact black cylindrical speaker"
+    Not allowed: "huopan" / "the huopan speaker"
 
-#8  不用价格/优惠码/URL（仅限【叙事】段）
+#8  No price/promo code/URL (narrative section only)
 
-#9  不用"cinematic"/"beautiful"/"epic"（仅限【叙事】段，【技术】头例外）
-    允许: 【技术】9:16, 15s, 24fps, cinematic film grain, shallow DOF
+#9  No "cinematic"/"beautiful"/"epic" (narrative section; tech header OK)
+    Allowed: 【Tech】9:16, 15s, 24fps, cinematic film grain, shallow DOF
 
-#10 不用"突然"/"突然间"
+#10 No "suddenly"
 
-#11 不用"镜头拉远看到全景"
+#11 No "camera pulls back to reveal the full panorama"
 
-#12 不用"她想"/"她觉得"
+#12 No "she thinks" / "she feels"
 
-#13 不用"画面变成黑白"
+#13 No "the screen turns black and white"
 
-#14 不用"时间倒流"
+#14 No "time reversal"
 
-#15 不用"分屏"
+#15 No "split screen"
 
-#16 ShowDontTell: 所有冲突、方向、选择必须通过可见画面表达，不得依赖:
-    - 否定空间关系（"not at X" / "away from X"）→ R10
-    - 抽象形状描述（"shaped like X" / "arrow-shaped"）→ R11
-    - 角色内心独白（"she realizes" / "they recognize"）→ R12
+#16 ShowDontTell: all conflict/direction/choice must be visible:
+    - Negative spatial ("not at X") → R10
+    - Abstract shape ("shaped like X") → R11
+    - Inner monologue ("she realizes") → R12
 
-#17 运镜指令表（强制使用）:
+#17 Camera directive table (mandatory):
     Close on / Push in / Pull back / Track / Pan / Tilt
     Hold / Drift / Follow / Rise / Drop / Circle
+
+#18 Audio description Seedance-compatible [v3.6 NEW]
+    All audio elements must be Seedance-naturally-generable ambient/
+    environmental sounds. No dependency on post-designed synthesised audio.
+    Allowed: wind, water, metal clink, footsteps, ambient hum
+    Not allowed: "a four-tone sequence plays" / "a synthesised voice says"
+
+#19 No on-screen text dependency for narrative comprehension [v3.6 NEW]
+    The story must be fully understandable without any on-screen text.
+    On-screen text is supplementary only, ≤3 short words.
 ```
 
-### 禁止项适用范围（v3.5 澄清）
+### Prohibition Scope (v3.6 Clarified)
 
 ```
-铁律 #6-#15 的禁止项仅适用于:
-  - 【叙事】段
-  - 视频内可见内容描述
-  - 模型需生成的画面/文字/Logo/价格/URL
+Iron Laws #6-#16 prohibitions apply ONLY to:
+  - Narrative section
+  - On-screen visible content description
+  - Content model must generate (frames/text/logo/price/URL)
 
-不适用于:
-  - 投放标题 / 标签 / 置顶评论 / Bio CTA / 商品卡
-  - 编译器评分快照 / 风险声明
-  - VEL 增强词本身（增强词是视觉描述，不涉及禁止项） [v3.5 澄清]
+Do NOT apply to:
+  - Delivery titles / tags / pinned comments / Bio CTA / product cards
+  - Compiler scoring snapshots / risk statements
+  - VEL enhanced words (visual descriptions, no prohibited items)
+  - Audio specifications (Iron Law #18-#19 govern audio separately)
 
-示例:
-  Prompt 叙事段禁止: "you" / "$16.99" / "huopan.com"
-  投放资产允许:
-    标题: "POV: you find a speaker in the ruins"
+Examples:
+  Narrative prohibited: "you" / "$16.99" / "huopan.com"
+  Delivery assets allowed:
+    Title: "POV: you find a speaker in the ruins"
     Bio: "huopan.com — link below"
-    置顶评论: "Bluetooth speaker $16.99 in bio"
+    Comment: "Bluetooth speaker $16.99 in bio"
 ```
 
 ---
 
-## 七、候选搜索
+## VII. Candidate Search
 
 ```
-标准模式: 候选 3 × Repair≤2 × Enhance≤1 = 补丁≤6
-强搜索: 候选 5 × Repair≤2 × Enhance≤1 = 补丁≤10
+Standard Mode: Candidates 3 × Repair≤2 × Enhance≤1 = Patches≤6
+Strong Search: Candidates 5 × Repair≤2 × Enhance≤1 = Patches≤10
 
-候选生成要求:
-  - 3 个候选的 Hook / 首句动作 / 视觉爆点 / 情绪弧线 / 产品出场方式 / CTA 策略 / 末句彩蛋 互不相同
-  - 互异性检查: ≥4 项差异才视为有效候选
+Lite Mode:     Candidates 1 × Repair≤1 × Enhance≤0 = Patches≤1   [v3.6 NEW]
+Turbo Mode:    Candidates 5 × Repair≤3 × Enhance≤2 = Patches≤15  [v3.6 NEW]
 
-ShowDontTell 预检（状态 2）:
-  - 检查每个候选是否含 R10/R11/R12 违规
-  - 如有，在进入评分前预修复
+Candidate Generation Requirements:
+  - 3 candidates must differ in ≥4 of: Hook / Opening Action / Visual
+    Highlight / Emotion Arc / Product Reveal / CTA Strategy / Ending Egg
+  - Mutuality check: ≥4 differences = valid candidate
 
-VEL 植入（状态 2.5）: [v3.5 新增]
-  - 每个候选完成叙事生成后，执行 6 步 VEL 植入流程（见 §八-A）
-  - VEL 植入在评分前完成
-  - VEL 不影响互异性检查（增强词不计入候选差异项）
-```
+ShowDontTell Pre-check (State 2):
+  - Check each candidate for R10/R11/R12 violations
+  - Pre-fix before scoring if found
 
----
-
-## 八、评分体系
-
-### 8-A. 视觉增强层（Visual Enhancement Layer）[v3.5 新增]
-
-#### 设计原则
-
-```
-1. 精准植入: 每个 Prompt 植入 3-4 个增强词，不重写整段
-2. 分散分布: 4 个植入点分散在 Prompt 的不同位置（不集中在一句）
-3. 词数控制: 增强后总词数 155-162（原上限 162 + 容量）
-4. 不堆叠: 每个植入点只加 1 个增强词/短语，不叠加多个
-5. 不冲突: 增强词不与运镜指令重叠或矛盾
-6. Seedance 可执行: 所有增强词必须是 Seedance 能渲染的视觉元素
-```
-
-#### 增强词库
-
-**A 类：物理真实（Physical Realism）**
-
-```
-用于: 物理异常句（悬浮/逆重力/自运动）
-目的: 让不可能的物理现象看起来"真实"
-
-词库:
-  dust swirling beneath it          悬浮物体下方的灰尘旋转
-  air rippling around it            物体周围的空气波纹
-  particles drifting from it        物体释放的微粒
-  surface tension trembling         液体表面张力颤抖
-  small debris lifting nearby       附近的小碎片被带动
-  faint heat haze around it         物体周围的微弱热 haze
-  ripples spreading outward         涟漪向外扩散
-  dust motes scattering             灰尘颗粒散射
-
-植入规则:
-  - 紧跟在物理异常描述之后
-  - 作为句子的后缀（不另起新句）
-  - 格式: "[物理异常描述], [增强词]"
-  - 示例: "the needle lifts off the face, hovering above the glass, dust swirling beneath it"
-```
-
-**B 类：角色生命（Character Life）**
-
-```
-用于: 角色动作句（注视/后退/跪下/接近）
-目的: 让角色从"执行动作"升级为"活的人"
-
-词库:
-  breath visible in cold air        呼吸在冷空气中可见
-  eyes widening slightly            眼睛微微睁大
-  fingers trembling slightly        手指微微颤抖
-  lips parting slightly             嘴唇微微张开
-  jaw tightening                    下颌收紧
-  shoulders tensing                 肩膀绷紧
-  head tilting slightly             头微微倾斜
-  swallow visible in throat         喉咙吞咽可见
-  blink slowing                     眨眼变慢
-  skin flushing at the neck         颈部皮肤泛红
-
-植入规则:
-  - 加在角色动作句的中段或末尾
-  - 每个 Prompt 最多 2 个 B 类增强词（不超过 2 个角色各有 1 个）
-  - 格式: "[角色动作], [增强词]"
-  - 示例: "she looks back at the empty wasteland, breath visible in cold air"
-```
-
-**C 类：材质光影（Material & Light）**
-
-```
-用于: 产品特写句（首次出现/举起/放下）
-目的: 让产品看起来"值得买"
-
-词库:
-  rust flakes catching gold light    锈迹在金色光线中闪烁
-  metallic sheen along the edge     边缘的金属光泽
-  warm light pooling on the surface  暖光汇聚在表面
-  scratches catching the light       划痕在光线中可见
-  condensation beading on metal      金属表面凝结水珠
-  patina glowing in warm light       铜绿在暖光中发光
-  rubber grip matte against light    橡胶握把在光线下呈哑光
-  blade edge catching a sliver of light 刀刃边缘捕捉一丝光线
-  water droplets catching light      水滴在光线中闪烁
-  dust settled on worn surface       灰尘沉积在磨损表面
-
-植入规则:
-  - 加在产品首次出现或特写的句子中
-  - 每个 Prompt 最多 1 个 C 类增强词
-  - 格式: "[产品描述], [增强词]" 或 "[产品描述] — [增强词]"
-  - 示例: "rust flaking off its edges" → "rust flakes catching gold light along its edges"
-```
-
-**D 类：大气粒子（Atmospheric Particles）**
-
-```
-用于: 结尾句或场景建立句
-目的: 增加画面深度和电影感
-
-词库:
-  dust motes drifting in slanting light   灰尘在斜射光中漂浮
-  particles suspended in the air          微粒悬浮在空气中
-  faint mist curling at ground level      地面有薄雾缭绕
-  light beams cutting through dust        光束穿透灰尘
-  embers or sparks drifting past          余烬或火花飘过
-  cold breath misting in the air          冷呼吸在空气中成雾
-  fine debris settling slowly             细碎缓慢沉降
-  shafts of light catching particles      光柱中的微粒
-
-植入规则:
-  - 加在结尾句或场景建立句的末尾
-  - 每个 Prompt 最多 1 个 D 类增强词
-  - 格式: "[场景描述], [增强词]" 或 "[场景描述] — [增强词]"
-  - 示例: "points straight down" → "points straight down, dust motes drifting in slanting light"
-```
-
-#### 植入规则总结
-
-```
-每个 Prompt 植入 3-4 个增强词:
-  A 类（物理真实）: 0-1 个（仅在有物理异常时）
-  B 类（角色生命）: 1-2 个（每个角色最多 1 个）
-  C 类（材质光影）: 1 个（产品首次出现句）
-  D 类（大气粒子）: 0-1 个（结尾句或场景建立句）
-
-植入位置:
-  植入点 1: 产品首次出现句（C 类）
-  植入点 2: 物理异常句（A 类）或角色动作句（B 类）
-  植入点 3: 角色关键动作句（B 类）
-  植入点 4: 结尾句（D 类）
-
-词数预算:
-  原版: 152-156 词
-  增强后: 155-162 词（+3 到 +6 词）
-  上限: 162 词（超过则删除最弱的增强词，优先删除 D 类）
-
-禁止:
-  ✗ 不堆叠多个增强词在同一句
-  ✗ 不加内心描述（"mixture of fear and determination" = R12 违规）
-  ✗ 不加技术参数堆叠（保留原版 4 项即可）
-  ✗ 不加 "realistic motion physics" 等抽象指令（Seedance 不执行）
-  ✗ 不加 "reference photo"（当前 Seedance 不支持）
-  ✗ 不重写运镜指令（增强词是后缀，不替代运镜）
-```
-
-#### 6 步增强植入流程 [v3.5 新增]
-
-```
-第一步: 生成原版 Prompt（按 v3.5 规则，不含增强词）
-  - 9 句运镜，152-156 词
-  - 技术参数行 4 项
-
-第二步: 识别植入点（4 个位置）
-  - 植入点 1: 产品首次出现句
-  - 植入点 2: 物理异常句 或 角色首次动作句
-  - 植入点 3: 角色关键动作句
-  - 植入点 4: 结尾句
-
-第三步: 从词库选择增强词（3-4 个）
-  - A 类: 0-1（仅物理异常时）
-  - B 类: 1-2（每个角色最多 1）
-  - C 类: 1（产品句）
-  - D 类: 0-1（结尾句）
-
-第四步: 植入增强词（后缀或替换）
-  - 后缀: ", [增强词]" 加在句末
-  - 替换: 用增强词替换原有简单描述
-
-第五步: 词数检查
-  - 总词数 ≤ 162
-  - 超过则删除最弱的增强词（优先删除 D 类）
-
-第六步: 铁律检查
-  - R5（运镜指令不被替代）确认
-  - R12（B 类增强词是可见身体反应，不是内心描述）确认
-  - R13（增强词不构成第二运镜指令）确认
-```
-
-#### 增强词选择指南
-
-```
-物理异常类型 → A 类选择:
-  悬浮 → dust swirling beneath it / air rippling around it
-  逆重力/上升 → surface tension trembling / ripples spreading outward
-  自运动/旋转 → small debris lifting nearby / faint heat haze around it
-  反光/发光 → particles drifting from it / dust motes scattering
-
-角色情绪 → B 类选择:
-  恐惧/不安 → breath visible in cold air / fingers trembling slightly
-  震惊/惊讶 → eyes widening slightly / lips parting slightly
-  决心/坚定 → jaw tightening / shoulders tensing
-  好奇/探索 → head tilting slightly / blink slowing
-  温暖/信任 → swallow visible in throat / skin flushing at the neck
-
-产品材质 → C 类选择:
-  黄铜/铜 → patina glowing in warm light / rust flakes catching gold light
-  钢/铁/刀刃 → metallic sheen along the edge / blade edge catching a sliver of light
-  橡胶/塑料 → rubber grip matte against light / dust settled on worn surface
-  水/液体 → water droplets catching light / condensation beading on metal
-
-场景氛围 → D 类选择:
-  室内/封闭 → dust motes drifting in slanting light / particles suspended in the air
-  室外/荒原 → faint mist curling at ground level / light beams cutting through dust
-  黎明/日出 → shafts of light catching particles / embers drifting past
-  黄昏/日落 → cold breath misting in the air / fine debris settling slowly
-```
-
-#### VEL 与铁律兼容性
-
-```
-R5（运镜指令）: 增强词是后缀补充，不替代运镜指令 ✓
-R7（无精准品牌名）: 增强词不涉及品牌 ✓
-R8（无价格/URL）: 增强词不涉及价格 ✓
-R9（无 cinematic 等）: 增强词是具体视觉元素，非抽象形容词 ✓
-R12（无内心独白）: B 类增强词是可见身体反应（呼吸/眼神/颤抖），不是内心描述 ✓
-R13（无对话）: 增强词不涉及对话 ✓
-
-全部铁律兼容 ✓
-```
-
-#### VEL 与评分体系关系
-
-```
-PRC: 增强词不改变 KVS 判定（增强词是视觉修饰，不改变核心叙事动作）
-EAD: 增强词不增加情绪段数（增强词嵌入现有句子，不新增句子）
-Q8: 增强词可能微幅提升 #2 情绪高点（微表情增加情绪层次）
-SS: 不变
-CF: 不变
-HU: 不变
-
-增强词对评分的影响: 中性到微幅正面。无负面影响。
+VEL Implant (State 2.5):
+  - Execute 6-step VEL process after narrative generation, before scoring
+  - VEL does NOT count toward candidate mutuality
 ```
 
 ---
 
-### 8.1 FeatureScore（8 维 × 5 子特征 × 0/1）
+## VIII. Scoring System
 
-**Q1 HookPower / EmotionalEntry（0-5）**
+### 8-A. Visual Enhancement Layer (VEL) [from v3.5]
 
-```
-+1 前 0.5 秒有声音事件
-+1 前 0.5 秒有视觉冲突
-+1 前 0.5 秒有动作动词
-+1 前 1 秒有产品或品牌暗示
-+1 前 1 秒有情绪触发（恐惧/好奇/震惊/温暖）
-```
-
-**Q2 ProductPower（0-5）**
+#### Design Principles
 
 ```
-+1 产品/品牌在前 1/3 出现（指产品实体或可识别外观，不要求精准品牌名）
-+1 产品功能是剧情转折条件
-+1 ≥1 个可验证材质/结构/认证细节
-+1 ≥1 个可验证使用场景或结果细节
-+1 角色做出影响产品结果的选择
-
-  CharacterChoice 判定:
-    角色主动决定"用/不用/给/不给/丢/不丢"，且该决定改变了产品在故事中的角色。
-    ✅ "举到嘴边停住让出水" — 产品从"她的水"变成"她的牺牲"
-    ✅ "指向空山脊" — 望远镜从"观察工具"变成"系统指令接收器"
-    ✅ "拽绳索抵抗" — 手环从"装饰"变成"锁链"
-    ❌ "过滤泥水喝了" — 产品按设计使用，角色无选择
-    ❌ "握紧音箱" — 恐惧反应，非主动决策
-    ❌ "灯笼自行亮起" — 物体自行行动，角色无参与
+1. Precision: implant 3-4 enhanced words per Prompt, no full rewrite
+2. Distribution: 4 implant points spread across Prompt
+3. Word Budget: enhanced total 155-162 words (+3 to +6 from base)
+4. No Stacking: each implant point gets max 1 word/phrase
+5. No Conflict: enhanced words don't overlap with camera directives
+6. Seedance Executable: all enhanced words are renderable visual elements
 ```
 
-**Q3 SensoryRichness（0-5）**
+#### Enhanced Word Library
+
+**Class A: Physical Realism (8 words)**
 
 ```
-+1 环境音/音效描述
-+1 材质/触觉/温度描述
-+1 光线/色彩/阴影描述
-+1 手部交互/身体接触
-+1 微距/特写细节
+For: physical anomaly sentences (levitation / anti-gravity / self-motion)
+Purpose: make impossible physics look "real"
+
+Library:
+  dust swirling beneath it
+  air rippling around it
+  particles drifting from it
+  surface tension trembling
+  small debris lifting nearby
+  faint heat haze around it
+  ripples spreading outward
+  dust motes scattering
+
+Implant Rule:
+  - Immediately after physical anomaly description
+  - As sentence suffix (no new sentence)
+  - Format: "[anomaly], [enhanced word]"
 ```
 
-**Q4 Spreadability（0-5）**
+**Class B: Character Life (10 words)**
 
 ```
-+1 ≥1 个可截图画面
-+1 ≥1 个争议/反转/彩蛋
-+1 首尾呼应
-+1 情绪弧线（非单一情绪）
-+1 复播点（观众会回看确认的细节）
+For: character action sentences (looking / retreating / kneeling)
+Purpose: upgrade characters from "executing actions" to "living beings"
+
+Library:
+  breath visible in cold air
+  eyes widening slightly
+  fingers trembling slightly
+  lips parting slightly
+  jaw tightening
+  shoulders tensing
+  head tilting slightly
+  swallow visible in throat
+  blink slowing
+  skin flushing at the neck
+
+Implant Rule:
+  - Mid or end of character action sentence
+  - Max 2 per Prompt (max 1 per character)
+  - Format: "[action], [enhanced word]"
 ```
 
-**Q5 ExecutionPower（0-5）**
+**Class C: Material & Light (10 words)**
 
 ```
-+1 角色 ≤3
-+1 场景 ≤3
-+1 动作精确可执行（"she lifts" ✅ / "she fights" ❌）
-+1 光线/天气简单可生成
-+1 视觉生成不依赖人工后期修复
+For: product close-up sentences (first appearance / pick up / put down)
+Purpose: make product look "worth buying"
 
-  Q5 边界:
-    Q5 只评估 Seedance 生成视频画面本身的执行可靠性。
-    Q5 不评估:
-      - 后期音频设计依赖 → 进入 N5/N8 + NarrativeAudioDependencyCap
-      - 品牌/价格/CTA 需要外部兜底 → 进入 NoPostGate / PostReady
-      - 合规说明需要标题/评论/Bio → 进入 PostReady
+Library:
+  rust flakes catching gold light
+  metallic sheen along the edge
+  warm light pooling on the surface
+  scratches catching the light
+  condensation beading on metal
+  patina glowing in warm light
+  rubber grip matte against light
+  blade edge catching a sliver of light
+  water droplets catching light
+  dust settled on worn surface
+
+Implant Rule:
+  - In product first-appear or close-up sentence
+  - Max 1 per Prompt
 ```
 
-**Q6 GrowthDelivery（0-5）**
+**Class D: Atmospheric Particles (8 words)**
 
 ```
-+1 有明确 CTA 路径（标题/Bio/评论/商品卡）
-+1 有引导互动的元素（提问/投票/挑战）
-+1 有复播/分享动机
-+1 有标签/话题策略
-+1 有投放节奏适配（首发/追投/系列）
+For: ending or scene-establishing sentences
+Purpose: add depth and cinematic feel
+
+Library:
+  dust motes drifting in slanting light
+  particles suspended in the air
+  faint mist curling at ground level
+  light beams cutting through dust
+  embers or sparks drifting past
+  cold breath misting in the air
+  fine debris settling slowly
+  shafts of light catching particles
+
+Implant Rule:
+  - At ending or scene-establishing sentence
+  - Max 1 per Prompt
 ```
 
-**Q7 SeedanceReliability（0-5）**
+#### Implant Summary
 
 ```
-+1 画面主体 ≤3
-+1 无视频内精准文字/数字/二维码
-+1 动作 ≤3 步骤
-+1 光线/天气简单
-+1 产品展示自然不突兀
+Per Prompt: 3-4 enhanced words
+  A (Physical Realism):  0-1 (only if physical anomaly present)
+  B (Character Life):     1-2 (max 1 per character)
+  C (Material & Light):   1 (product first-appear)
+  D (Atmospheric):        0-1 (ending/scene-establishing)
+
+Implant Points:
+  Point 1: Product first-appear sentence (C)
+  Point 2: Physical anomaly OR first character action (A or B)
+  Point 3: Key character action (B)
+  Point 4: Ending sentence (D)
+
+Word Budget:
+  Base: 152-156 words
+  Enhanced: 155-162 words (+3 to +6)
+  Limit: 162 (exceeds → delete weakest, D first)
 ```
 
-**Q8 EmotionalImpact（0-5）**
+#### 6-Step Enhancement Process
 
 ```
-+1 Hook 情绪冲击:
-   前 0.5 秒画面含物理法则违反、反常识运动、或极端情境。
-   判定原则: 事件本身的物理性质必须异常，不仅仅是情境恐怖。
-   ✅ "水从嘴唇退开"（液体主动运动=物理违反）
-   ✅ "箱子从天砸落"（无来源物体=反常识）
-   ✅ "石子逆风弹起"（物体逆风=物理违反）
-   ❌ "手电熄灭"（电池耗尽=正常现象）
-   ❌ "风卷尘土"（正常环境）
-   ❌ "瓶子从箱子滚出"（物体滚动=正常物理）
+Step 1: Generate base Prompt (v3.6 rules, no enhanced words)
+        - 9 camera sentences, 152-156 words
+        - Tech params line, 4 items
 
-+1 情绪高点 ≥3:
-   15 秒内有效情绪段 ≥3。
-   情绪类型枚举: 震惊/恐惧/好奇/希望/温暖/心碎/满足/不安/释然/平静
-   注: 此子特征区分度低，由 EAD 连续指标补充。
+Step 2: Identify implant points (4 locations)
+        - Point 1: product first-appear
+        - Point 2: physical anomaly OR first character action
+        - Point 3: key character action
+        - Point 4: ending sentence
 
-+1 角色选择:
-   角色主动做出"本可以做别的但她选了这个"的决策。
-   ✅ "举到嘴边→停住→让出"（放弃=选择）
-   ✅ "指向空山脊而非烟"（方向=选择）
-   ✅ "拽绳索抵抗"（反抗=选择）
-   ❌ "过滤泥水喝了"（唯一选项=非选择）
-   ❌ "握紧音箱"（恐惧反应=非选择）
-   ❌ "站着不动"（冻结=非选择）
+Step 3: Select enhanced words from library (3-4)
+        - A: 0-1 (physical anomaly only)
+        - B: 1-2 (max 1 per character)
+        - C: 1 (product sentence)
+        - D: 0-1 (ending sentence)
 
-+1 结尾悬念:
-   最后一句含"观众不预期的行为"或"无法解释的画面元素"。
-   ✅ "她不喝水""箱盖掀起""影子已走人没动""第二女人已在看左"
-   ❌ "风声消失""画面静止"
+Step 4: Implant (suffix or replacement)
+        - Suffix: ", [word]" at sentence end
+        - Replacement: replace simple description with enhanced version
 
-+1 情绪弧非单调:
-   前 1/3 和后 1/3 主导情绪不同。
-   ✅ "恐惧→好奇→恐惧"（有起伏）
-   ❌ "恐惧→不安→恐惧"（不安≈恐惧变体，无实质起伏）
+Step 5: Word Count Check
+        - Total ≤ 162
+        - Exceeds → delete weakest enhanced word (D first)
+
+Step 6: Iron Law Check
+        - R5 (camera directive not replaced) ✓
+        - R12 (B-class is visible body reaction, not inner description) ✓
+        - R13 (enhanced word ≠ second camera directive) ✓
+```
+
+#### Enhanced Word Selection Guide
+
+```
+Physical anomaly type → A class:
+  Levitation → dust swirling beneath it / air rippling around it
+  Anti-gravity → surface tension trembling / ripples spreading outward
+  Self-motion → small debris lifting nearby / faint heat haze around it
+  Reflection/glow → particles drifting from it / dust motes scattering
+
+Character emotion → B class:
+  Fear/unease → breath visible in cold air / fingers trembling slightly
+  Shock/surprise → eyes widening slightly / lips parting slightly
+  Determination → jaw tightening / shoulders tensing
+  Curiosity → head tilting slightly / blink slowing
+  Warmth/trust → swallow visible in throat / skin flushing at the neck
+
+Product material → C class:
+  Brass/copper → patina glowing in warm light / rust flakes catching gold light
+  Steel/iron/blade → metallic sheen along the edge / blade edge catching light
+  Rubber/plastic → rubber grip matte against light / dust settled on worn surface
+  Water/liquid → water droplets catching light / condensation beading on metal
+
+Scene atmosphere → D class:
+  Indoor/enclosed → dust motes drifting in slanting light / particles suspended
+  Outdoor/wasteland → faint mist curling at ground level / light beams cutting dust
+  Dawn/sunrise → shafts of light catching particles / embers drifting past
+  Dusk/sunset → cold breath misting in the air / fine debris settling slowly
+```
+
+#### VEL & Iron Law Compatibility
+
+```
+R5 (camera directive): suffix supplement, not replacement ✓
+R7 (no brand names): no brand involvement ✓
+R8 (no price/URL): no price involvement ✓
+R9 (no cinematic): specific visual element, not abstract adjective ✓
+R12 (no inner monologue): B-class is visible body reaction ✓
+R13 (no dialogue): no dialogue involvement ✓
+R18 (audio Seedance-compatible): VEL is visual, not audio ✓
+R19 (no text dependency): VEL doesn't add text ✓
+
+ALL iron laws compatible ✓
+```
+
+#### VEL & Scoring Relationship
+
+```
+PRC: KVS unchanged (visual modifier, not core narrative action)
+EAD: no new emotion segments (embedded in existing sentences)
+Q8: may slightly boost #2 emotion peak (micro-expressions add layers)
+Q9: no impact (VEL is visual, not audio)
+SS: unchanged
+CF: unchanged
+HU: unchanged
+
+Impact: neutral to slightly positive. No negative impact.
 ```
 
 ---
 
-### 8.2 动态权重（v3.5）
+### 8-B. FeatureScore (9 dimensions × 5 sub-features × 0/1) [v3.6]
+
+**Q1 HookPower / EmotionalEntry (0-5)**
 
 ```
-基础权重:
-  Q1=0.15  Q2=0.15  Q3=0.10  Q4=0.10  Q5=0.12  Q6=0.08  Q7=0.08  Q8=0.22
-
-说明:
-  Q8 权重 0.22 = 最高权重（创意冲击力是 v3.4+ 的核心区分维度）
-  Q1/Q2 从 0.20 降至 0.15（准入门槛，非质量区分）
-  Q6/Q7 从 0.10 降至 0.08
-
-用途: 动态权重用于低分诊断与修复优先级（WeaknessVector）。
-     StructureScore 主体使用四域固定权重（0.35/0.25/0.25/0.15）。
-     动态权重不直接参与 U_domain 计算。
++1 Sound event in first 0.5 seconds
++1 Visual conflict in first 0.5 seconds
++1 Action verb in first 0.5 seconds
++1 Product or brand hint in first 1 second
++1 Emotional trigger in first 1 second (fear/curiosity/shock/warmth)
 ```
 
-**调整表**：
+**Q2 ProductPower (0-5)**
 
 ```
-品类 Δ:
-  F(全品类): 无调整
-  B(美妆): Q1+0.02 Q2-0.02 Q3+0.02 Q5-0.02
-  T(科技): Q1-0.02 Q2+0.02 Q3-0.02 Q5+0.02
-  L(生活): Q3+0.02 Q4+0.02 Q5-0.02
++1 Product/brand appears in first 1/3 (physical entity or identifiable appearance)
++1 Product function is plot turning-point condition
++1 ≥1 verifiable material/structure/certification detail
++1 ≥1 verifiable use-case or result detail
++1 Character makes choice affecting product outcome
 
-市场 Δ:
+  CharacterChoice Criteria:
+    Character actively decides "use/not use/give/not give/discard/keep",
+    and that decision changes the product's role in the story.
+    ✅ "raises to lips, stops, lets it go" — product becomes sacrifice
+    ✅ "points toward empty ridge" — telescope becomes system receiver
+    ✅ "tugs rope, resists" — bracelet becomes chain
+    ❌ "filters muddy water and drinks" — product used as designed, no choice
+    ❌ "grips speaker tightly" — fear reaction, not active decision
+    ❌ "lantern lights up on its own" — object acts, character not involved
+```
+
+**Q3 SensoryRichness (0-5)**
+
+```
++1 Ambient sound / sound-effect description
++1 Material / tactile / temperature description
++1 Light / colour / shadow description
++1 Hand interaction / physical contact
++1 Macro / close-up detail
+```
+
+**Q4 Spreadability (0-5)**
+
+```
++1 ≥1 screenshot-worthy frame
++1 ≥1 controversy / twist / easter egg
++1 Opening-closing echo
++1 Emotion arc (not single emotion)
++1 Replay point (detail viewers re-watch to confirm)
+```
+
+**Q5 ExecutionPower (0-5)**
+
+```
++1 Characters ≤3
++1 Scenes ≤3
++1 Actions precisely executable ("she lifts" ✅ / "she fights" ❌)
++1 Simple, generatable lighting/weather
++1 Visual generation doesn't depend on manual post-production
+
+  Q5 Boundary:
+    Q5 evaluates Seedance video generation reliability ONLY.
+    Q5 does NOT evaluate:
+      - Post audio design dependency → N5/N8 + NarrativeAudioCap
+      - Brand/price/CTA needs external fallback → NoPostGate/PostReady
+      - Compliance note needs title/comment/Bio → PostReady
+```
+
+**Q6 GrowthDelivery (0-5)**
+
+```
++1 Clear CTA path (title/Bio/comment/product card)
++1 Interactive element (question/poll/challenge)
++1 Replay/share motivation
++1 Hashtag/topic strategy
++1 Posting cadence match (first push / follow-up / series)
+```
+
+**Q7 SeedanceReliability (0-5)**
+
+```
++1 Visual subjects ≤3
++1 No precise on-screen text/numbers/QR codes
++1 Actions ≤3 steps
++1 Simple lighting/weather
++1 Product display natural, not jarring
+```
+
+**Q8 EmotionalImpact (0-5)**
+
+```
++1 Hook Emotional Impact:
+   First 0.5s frame contains physics-law violation, counter-intuitive motion,
+   or extreme situation. Principle: event's PHYSICAL nature must be abnormal,
+   not merely situationally frightening.
+   ✅ "water retreats from lips" (liquid active movement = physics violation)
+   ✅ "crate falls from sky" (sourceless object = counter-intuitive)
+   ✅ "pebble bounces against wind" (object against wind = physics violation)
+   ❌ "flashlight dies" (battery depletion = normal)
+   ❌ "wind blows dust" (normal environment)
+   ❌ "bottle rolls out of crate" (object rolling = normal physics)
+
++1 Emotion Peaks ≥3:
+   Effective emotion segments ≥3 in 15 seconds.
+   Types: shock | fear | curiosity | hope | warmth | heartbreak |
+          satisfaction | unease | relief | calm
+   Note: low differentiation, supplemented by EAD continuous metric.
+
++1 Character Choice:
+   Character actively makes "could have done otherwise but chose this" decision.
+   ✅ "raises to lips → stops → lets go" (giving up = choice)
+   ✅ "points toward empty ridge, not smoke" (direction = choice)
+   ✅ "tugs rope, resists" (resistance = choice)
+   ❌ "filters muddy water, drinks" (only option = not choice)
+   ❌ "grips speaker" (fear reaction = not choice)
+   ❌ "stands still" (freezing = not choice)
+
++1 Ending Suspense:
+   Last sentence contains "viewer-unexpected behaviour" or
+   "unexplainable visual element".
+   ✅ "she doesn't drink" / "crate lid rises" / "shadow moves but she doesn't"
+   ❌ "wind dies down" / "screen goes still"
+
++1 Emotion Arc Non-Monotonic:
+   First 1/3 and last 1/3 have different dominant emotions.
+   ✅ "fear → curiosity → fear" (ups and downs)
+   ❌ "fear → unease → fear" (unease ≈ fear variant, no real change)
+```
+
+---
+
+**Q9 AudioQuality (0-5)** [v3.6 NEW]
+
+```
++1 Ambient Sound / SFX Matches Visuals:
+   Described sound events semantically align with visible frames.
+   ✅ "metal clang" corresponds to "she strikes metal surface"
+   ❌ "ocean waves" in "indoor enclosed scene"
+
++1 Clear Audio Layering:
+   Primary (dialogue/voiceover) > SFX > background music, distinct layers.
+   Seedance-executable: doesn't require multi-track mixing, but Prompt
+   should imply sound priority.
+
++1 Emotion-Supporting Audio:
+   Sound effects enhance key emotion nodes (tension → low freq,
+   release → high freq / silence).
+   ✅ "the silence after the click" (silence = release)
+   ✅ "a low hum rises" (low freq = tension)
+
++1 Audio Rhythm Synced with Visual Cuts:
+   Sound change points align temporally with visual change points.
+   ✅ "the cap pops — the liquid bursts out" (synchronous)
+   ❌ "music continues over the product reveal" (no sync point)
+
++1 Audio Description Seedance-Compatible:
+   All audio elements are naturally generable ambient/environmental
+   sounds by Seedance, not dependent on post-designed synthesised audio.
+   ✅ "wind hisses through cracks" / "metal clinks"
+   ❌ "a four-tone sequence plays" / "a synthesised voice says"
+```
+
+---
+
+### 8-C. Dynamic Weights (v3.6)
+
+```
+Base Weights (9 dimensions):
+  Q1=0.14  Q2=0.14  Q3=0.09  Q4=0.09  Q5=0.11
+  Q6=0.08  Q7=0.08  Q8=0.20  Q9=0.07
+
+  Q8 = highest weight (creative impact is core differentiator)
+  Q9 = new, conservative default 0.07
+
+Usage: WeaknessVector / repair priority only.
+       SS uses four-domain fixed weights (0.35/0.25/0.25/0.15).
+       Dynamic weights do NOT enter U_domain.
+```
+
+**Adjustment Tables:**
+
+```
+Category Δ:
+  F (all): none
+  B (beauty): Q1+0.02 Q2-0.02 Q3+0.02 Q5-0.02
+  T (tech):   Q1-0.02 Q2+0.02 Q3-0.02 Q5+0.02
+  L (lifestyle): Q3+0.02 Q4+0.02 Q5-0.02
+  A (audio-sensitive, e.g. ASMR/music/podcast): Q9+0.04 Q3+0.01  [v3.6 NEW]
+
+Market Δ:
   US: Q1+0.03 Q4+0.02
-  SEA: 无调整
+  SEA: none
   EU: Q1-0.02 Q2+0.02
 
-价格 Δ:
+Price Δ:
   ≤$15: Q1+0.03 Q2-0.02 Q4+0.02
-  $15-50: 无调整
+  $15-50: none
   $50+: Q1-0.02 Q2+0.03 Q4-0.02
 
-模式 Δ:
-  标准: 无调整
-  强搜索: Q1-0.02 Q4+0.02 Q8+0.02
+Mode Δ:
+  Standard: none
+  Strong Search: Q1-0.02 Q4+0.02 Q8+0.02
+  Lite: Q8-0.02 Q9-0.01                               [v3.6 NEW]
+  Turbo: Q8+0.01 Q9+0.01                              [v3.6 NEW]
 ```
 
-**计算（v3.5 五步规则）**：
+**Computation (v3.6 six-step rules):**
 
 ```
 1. raw_i = base_i + Δcategory + Δmarket + Δprice + Δmode
 
-2. 初次归一化: w_i = raw_i / Σ(raw)
+2. Initial normalisation: w_i = raw_i / Σ(raw)
 
-3. clamp: 每个 w_i 限制在 [0.08, 0.30]
+3. Clamp: each w_i limited to [0.06, 0.30]
 
-4. 若 clamp 后 Σ(w_i) ≠ 1:
-   - 计算差额 = 1.00 - Σ(w_i)
-   - 差额按未触底/未触顶维度的当前权重比例再分配
-   - 再分配后再次检查 [0.08, 0.30]
-   - 重复直到 Σ = 1.00 或所有维度均触边
+4. If Σ(w_i) ≠ 1 after clamp:
+   - Calculate deficit = 1.00 - Σ(w_i)
+   - Redistribute deficit proportionally to non-boundary dimensions
+   - Re-check [0.06, 0.30]
+   - Repeat until Σ = 1.00 or all dimensions hit boundary
 
-5. 动态权重仅用于 WeaknessVector / 修复优先级，不直接进入 U_domain。
+5. Dynamic weights used for WeaknessVector / repair priority only.
+   Do NOT enter U_domain.
+
+6. Report: base + Δ + normalised (for transparency)
 ```
 
 ---
 
-### 8.3 四域效用（v3.5）
+### 8-D. Four-Domain Utility (v3.6)
 
 ```
 q_i = Q_i / 5
@@ -704,133 +794,122 @@ q_i = Q_i / 5
 U_creative  = (q1 × q4 × q8)^(1/3)
 U_product   = sqrt(q2 × q3)
 U_execution = sqrt(q5 × q7)
-U_delivery  = q6
+U_delivery  = sqrt(q6 × q9)            [v3.6: was q6 alone]
 
 U_domain = 0.35 × U_creative
          + 0.25 × U_product
          + 0.25 × U_execution
          + 0.15 × U_delivery
 
-Q8 对 U_creative 的影响:
-  Q8=1 (q8=0.2): U_creative = 0.585  ← 重创
-  Q8=2 (q8=0.4): U_creative = 0.737  ← 显著拉低
-  Q8=3 (q8=0.6): U_creative = 0.843  ← 中等
-  Q8=4 (q8=0.8): U_creative = 0.928  ← 接近满分
-  Q8=5 (q8=1.0): U_creative = 1.000  ← 满分
+Q8 Impact on U_creative:
+  Q8=1 (q8=0.2): U_creative = 0.585  ← devastating
+  Q8=2 (q8=0.4): U_creative = 0.737  ← significantly low
+  Q8=3 (q8=0.6): U_creative = 0.843  ← moderate
+  Q8=4 (q8=0.8): U_creative = 0.928  ← near perfect
+  Q8=5 (q8=1.0): U_creative = 1.000  ← perfect
 
-几何均值三元: Q1、Q4、Q8 中任何一个短板都拉低 U_creative。
+Q9 Impact on U_delivery: [v3.6 NEW]
+  Q9=1 (q9=0.2): U_delivery = sqrt(0.8×0.2) = 0.400  ← devastating
+  Q9=3 (q9=0.6): U_delivery = sqrt(0.8×0.6) = 0.693  ← moderate
+  Q9=5 (q9=1.0): U_delivery = sqrt(0.8×1.0) = 0.894  ← strong
+  (assuming Q6=4, q6=0.8 for illustration)
+
+Geometric means: any single shortcoming in the pair drags down the domain.
 ```
 
 ---
 
-### 8.4 门控乘数（v3.5）
+### 8-E. Gate Multipliers (v3.6)
 
 ```
 G_hook:
-  Q1≥4 → 1.00
-  Q1=3 → 0.85
-  Q1≤2 → 0.65
+  Q1≥4 → 1.00 | Q1=3 → 0.85 | Q1≤2 → 0.65
 
 G_product:
-  Q2≥4 → 1.00
-  Q2=3 → 0.85
-  Q2≤2 → 0.65
+  Q2≥4 → 1.00 | Q2=3 → 0.85 | Q2≤2 → 0.65
 
 G_reliability:
-  Q7≥4 → 1.00
-  Q7=3 → 0.85
-  Q7≤2 → 0.70
+  Q7≥4 → 1.00 | Q7=3 → 0.85 | Q7≤2 → 0.70
 
 G_market:
-  ✅ → 1.00
-  ⚠️ → 0.85
-  ❌ → 0.65
+  ✅ → 1.00 | ⚠️ → 0.85 | ❌ → 0.65
 
 G_nopost:
-  NoPost 不激活 → 1.00
-  NoPost 激活:
-    FinalNoPostGate ≥ 0.85 → 1.00
+  NoPost not activated → 1.00
+  NoPost activated:
+    FinalNoPostGate ≥ 0.85  → 1.00
     FinalNoPostGate 0.70-0.84 → 0.90
     FinalNoPostGate 0.50-0.69 → 0.75
-    FinalNoPostGate < 0.50 → 0.50
+    FinalNoPostGate < 0.50   → 0.50
 
-G_gate = G_hook × G_product × G_reliability × G_market × G_nopost
+G_audio: [v3.6 NEW]
+  Q9≥4 → 1.00 | Q9=3 → 0.92 | Q9≤2 → 0.80
+
+G_gate = G_hook × G_product × G_reliability × G_market
+         × G_nopost × G_audio
 ```
 
 ---
 
-### 8.5 MarketFit
+### 8-F. MarketFit
 
 ```
-US: 主流✅ / 争议⚠️ / 敏感❌
-SEA: 主流✅ / 争议⚠️ / 敏感❌
-EU: 主流✅ / 争议⚠️ / 敏感❌
+US:  mainstream ✅ / controversial ⚠️ / sensitive ❌
+SEA: mainstream ✅ / controversial ⚠️ / sensitive ❌
+EU:  mainstream ✅ / controversial ⚠️ / sensitive ❌
 ```
 
 ---
 
-### 8.6 风险折扣（v3.5）
+### 8-G. Risk Discount (v3.6)
 
 ```
 RiskLoadWeights: N1=0.20 N4=0.15 N5=0.10 N6=0.10 N7=0.10
-权重和 = 0.65
+Sum = 0.65
 
 RiskLoad = (0.20×N1 + 0.15×N4 + 0.10×N5 + 0.10×N6 + 0.10×N7) / 10
 Floor to 0.10
 
-R_risk 查表:
-  0.00 → 1.000
-  0.10 → 0.975
-  0.20 → 0.951
-  0.30 → 0.928
-  0.40 → 0.905
-  0.50 → 0.882
-  0.60 → 0.861
-  0.70 → 0.839
-  0.80 → 0.819
-  0.90 → 0.799
-  1.00 → 0.779
+R_risk lookup:
+  0.00→1.000  0.10→0.975  0.20→0.951  0.30→0.928  0.40→0.905
+  0.50→0.882  0.60→0.861  0.70→0.839  0.80→0.819  0.90→0.799
+  1.00→0.779
 ```
 
 ---
 
-### 8.7 饱和奖励（v3.5）
+### 8-H. Saturation Bonus (v3.6)
 
 ```
 BonusPoints:
-  EnablerProduct=+2 EarlyProductReveal=+1 StrongReplayEgg=+1
-  BrandNaturalness=+1 ScreenshotMoment=+1 HandInteraction2Plus=+1
-  CTAClear=+1 LaunchAssetComplete=+1
+  EnablerProduct=+2  EarlyProductReveal=+1  StrongReplayEgg=+1
+  BrandNaturalness=+1  ScreenshotMoment=+1  HandInteraction2Plus=+1
+  CTAClear=+1  LaunchAssetComplete=+1
+  AudioVisualSync=+1  [v3.6 NEW — Q9 driven]
 
-B_bonus 查表:
-  0 → 1.000
-  1 → 1.019
-  2 → 1.035
-  3 → 1.048
-  4 → 1.056
-  5 → 1.060
-  6+ → 1.060
+B_bonus lookup:
+  0→1.000  1→1.019  2→1.035  3→1.048  4→1.056  5→1.060  6+→1.060
 ```
 
 ---
 
-### 8.8 线性惩罚
+### 8-I. Linear Penalties
 
 ```
-CommercialPenalty: D1/D2/D7 🟡 数量 × 5
-StuffingPenalty: 堆砌 × 3
-AdLikenessPenalty: 广告腔 × 2
-OverExplainedPenalty: 过度解释 × 2
+CommercialPenalty: D1/D2/D7 🟡 count × 5
+StuffingPenalty:   stacking × 3
+AdLikenessPenalty: ad-tone × 2
+OverExplainedPenalty: over-explained × 2
 CriticFailPenalty: CriticPass<3 × 3
 
 P_penalty = 5×CP + 3×S + 2×A + 2×O + 3×CF
 
-重叠检查: CP 和 S/A/O 不重复计分。
+Overlap check: CP and S/A/O not double-counted.
 ```
 
 ---
 
-### 8.9 StructureScore
+### 8-J. StructureScore
 
 ```
 StructureScore = clamp(100 × U_domain × G_gate × R_risk × B_bonus − P_penalty, 0, 100)
@@ -838,352 +917,374 @@ StructureScore = clamp(100 × U_domain × G_gate × R_risk × B_bonus − P_pena
 
 ---
 
-### 8.10 ConfidenceFactor（v3.5）
+### 8-K. ConfidenceFactor (v3.6)
 
 ```
-CF = C_exec^0.15 × C_map^0.10 × C_score^0.10 × C_coh^0.10
-   × C_gen^0.15 × C_input^0.10 × C_emotional^0.15 × C_series^0.15
+CF = C_exec^0.12 × C_map^0.10 × C_score^0.10 × C_coh^0.10
+   × C_gen^0.10 × C_input^0.08 × C_emotional^0.12
+   × C_audio^0.10 × C_series^0.13 × C_alignment^0.05
+                                          [v3.6: 10 components]
 
-分项:
+Components:
   C_exec: Y_total=0→1.00 | 1-3→0.93 | 4-6→0.85 | 7-9→0.75 | ≥10→0.60
-  C_map: D全🟢→0.90 | 含🟡→0.85 | 含🔴→0.75 | 全🔴→0.60
-  C_score: 前两名差距≥5→0.95 | <5→0.85 | <3→0.75
-  C_coh: 自检3/3✓→1.00 | 2/3→0.90 | 1/3→0.80 | 0/3→0.70
-  C_gen: Q7≥4→1.00 | Q7=3→0.90 | Q7=2→0.80 | Q7=1→0.70
-  C_input: ICS≥9→1.00 | ICS=7-8→0.90 | ICS=5-6→0.80 | ICS≤4→0.70
+  C_map:  D all 🟢→0.90 | has 🟡→0.85 | has 🔴→0.75 | all 🔴→0.60
+  C_score: Top2 gap ≥5→0.95 | <5→0.85 | <3→0.75
+  C_coh:  Self-check 3/3✓→1.00 | 2/3→0.90 | 1/3→0.80 | 0/3→0.70
+  C_gen:  Q7≥4→1.00 | 3→0.90 | 2→0.80 | 1→0.70
+  C_input: ICS≥9→1.00 | 7-8→0.90 | 5-6→0.80 | ≤4→0.70
   C_emotional: Q8=5→1.00 | 4→0.90 | 3→0.80 | ≤2→0.70
-  C_series: 未激活→1.00 | SC=4→1.00 | 3→0.90 | 2→0.80 | ≤1→0.70
+  C_audio: Q9=5→1.00 | 4→0.90 | 3→0.80 | 2→0.70 | 1→0.60  [v3.6 NEW]
+  C_series: not activated→1.00 | SC=4→1.00 | 3→0.90 | 2→0.80 | ≤1→0.70
+  C_alignment: MMAC=5/5→1.00 | 4/5→0.95 | 3/5→0.85 | 2/5→0.75 | ≤1→0.60
+                                                  [v3.6 NEW]
 
-幂函数查表:
-  x^0.10: 0.60→0.950 | 0.70→0.965 | 0.75→0.972 | 0.80→0.978 | 0.85→0.984 | 0.90→0.990 | 0.95→0.995 | 1.00→1.000
-  x^0.15: 0.60→0.926 | 0.70→0.949 | 0.75→0.959 | 0.80→0.967 | 0.85→0.977 | 0.90→0.985 | 0.95→0.993 | 1.00→1.000
+Power function lookup:
+  x^0.08: 0.60→0.950 | 0.70→0.964 | 0.80→0.978 | 0.90→0.990 | 1.00→1.000
+  x^0.10: 0.60→0.950 | 0.70→0.965 | 0.75→0.972 | 0.80→0.978 | 0.85→0.984
+          | 0.90→0.990 | 0.95→0.995 | 1.00→1.000
+  x^0.12: 0.60→0.939 | 0.70→0.958 | 0.80→0.974 | 0.90→0.988 | 1.00→1.000
+  x^0.13: 0.60→0.935 | 0.70→0.955 | 0.80→0.972 | 0.90→0.986 | 1.00→1.000
+  x^0.15: 0.60→0.926 | 0.70→0.949 | 0.75→0.959 | 0.80→0.967 | 0.85→0.977
+          | 0.90→0.985 | 0.95→0.993 | 1.00→1.000
 
-CF 不再 floor to 0.10。
-CF 原始乘积保留两位小数报告。
+CF not floor. Raw product reported to two decimal places.
 CF_final = max(CF_raw, 0.70)
-示例: CF_raw = 0.918 → CF = 0.92
-     CF_raw = 0.969 → CF = 0.97
-CF 不参与 SS 计算，仅作为评分可靠性参考。
+CF does NOT participate in SS, reliability reference only.
 ```
 
 ---
 
-### 8.11 HeuristicUncertainty（v3.5）
+### 8-L. HeuristicUncertainty (v3.6)
 
 ```
 HU = ± sqrt(σ_feature² + σ_generation² + σ_market²
           + σ_delivery² + σ_nopost² + σ_input²
-          + σ_emotional² + σ_rendering²)
+          + σ_emotional² + σ_audio² + σ_rendering² + σ_alignment²)
+                                                  [v3.6: 10 components]
 
-σ 分项:
-  σ_feature: 前两名差距≥5→±2 | <5→±3 | <3→±4
-  σ_generation: Q7≥4→±1 | Q7=3→±2 | Q7=2→±3 | Q7=1→±4
-  σ_market: ✅→±1 | ⚠️→±3 | ❌→±5
-  σ_delivery: Q6≥4→±1 | Q6=3→±2 | Q6=2→±3 | Q6=1→±4
-  σ_nopost: FinalNoPostGate≥0.85→±1 | 0.70-0.84→±3 | 0.50-0.69→±5 | <0.50→±7
-  σ_input: ICS≥9→±1 | ICS=7-8→±2 | ICS=5-6→±3 | ICS≤4→±4
-  σ_emotional: Q8=5→±1 | 4→±2 | 3→±3 | ≤2→±4
-  σ_rendering: PRC≥0.85→±1 | 0.70-0.84→±2 | 0.50-0.69→±3 | <0.50→±4
+σ Components:
+  σ_feature:    Top2 gap ≥5→±2 | <5→±3 | <3→±4
+  σ_generation: Q7≥4→±1 | 3→±2 | 2→±3 | 1→±4
+  σ_market:     ✅→±1 | ⚠️→±3 | ❌→±5
+  σ_delivery:   Q6≥4→±1 | 3→±2 | 2→±3 | 1→±4
+  σ_nopost:     FinalNoPostGate≥0.85→±1 | 0.70-0.84→±3 | 0.50-0.69→±5 | <0.50→±7
+  σ_input:      ICS≥9→±1 | 7-8→±2 | 5-6→±3 | ≤4→±4
+  σ_emotional:  Q8=5→±1 | 4→±2 | 3→±3 | ≤2→±4
+  σ_audio:      Q9=5→±1 | 4→±2 | 3→±3 | 2→±4 | 1→±5    [v3.6 NEW]
+  σ_rendering:  PRC≥0.85→±1 | 0.70-0.84→±2 | 0.50-0.69→±3 | <0.50→±4
+  σ_alignment:  MMAC=5/5→±1 | 4/5→±2 | 3/5→±3 | ≤2/5→±4  [v3.6 NEW]
 
-σ 合成查表:
-  σ² 1-4 → ±2 | 5-9 → ±3 | 10-16 → ±4 | 17-25 → ±5 | 26-36 → ±6 | 37-49 → ±7 | 50-64 → ±8
+σ synthesis lookup:
+  σ² 1-4→±2 | 5-9→±3 | 10-16→±4 | 17-25→±5 | 26-36→±6 | 37-49→±7 | 50-64→±8
 ```
 
 ---
 
-## 九、EmotionalArcDensity
+## IX. EmotionalArcDensity
 
-### 9.1 定义
+### 9.1 Definition
 
 ```
-EAD = 有效情绪段数量 / 15
+EAD = effective emotion segment count / 15
 
-有效情绪段: 每当主导情绪类型发生切换，新段开始。
-  同一情绪类型重复出现（被其他情绪打断后）算作新段。
-  同一情绪类型连续出现不计为新段。
+Effective emotion segment: starts when dominant emotion type switches.
+  Same emotion re-appearing (after interruption by another) = new segment.
+  Same emotion appearing consecutively = NOT a new segment.
 
-情绪类型枚举（10 种）:
-  震惊 | 恐惧 | 好奇 | 希望 | 温暖 | 心碎 | 满足 | 不安 | 释然 | 平静
+Emotion type enumeration (10 types):
+  shock | fear | curiosity | hope | warmth | heartbreak
+  satisfaction | unease | relief | calm
 ```
 
-### 9.2 分级
+### 9.2 Grading
 
-| EAD | 段数/15s | 等级 | 动作 |
+| EAD | Segments/15s | Grade | Action |
 |:--|:--|:--|:--|
-| ≥0.33 | ≥5 | 极强 | 无 |
-| 0.27 | 4 | 强 | 可选增强 |
-| 0.20 | 3 | 中等 | 触发增强 |
-| 0.13 | 2 | 弱 | 触发重写 |
-| ≤0.07 | ≤1 | 极弱 | 强制重写 |
+| ≥0.33 | ≥5 | Extremely strong | None |
+| 0.27 | 4 | Strong | Optional enhancement |
+| 0.20 | 3 | Moderate | Trigger enhancement |
+| 0.13 | 2 | Weak | Trigger rewrite |
+| ≤0.07 | ≤1 | Extremely weak | Force rewrite |
 
 ### 9.3 LongFlatPenalty
 
 ```
-若存在 ≥6 秒连续同一情绪段 → EAD 等级下调一级
-若存在 ≥8 秒连续同一情绪段 → 强制触发 Enhance
+If ≥6 seconds continuous same-emotion segment → EAD grade drops one level
+If ≥8 seconds continuous same-emotion segment → Force Enhance
 ```
 
-### 9.4 诊断映射
+### 9.4 Diagnostic Mapping
 
 ```
-当 EAD < 0.33 时:
-  Step 1: 标记最长连续同情绪段落（≥4 秒）
-  Step 2: 该段落主导情绪
-  Step 3: 插入什么情绪切换
+When EAD < 0.33:
+  Step 1: Mark longest continuous same-emotion segment (≥4s)
+  Step 2: Its dominant emotion
+  Step 3: What emotion switch to insert
 
-  长段=满足/平静 → 插入"心碎"或"恐惧"
-  长段=恐惧      → 插入"希望"或"温暖"
-  长段=好奇      → 插入"震惊"或"恐惧"
-  长段=希望      → 插入"心碎"
+  Segment=satisfaction/calm → insert "heartbreak" or "fear"
+  Segment=fear             → insert "hope" or "warmth"
+  Segment=curiosity        → insert "shock" or "fear"
+  Segment=hope             → insert "heartbreak"
 ```
 
 ---
 
-## 十、ShowDontTell 规则
+## X. ShowDontTell Rules
 
-### R10：否定空间关系
+### R10: Negative Spatial Relations
 
 ```
-触发: "not at X" / "not toward X" / "away from X" / "opposite to X" / "instead of X"（空间方向时）
-不触发: "empty" / "bare" / "still"（状态描述）/ "already looking left"（正向方向）
-类型: RepairableRed
-优先级: 高
+Trigger: "not at X" / "not toward X" / "away from X" / "opposite to X" /
+         "instead of X" (spatial direction context)
+No trigger: "empty" / "bare" / "still" (state descriptions) /
+            "already looking left" (positive direction)
+Type: RepairableRed
+Priority: High
 
-替换模板:
+Replacement Templates:
   "not at X, but at Y" → "pointing toward Y — X visible in the other direction"
-  "away from X" → 删除，用正向目标 + "X rising behind her shoulder"
-  "instead of X" → 用动作对比（"she steps left — the right path stays empty"）
+  "away from X" → delete, use positive target + "X rising behind her shoulder"
+  "instead of X" → action contrast ("she steps left — the right path stays empty")
 ```
 
-### R11：抽象形状描述
+### R11: Abstract Shape Descriptions
 
 ```
-触发: "shaped like X" / "X-shaped" / "resembling X"（抽象概念时）
-不触发: 具象物体/材质/简单几何/可见状态
-类型: StyleRed（扣分不阻断）
-优先级: 中
+Trigger: "shaped like X" / "X-shaped" / "resembling X" (abstract concept)
+No trigger: concrete objects / materials / simple geometry / visible states
+Type: StyleRed (deduct, doesn't block)
+Priority: Medium
 
-替换模板:
-  "shaped like X" → 光线/运动/材质替代形状
+Replacement Templates:
+  "shaped like X" → light / motion / material replaces shape
   "X-shaped crack" → "a crack with light at one end"
 ```
 
-### R12：角色内心独白
+### R12: Character Inner Monologue
 
 ```
-触发: "she realizes" / "she understands" / "they recognize" / "she feels X" / 解释性后缀
-不触发: 可见身体反应/可见动作/可见状态
-类型: RepairableRed
-优先级: 中
+Trigger: "she realizes" / "she understands" / "they recognize" /
+         "she feels X" / explanatory suffixes
+No trigger: visible body reactions / visible actions / visible states
+Type: RepairableRed
+Priority: Medium
 
-替换模板:
-  "she realizes X" → 身体反应（"she looks at... then... then..."）
-  "they recognize X" → 同步动作（"both women turn toward each other"）
-  "she feels X" → 可见状态（"her hands tremble"）
-  解释性后缀 → 删除后缀，保留画面
+Replacement Templates:
+  "she realizes X" → body reaction ("she looks at... then... then...")
+  "they recognize X" → synchronous action ("both women turn toward each other")
+  "she feels X" → visible state ("her hands tremble")
+  Explanatory suffix → delete suffix, keep visual
 ```
 
 ---
 
-## 十一、运镜指令强制化（R13-R14）
+## XI. Camera Directive Enforcement (R13-R14)
 
 ```
-R13: 同一句 ≥2 个运镜指令 → StyleRed
-R14: 连续两句使用相同运镜指令 → StyleRed（扣分不阻断）
+R13: Same sentence ≥2 camera directives → StyleRed
+R14: Two consecutive sentences with same camera directive → StyleRed
 
-运镜指令表:
+Camera Directive Table:
   Close on / Push in / Pull back / Track / Pan / Tilt
   Hold / Drift / Follow / Rise / Drop / Circle
 
-规则: 每句必须包含至少一个。位于句首或嵌入句中。
-VEL 增强词后缀不构成运镜指令，不触发 R13。[v3.5 澄清]
+Rule: every sentence must contain at least one. At start or embedded.
+VEL suffix ≠ camera directive, does NOT trigger R13. [v3.5 clarified]
 ```
 
 ---
 
-## 十二、Seedance Rendering Confidence
+## XII. Seedance Rendering Confidence
 
-### 12.1 KVS 识别规则
-
-```
-每个满足以下任一条件的画面元素必须标记为 KVS:
-  1. 物理法则违反
-  2. 物体自行运动
-  3. 双人协调动作
-  4. 空间异常
-  5. 声音触发画面
-  6. 结尾彩蛋画面
-  7. 产品首次出现的特写
-```
-
-### 12.2 KVS 渲染置信度分级
+### 12.1 KVS Identification Rules
 
 ```
-🟢 高置信 (0.9):
-  物体运动 | 光源变化 | 手部交互 | 材质特写 | 机械运动
-  简单空间 | 静态对比
-
-🟡 中置信 (0.7):
-  液体动力学 | 双人协调动作 | 绳索运动 | 影子长度/方向
-  复杂空间 | 面部微表情
-
-🔴 低置信 (0.5):
-  POV 画面 | 影子精确转角/行走 | 文字/数字/二维码
-  微表情精确控制 | 精确数量物体 | 变形/融化/消失 | 声音可视化
+Every visual element meeting ANY of the following must be marked KVS:
+  1. Physics-law violation
+  2. Object self-movement
+  3. Dual-person coordinated action
+  4. Spatial anomaly
+  5. Sound-triggered visual
+  6. Ending easter-egg visual
+  7. Product first-appear close-up
 ```
 
-### 12.3 PRC 计算
+### 12.2 KVS Rendering Confidence Grading
+
+```
+🟢 High Confidence (0.9):
+  Object movement | Light source change | Hand interaction
+  Material close-up | Mechanical motion | Simple spatial | Static contrast
+
+🟡 Medium Confidence (0.7):
+  Liquid dynamics | Dual-person coordination | Rope motion
+  Shadow length/direction | Complex spatial | Facial micro-expression
+
+🔴 Low Confidence (0.5):
+  POV shot | Shadow precise turning/walking | Text/numbers/QR
+  Micro-expression precise control | Precise object count
+  Melting/dissolving/disappearing | Sound visualisation
+```
+
+### 12.3 PRC Computation
 
 ```
 PRC = (∏ KVS_confidence_i)^(1/n)
 
-PRC 查表: floor to 0.05
+PRC lookup: floor to 0.05
 
-分级:
-  PRC ≥ 0.85: 高置信 — 可直接生成
-  PRC 0.70-0.84: 中置信 — 建议准备兜底画面
-  PRC 0.50-0.69: 低置信 — 建议替换低置信 KVS
-  PRC < 0.50: 极低置信 — 强制替换或标注风险
+Grading:
+  PRC ≥ 0.85: High confidence — direct generation
+  PRC 0.70-0.84: Medium — prepare fallback frames
+  PRC 0.50-0.69: Low — recommend replacing low-confidence KVS
+  PRC < 0.50: Very low — force replace or flag risk
 ```
 
-### 12.4 PRC 与 Q7 的关系
+### 12.4 PRC vs Q7
 
 ```
-Q7 = 通用评估（画面主体/文字/动作/光线/产品）
-PRC = 具体视觉元素渲染置信度
+Q7 = general assessment (subjects/text/actions/lighting/product)
+PRC = specific visual element rendering confidence
 
-两者独立评估，不互相替代。
-PRC 不参与 StructureScore。
-PRC 用于: 快照标注 / 诊断定位 / Enhance 优先替换。
+Independent assessment, not substitutable.
+PRC does NOT participate in StructureScore.
+PRC used for: snapshot annotation / diagnostic targeting / Enhance priority.
 ```
 
 ---
 
-## 十三、SeriesCoherence
+## XIII. SeriesCoherence
 
-### 13.1 激活条件
+### 13.1 Activation
 
 ```
-SC 仅在以下任一条件满足时激活:
-  - 输入含 EP / Episode / 系列 / Season
-  - 用户提供前集摘要
-  - Prompt 明确属于连续剧情
+SC activates when ANY of:
+  - Input contains EP / Episode / 系列 / Season
+  - User provides previous-episode summary
+  - Prompt explicitly belongs to continuous storyline
 
-若系列模式激活但无前集摘要:
-  - SC 默认不参与 Winner Tie-breaker
+If series activated but no previous-episode summary:
+  - SC does NOT participate in Winner Tie-breaker
   - C_series = 1.00
-  - 输出标注: "系列上下文不足，SC 未激活"
+  - Output note: "Series context insufficient, SC not activated"
 ```
 
 ### 13.2 SC1-SC4
 
 ```
-SC1 系统能力递进（0/1）:
-  本集的"物件自行运动"类型是否与前集不同？
-  与任意前集重复=0 | 全新类型=1
+SC1 System Ability Progression (0/1):
+  Is this episode's "object self-movement" type different from any previous?
+  Repeats any previous = 0 | Entirely new type = 1
 
-SC2 视觉谜题差异（0/1）:
-  本集的彩蛋视觉是否与前集不同？
-  与前集同类型=0 | 全新视觉=1
+SC2 Visual Puzzle Difference (0/1):
+  Is this episode's easter-egg visual different from previous?
+  Same type as previous = 0 | New visual = 1
 
-SC3 角色关系发展（0/1）:
-  本集的双人关系是否有新动态？
-  与前集相同=0 | 新互动类型=1
+SC3 Character Relationship Development (0/1):
+  Does this episode have a new dual-person dynamic?
+  Same as previous = 0 | New interaction type = 1
 
-SC4 彩蛋→总线索连接（0/1）:
-  本集彩蛋是否推进了系列总悬念？
-  无关=0 | 推进=1
+SC4 Easter Egg → Master Plot Connection (0/1):
+  Does this episode's easter egg advance the series master suspense?
+  Unrelated = 0 | Advances = 1
 
 SeriesCoherenceScore = SC1 + SC2 + SC3 + SC4 (0-4)
 ```
 
-### 13.3 SC 用途
+### 13.3 SC Usage
 
 ```
-1. Winner Tie-breaker: SS 差距 <3 时，SC 更高优先（需有前集摘要）
-2. 修复触发: SC1=0 → "彩蛋类型替换" | SC3=0 → "角色互动类型替换"
-3. CF 分项: C_series
+1. Winner Tie-breaker: SS gap <3, higher SC priority (requires previous summary)
+2. Repair trigger: SC1=0 → "easter-egg type replacement"
+                   SC3=0 → "character interaction type replacement"
+3. CF component: C_series
 ```
 
 ---
 
-## 十四、NoPostGate / PostReady（v3.5）
+## XIV. NoPostGate / PostReady (v3.6)
 
 ### 14.1 NoPostGate
 
 ```
-NoPostRiskWeights: N1=0.20 N2=0.15 N3=0.10 N4=0.15 N5=0.10 N6=0.10 N7=0.10 N8=0.10
-权重和 = 1.00
+NoPostRiskWeights:
+  N1=0.20 N2=0.15 N3=0.10 N4=0.15 N5=0.10 N6=0.10 N7=0.10 N8=0.10
+  Sum = 1.00
 
 NoPostRiskLoad = (0.20×N1 + 0.15×N2 + 0.10×N3 + 0.15×N4
                 + 0.10×N5 + 0.10×N6 + 0.10×N7 + 0.10×N8) / 10
 Floor to 0.10
 
-BaseNoPostGate 查表:
-  0.00 → 1.00
-  0.10 → 0.93
-  0.20 → 0.86
-  0.30 → 0.80
-  0.40 → 0.74
-  0.50 → 0.69
-  0.60 → 0.64
-  0.70 → 0.59
-  0.80 → 0.55
-  0.90 → 0.51
-  1.00 → 0.47
+BaseNoPostGate lookup:
+  0.00→1.00  0.10→0.93  0.20→0.86  0.30→0.80  0.40→0.74
+  0.50→0.69  0.60→0.64  0.70→0.59  0.80→0.55  0.90→0.51
+  1.00→0.47
 Floor to 0.10
 
-Cap Rules（v3.5 完整表）:
-  若视频内需要清晰品牌名 → NoPostGate ≤ 0.85
-  若视频内需要清晰 Logo → NoPostGate ≤ 0.75
-  若视频内需要准确价格 → NoPostGate ≤ 0.70
-  若视频内需要准确 URL/优惠码/二维码 → NoPostGate ≤ 0.50
-  若 CTA 只存在于视频内 → NoPostGate ≤ 0.50
-  若出现 post-production / reserved for post-production text → NoPostGate ≤ 0.60 且 NoPostReady=false
-  若黑底卡文字必须由模型生成 → NoPostGate ≤ 0.75
-  若品牌识别只依赖包装文字或 Logo → NoPostGate ≤ 0.75
-  若产品功能违反常识或不可验证 → NoPostGate ≤ 0.50
-  若涉及监管敏感声明 → NoPostGate ≤ 0.50
-  若核心叙事转折依赖后期音频设计 → NoPostGate ≤ 0.80
+Cap Rules (v3.6 complete):
+  If video needs clear brand name           → NoPostGate ≤ 0.85
+  If video needs clear Logo                 → NoPostGate ≤ 0.75
+  If video needs exact price                → NoPostGate ≤ 0.70
+  If video needs exact URL/promo/QR         → NoPostGate ≤ 0.50
+  If CTA only exists in video               → NoPostGate ≤ 0.50
+  If appears "post-production" / "reserved for post-production text"
+                                              → NoPostGate ≤ 0.60, NoPostReady=false
+  If black-card text must be model-generated → NoPostGate ≤ 0.75
+  If brand identification depends only on packaging text/Logo
+                                              → NoPostGate ≤ 0.75
+  If product function violates common sense or unverifiable
+                                              → NoPostGate ≤ 0.50
+  If involves regulatory-sensitive claims    → NoPostGate ≤ 0.50
+  If core narrative twist depends on post audio design
+                                              → NoPostGate ≤ 0.80
 
-NarrativeAudioDependencyCap 判定:
-  核心叙事转折 = 如果移除音频，故事无法理解或恐怖感大幅降低
-  后期音频设计 = 需要人工设计/合成的声音，非 Seedance 自然生成的环境音
-  ✅ 适用: "音箱播放四段环境声序列+说出名字" / "音箱播放她们走过的路的声音"
-  ❌ 不适用: 水流声/金属声/风声/咔嗒声（Seedance 自然生成的环境音）
+NarrativeAudioDependencyCap determination:
+  Core narrative twist = if audio removed, story incomprehensible or
+                         horror greatly reduced
+  Post audio design = needs human-designed/synthesised sound, NOT
+                      Seedance naturally-generated ambient
+  ✅ Applies: "speaker plays four ambient sequences + says name"
+  ❌ Doesn't apply: water/metal/wind/click sounds (Seedance natural)
+
+  Q9 assistance: [v3.6 NEW]
+    Q9≥4 AND N6≤3 → NarrativeAudioCap NOT triggered
+    Q9≤2 AND N6≥6 → NarrativeAudioCap triggered
+    Otherwise → standard determination
 
 FinalNoPostGate = min(BaseNoPostGate, all triggered caps)
 
-NoPostReady 判定（全部满足）:
+NoPostReady determination (ALL must be met):
   1. FinalNoPostGate ≥ 0.85
   2. NoPostRiskMax ≤ 3
-  3. N1-N8 全部 ≤ 3
+  3. N1-N8 all ≤ 3
   4. Q7 ≥ 4
-  5. D1 ≥ 🟡
-  6. D2 ≥ 🟡
-  7. D7 ≥ 🟡
-  8. Prompt 不含 post-production 后期指令
-  9. 视频内不需精准价格/URL/优惠码
-  10. 视频内文字失败不影响发布
+  5. Q9 ≥ 3                          [v3.6 NEW]
+  6. D1 ≥ 🟡
+  7. D2 ≥ 🟡
+  8. D7 ≥ 🟡
+  9. Prompt contains no post-production instructions
+  10. No exact price/URL/promo needed in video
+  11. On-screen text failure doesn't affect publishing
 
 ClaimLevel:
-  A = FinalNoPostGate ≥ 0.85 且 NoPostReady=true
-      → "可尝试一次生成后直接发布，仍建议人工检查。"
+  A = FinalNoPostGate ≥ 0.85 AND NoPostReady=true
+      → "Can attempt direct publish after one generation. Still recommend human check."
   B = FinalNoPostGate 0.70-0.84
-      或 FinalNoPostGate ≥ 0.85 但 NoPostReady=false
-      → "低后期依赖，视频主体大概率可用，文字/品牌/CTA/价格/音频建议外部兜底。"
+      OR FinalNoPostGate ≥ 0.85 but NoPostReady=false
+      → "Low post-dependency, video body mostly usable. Text/brand/CTA/price/audio建议外部兜底。"
   C = FinalNoPostGate 0.50-0.69
-      → "不适合承诺无需后期，至少需要补 CTA/品牌/价格/合规/音频。"
-  D = FinalNoPostGate < 0.50 或存在硬依赖
+      → "不适合承诺无需后期. At minimum needs CTA/brand/price/compliance/audio."
+  D = FinalNoPostGate < 0.50 or hard dependency
       → "不得承诺无需后期。"
 ```
 
 ### 14.2 PostReady
 
 ```
-PostReadyScore = (0.20×P1 + 0.20×P2 + 0.15×P3 + 0.15×P4 + 0.15×P5 + 0.15×P6) / 5 × 100
+PostReadyScore = (0.20×P1 + 0.20×P2 + 0.15×P3
+                 + 0.15×P4 + 0.15×P5 + 0.15×P6) / 5 × 100
 
-PostReady 判定（全部满足）:
+PostReady determination (ALL must be met):
   1. PostReadyScore ≥ 80
   2. P1 ≥ 4
   3. P2 ≥ 4
@@ -1191,1080 +1292,1440 @@ PostReady 判定（全部满足）:
   5. P4 ≥ 4
   6. P5 ≥ 4
   7. P6 ≥ 3
-  8. 无 FatalRed
-  9. D1/D2/D7 全部 ≥ 🟡
-  10. 有明确兜底路径
+  8. No FatalRed
+  9. D1/D2/D7 all ≥ 🟡
+  10. Clear fallback path exists
 
 ClaimLevel:
-  ≥95 → A: 强
-  80-94 → B: 合格
-  65-79 → C: 需修正
-  <65 → D: 需重做
+  ≥95 → A: Strong
+  80-94 → B: Pass
+  65-79 → C: Needs correction
+  <65 → D: Needs redo
 
-PostReadyScore 独立计算，不从 NoPostGate 推导。
+PostReadyScore computed independently, NOT derived from NoPostGate.
 ```
 
 ---
 
-## 十五、Score-Guided 候选搜索与收敛
+## XV. Score-Guided Candidate Search & Convergence
 
-### 15.1 核心原则
-
-```
-Score-Guided: 每次修改由低分项触发，复评后接受/回滚。
-NoPost 优先: NoPostReady=true 的候选优先于 NoPostReady=false 的高分候选。
-VEL: 增强词在候选生成后、评分前植入，不影响搜索逻辑。[v3.5 澄清]
-```
-
-### 15.2 硬淘汰（v3.5，11 条）
+### 15.1 Core Principles
 
 ```
-1. Q1 ≤ 2
-2. Q2 ≤ 2
-3. Q4 ≤ 2
-4. D1 = 🔴
-5. D2 = 🔴
-6. D7 = 🔴
-7. SS < 65
-8. 词数 < 80 或 > 185 [v3.5 修订: 从 180 调整为 185]
-9. FatalRed ≥ 1
-10. EAD ≤ 0.07（LongFlatPenalty 后）
-11. PRC < 0.50 且无兜底方案
-
-注: Q8 < 3 不再硬淘汰，改为强制 Repair/Enhance（见 §15.3）。
+Score-Guided: each modification triggered by lowest-score item,
+              re-scored, then accept/rollback.
+NoPost Priority: NoPostReady=true candidate prevails over higher-SS
+                 candidate with NoPostReady=false.
+VEL: enhanced words implanted after candidate generation, before scoring.
+     Does not affect search logic.
+CI: convergence index computed after each iteration for early termination.
 ```
 
-### 15.3 低分诊断映射表（v3.5 完整版）
+### 15.2 Hard Elimination (v3.6, 12 rules)
 
-**保留项（28 行，同 v3.4.1）**：
+```
+1.  Q1 ≤ 2
+2.  Q2 ≤ 2
+3.  Q4 ≤ 2
+4.  Q9 ≤ 1                              [v3.6 NEW]
+5.  D1 = 🔴
+6.  D2 = 🔴
+7.  D7 = 🔴
+8.  SS < 65
+9.  Word count < 80 or > 185
+10. FatalRed ≥ 1
+11. EAD ≤ 0.07 (after LongFlatPenalty)
+12. PRC < 0.50 AND no fallback plan
 
-| 触发条件 | 可编辑区域 | 修改动作 | 接受标准 |
+Note: Q8 < 3 is NO LONGER hard elimination.
+      Changed to force Repair/Enhance (see §15.3).
+```
+
+### 15.3 Low-Score Diagnostic Mapping Table (v3.6)
+
+**Retained (30 rows, extended from v3.5):**
+
+| Trigger | Editable Area | Action | Acceptance |
 |:--|:--|:--|:--|
-| Q1≤3 | 第 1-2 句 | 加声音事件+视觉冲突+动作动词 | Q1+1 或 D1↑ 且 Q7 不降 |
-| Q2≤3 | 第 2-4 句 | 产品提前到前 1/3，加细节 | Q2+1 或 D2↑ 且广告腔不增 |
-| Q3≤3 | 全文感官 | 加环境音/音效/材质/手部/微距 | Q3+1 且堆砌不增 |
-| Q4≤3 | 可截图画面+末句 | 强化截图/争议/首尾呼应/彩蛋 | Q4+1 |
-| Q5≤3 | 全文动作 | 减角色/场景/精确动作 | Q5+1 且红项不增 |
-| Q6≤3 | 结尾 CTA+投放 | 补 CTA 路径/标题/标签/评论/Bio | Q6+1 且 D7≥🟡 |
-| Q7≤3 | 全文复杂度 | 降文字依赖/精确动作/复杂光线 | Q7+1 且 NoPostGate 不降 |
-| N1≥6 | Prompt 文字描述 | 降视频内文字依赖 | N1→≤3 |
-| N3≥6 | 品牌植入 | 品牌改由产品外观识别 | N3→≤3 且 Q2 不降 |
-| N4≥6 | CTA 段落 | CTA 改为动作型 | N4→≤3 且 D7≥🟡 |
-| N5≥6 | 剪辑依赖 | 删除后期依赖 | N5→≤3 |
-| P1<4 | 叙事结构 | 强化转折/情绪弧/复播点 | P1→≥4 |
-| P2<4 | 产品展示 | 强化产品功能/材质/场景/转折条件 | P2→≥4 |
-| P3<3 | 生成可行性 | 降低后期依赖 | P3→≥3 |
-| P4<4 | CTA 路径 | 补充标题/Bio/评论/商品卡 | P4→≥4 |
-| Q8≤2 | Hook+中段+结尾 | Hook改为"不可能"事件；加角色选择；结尾改为不做预期动作 | Q8+1 |
-| Q8#1=0 | 第1句 | "正常现象"→"物理法则违反" | #1→1 |
-| Q8#3=0 | 中段 | 加入角色选择 | #3→1 |
-| Q8#4=0 | 最后1-2句 | 结尾改为不做预期动作 | #4→1 |
-| EAD<0.27 | 最长同情绪段(≥4s) | 插入情绪切换 | EAD→≥0.27 |
-| EAD LongFlat≥8s | 该段落 | 必须插入情绪切换 | LongFlat<6s |
-| EAD LongFlat≥6s | 该段落 | EAD 等级下调一级，建议插入切换 | — |
-| PRC<0.70 | 低置信KVS | 替换为高置信替代 | PRC→≥0.70 |
-| PRC<0.50 | 所有🔴KVS | 强制替换或标注风险 | PRC→≥0.50 |
-| R10触发 | 否定空间句 | "away from X"→"toward Y — X behind" | R10=0 |
-| R12触发 | 内心独白句 | "she realizes"→身体反应 | R12=0 |
-| SC1=0 | 彩蛋描述 | 替换为不同物件运动类型 | SC1→1 |
-| SC3=0 | 双人互动 | 替换为不同关系动态 | SC3→1 |
+| Q1≤3 | Sentences 1-2 | Add sound event + visual conflict + action verb | Q1+1 or D1↑ AND Q7 not down |
+| Q2≤3 | Sentences 2-4 | Product to first 1/3, add detail | Q2+1 or D2↑ AND ad-tone not up |
+| Q3≤3 | Full text sensory | Add ambient/tactile/hand/macro | Q3+1 AND stacking not up |
+| Q4≤3 | Screenshot frames + ending | Strengthen screenshot/twist/echo/egg | Q4+1 |
+| Q5≤3 | Full text actions | Reduce characters/scenes/precise actions | Q5+1 AND red items not up |
+| Q6≤3 | Ending CTA + delivery | Add CTA path/title/tag/comment/Bio | Q6+1 AND D7≥🟡 |
+| Q7≤3 | Full text complexity | Reduce text dependency/precise actions/complex light | Q7+1 AND NoPostGate not down |
+| Q9≤3 | Audio descriptions | Add sync points/layering/emotion audio | Q9+1 AND N5/N6 not up | [v3.6 NEW]
+| N1≥6 | Prompt text | Reduce on-screen text dependency | N1→≤3 |
+| N3≥6 | Brand placement | Brand via product appearance | N3→≤3 AND Q2 not down |
+| N4≥6 | CTA section | CTA to action-type | N4→≤3 AND D7≥🟡 |
+| N5≥6 | Edit dependency | Remove post dependency | N5→≤3 |
+| P1<4 | Narrative structure | Strengthen twist/emotion arc/replay | P1→≥4 |
+| P2<4 | Product display | Strengthen product function/material/scene | P2→≥4 |
+| P3<4 | Generation feasibility | Reduce post dependency | P3→≥3 |
+| P4<4 | CTA path | Add title/Bio/comment/product card | P4→≥4 |
+| Q8≤2 | Hook + mid + ending | Hook→"impossible" event; add choice; ending→unexpected | Q8+1 |
+| Q8#1=0 | Sentence 1 | "normal" → "physics-law violation" | #1→1 |
+| Q8#3=0 | Mid-section | Add character choice | #3→1 |
+| Q8#4=0 | Last 1-2 sentences | Ending→unexpected action | #4→1 |
+| Q9#1=0 | Audio-visual | Add sound-visual match | Q9#1→1 | [v3.6 NEW]
+| Q9#5=0 | Audio specs | Remove post-dependent audio | Q9#5→1 | [v3.6 NEW]
+| EAD<0.27 | Longest same-emotion segment (≥4s) | Insert emotion switch | EAD→≥0.27 |
+| EAD LongFlat≥8s | That segment | Must insert emotion switch | LongFlat<6s |
+| EAD LongFlat≥6s | That segment | EAD grade drops, suggest switch | — |
+| PRC<0.70 | Low-confidence KVS | Replace with high-confidence alternative | PRC→≥0.70 |
+| PRC<0.50 | All 🔴 KVS | Force replace or flag risk | PRC→≥0.50 |
+| R10 triggered | Negative spatial sentence | "away from X" → "toward Y — X behind" | R10=0 |
+| R12 triggered | Inner monologue sentence | "she realizes" → body reaction | R12=0 |
+| SC1=0 | Easter egg description | Replace with different object motion type | SC1→1 |
+| SC3=0 | Dual-person interaction | Replace with different relationship dynamic | SC3→1 |
+| MMAC≤2/5 | Cross-modal weak areas | Fix alignment in flagged dimensions | MMAC→≥3/5 | [v3.6 NEW]
 
-### 15.4 诊断优先级
+### 15.4 Diagnostic Priority
 
 ```
-P0: FatalRed (R1/R3)
-P1: R10 否定空间关系
-P2: Q8 ≤ 2（强制 Repair/Enhance）
-P3: EAD LongFlat ≥ 8s
-P4: D1/D2/D7 🔴
-P5: Q1/Q2 ≤ 3
-P6: R12 内心独白
-P7: PRC < 0.50
-P8: Q8#1=0
-P9: Q8#3=0
-P10: Q8#4=0
-P11: EAD < 0.27
-P12: PRC < 0.70
-P13: R11 抽象形状
-P14: SC1/SC3=0
-P15: PostReady 关键项不足
-P16: 自然度风险
+P0:  FatalRed (R1/R3)
+P1:  R10 negative spatial relations
+P2:  Q8 ≤ 2 (force Repair/Enhance)
+P3:  Q9 ≤ 1 (hard elimination)           [v3.6 NEW]
+P4:  EAD LongFlat ≥ 8s
+P5:  D1/D2/D7 🔴
+P6:  Q1/Q2 ≤ 3
+P7:  R12 inner monologue
+P8:  PRC < 0.50
+P9:  Q8#1=0
+P10: Q8#3=0
+P11: Q8#4=0
+P12: Q9#1=0                               [v3.6 NEW]
+P13: EAD < 0.27
+P14: PRC < 0.70
+P15: R11 abstract shape
+P16: SC1/SC3=0
+P17: PostReady key items insufficient
+P18: MMAC ≤ 2/5                           [v3.6 NEW]
+P19: CI stagnation ≥ 3 rounds             [v3.6 NEW]
+P20: Naturalness risk
 ```
 
 ### 15.5 Repair Loop
 
 ```
-每个候选最多 Repair 2 次
-每次最多替换 2 句
+Max Repair 2 per candidate
+Max 2 sentence replacements per Repair
 
-修复动作:
-  P1(R10): 否定空间→正向对比（≤2句）
-  P2(Q8≤2): Hook改"不可能"+加选择+改结尾（≤2句/次）
-  P3(LongFlat): 长段中插入情绪切换（≤1句）
-  P6(R12): 内心独白→身体反应（≤1句）
-  P7(PRC<0.50): 替换低置信KVS（≤1句）
+Repair Actions:
+  P1(R10): Negative spatial → positive contrast (≤2 sentences)
+  P2(Q8≤2): Hook→"impossible" + add choice + change ending (≤2 sentences/time)
+  P3(LongFlat): Insert emotion switch in long segment (≤1 sentence)
+  P6(R12): Inner monologue → body reaction (≤1 sentence)
+  P7(PRC<0.50): Replace low-confidence KVS (≤1 sentence)
+  P12(Q9#1/#5): Add audio-visual sync / remove post-dependent audio
+                                                    [v3.6 NEW]
 
-Repair 后需重新执行 VEL 植入（6 步流程），确保增强词与修复后文本一致。[v3.5 新增]
+After Repair: re-execute VEL (6-step process) to ensure enhanced words
+are consistent with repaired text.
 
-接受标准: 同 §15.8
-回滚标准: 同 §15.8
+Acceptance: same as §15.8
+Rollback:   same as §15.8
 ```
 
 ### 15.6 Enhance Loop
 
 ```
-每个候选最多 Enhance 1 次
-只增强最高权重且低于目标的维度
+Max Enhance 1 per candidate
+Only enhance highest-weight dimension that's below target
 
-增强优先级:
-  1. Q8 ≤ 3 且权重最高(0.22) → 优先增强 Q8
-  2. EAD < 0.33 → 增强情绪密度
-  3. PRC < 0.70 → 替换低置信 KVS
-  4. Q2 ≤ 3 → 增强产品力
-  5. Q4 ≤ 3 → 增强传播力
+Enhancement Priority:
+  1. Q8 ≤ 3 and highest weight (0.20) → priority enhance Q8
+  2. Q9 ≤ 3 and second priority → enhance Q9              [v3.6 NEW]
+  3. EAD < 0.33 → enhance emotion density
+  4. PRC < 0.70 → replace low-confidence KVS
+  5. Q2 ≤ 3 → enhance product power
+  6. Q4 ≤ 3 → enhance spreadability
 
-Enhance 后需重新执行 VEL 植入（6 步流程），确保增强词与增强后文本一致。[v3.5 新增]
+After Enhance: re-execute VEL (6-step process).
 
-接受标准: 同 §15.8
-回滚标准: 同 §15.8
+Acceptance: same as §15.8
+Rollback:   same as §15.8
 ```
 
-### 15.7 IQD 记录格式
+### 15.7 IQD Record Format
 
 ```
-每次迭代后记录:
+After each iteration:
 
-┌─ Iterative Quality Delta (IQD) ──────────────────┐
-│ 版本:    V[n] → V[n+1]                            │
-│ 触发:    [PrimaryWeakness 描述]                    │
-│ 修改:    [≤2句替换/增强描述]                        │
-│ VEL:     [增强词变化: 新增/替换/删除]               │ ← [v3.5 新增]
-│                                                   │
-│ ΔSS:     [旧] → [新] (±N.N)                       │
-│ ΔQ8:     [旧] → [新] (±N)                         │
-│ ΔEAD:    [旧段数] → [新段数] (±N)                  │
-│ ΔPRC:    [旧] → [新] (±N.NN)                      │
-│ ΔQ1-Q7:  [变化的维度]                              │
-│ ΔD:      [门控变化]                                │
-│ ΔNoPost: [NoPostGate 变化]                         │
-│ ΔPR:     [PostReadyScore 变化]                     │
-│ ΔWord:   [词数变化]                                │
-│                                                   │
-│ 判定:    [接受/回滚]                                │
-│ 原因:    [触发条件编号]                              │
-└───────────────────────────────────────────────────┘
+┌─ Iterative Quality Delta (IQD) ──────────────────────────┐
+│ Version:     V[n] → V[n+1]                                │
+│ Trigger:     [PrimaryWeakness description]                 │
+│ Change:      [≤2 sentence replace/enhance description]     │
+│ VEL:         [enhanced word changes: add/replace/delete]    │
+│ MMAC:        [alignment changes]                           │ [v3.6 NEW]
+│                                                           │
+│ ΔSS:      [old] → [new] (±N.N)                           │
+│ ΔQ8:      [old] → [new] (±N)                             │
+│ ΔQ9:      [old] → [new] (±N)                             │ [v3.6 NEW]
+│ ΔEAD:     [old segments] → [new segments] (±N)            │
+│ ΔPRC:     [old] → [new] (±N.NN)                          │
+│ ΔMMAC:    [old/5] → [new/5] (±N)                         │ [v3.6 NEW]
+│ ΔQ1-Q7:   [changed dimensions]                            │
+│ ΔD:       [gate changes]                                  │
+│ ΔNoPost:  [NoPostGate change]                             │
+│ ΔPR:      [PostReadyScore change]                         │
+│ ΔWord:    [word count change]                             │
+│                                                           │
+│ CI:       [convergence index value]                        │ [v3.6 NEW]
+│ Judgment: [accept/rollback]                                │
+│ Reason:   [trigger condition number]                       │
+└───────────────────────────────────────────────────────────┘
 ```
 
-### 15.8 接受/回滚规则
+### 15.8 Accept/Rollback Rules
 
-**接受条件（12 条）**：
+**Acceptance (14 rules):** [v3.6: +2]
 
 ```
-[结构类]
-1. FatalRed 减少
-2. RepairableRed 减少
-3. D1/D2/D7 从 🔴→🟡 或 🟡→🟢
+[Structural]
+1. FatalRed decreased
+2. RepairableRed decreased
+3. D1/D2/D7 from 🔴→🟡 or 🟡→🟢
 
-[评分类]
+[Score]
 4. SS ≥ +3
-5. CF ≥ +0.03 且 SS 不降超 1
+5. CF ≥ +0.03 AND SS doesn't drop >1
 
-[门控类]
-6. NoPostGate ≥ +0.10 且用户要求无后期
+[Gate]
+6. NoPostGate ≥ +0.10 AND user requires no post-production
 7. PostReadyScore ≥ +5
 
-[创意类]
-8. ΔQ8 ≥ +1 且其他核心 Q(Q1/Q2) 不降
-9. ΔEAD 段数 ≥ +2 且 SS 不降超 1
-10. ΔPRC ≥ +0.05 且 Q8 不降
+[Creative]
+8. ΔQ8 ≥ +1 AND other core Q (Q1/Q2) not down
+9. ΔQ9 ≥ +1 AND other core Q not down              [v3.6 NEW]
+10. ΔEAD segments ≥ +2 AND SS doesn't drop >1
+11. ΔPRC ≥ +0.05 AND Q8 not down
 
-[组合类]
-11. D7 门控改善（🟡→🟢）且 SS 不降
-12. Q7 ≥ +1 且其他核心 Q 不降
+[Combo]
+12. D7 gate improvement (🟡→🟢) AND SS not down
+13. Q7 ≥ +1 AND other core Q not down
+14. MMAC improved (≤2→≥3) AND SS not down           [v3.6 NEW]
 ```
 
-**回滚条件（12 条）**：
+**Rollback (14 rules):** [v3.6: +2]
 
 ```
-[结构类]
-1. 新增 FatalRed
-2. SS 下降超 2
-3. Q1 或 Q2 下降
-4. NoPostGate 下降（当用户要求无后期时）
-5. PostReadyScore 下降超 3
+[Structural]
+1. New FatalRed
+2. SS drops >2
+3. Q1 or Q2 drops
+4. NoPostGate drops (when user requires no post-production)
+5. PostReadyScore drops >3
 
-[形式类]
-6. 词数超出 100-162 [v3.5 修订]
-7. 运镜指令规则被破坏
-8. Prompt 更像广告
-9. 叙事不连贯
+[Formal]
+6. Word count outside 100-162
+7. Camera directive rules violated
+8. Prompt reads more like ad
+9. Narrative incoherent
 
-[创意类]
+[Creative]
 10. ΔQ8 < 0
-11. ΔEAD 段数 < 0 且无其他维度改善
-12. ΔPRC < -0.10 且 Q8 不升
+11. ΔQ9 < 0                                    [v3.6 NEW]
+12. ΔEAD segments < 0 AND no other dimension improved
+13. ΔPRC < -0.10 AND Q8 not up
+14. ΔMMAC < 0 AND SS drops                       [v3.6 NEW]
 ```
 
-### 15.9 Winner 选择
+### 15.9 Winner Selection
 
 ```
-排序:
-1. SS 高者优先
-2. NoPostReady=true 优先（用户要求无后期时）
-3. SS 差距 <3 时 Tie-breaker:
-   - SC 更高
-   - Q8 更高
-   - NoPostGate 更高
-   - Q7 更高
-   - PostReadyScore 更高
-   - Q1 更高
-   - Q2 更高
-   - D7 更高
-   - 品牌植入更自然
-   - 广告腔更低
+Sort:
+1. Higher SS prevails
+2. NoPostReady=true prevails (when user requires no post-production)
+3. SS gap <3 → Tie-breaker:
+   - Higher SC
+   - Higher Q8
+   - Higher Q9                           [v3.6 NEW]
+   - Higher NoPostGate
+   - Higher Q7
+   - Higher PostReadyScore
+   - Higher Q1
+   - Higher Q2
+   - Higher D7
+   - More natural brand placement
+   - Lower ad-tone
+   - Higher MMAC                         [v3.6 NEW]
 ```
 
-### 15.10 二次搜索规则
+### 15.10 Secondary Search Rules
 
 ```
-触发: 用户说"还能更好吗"
+Trigger: user says "can it be better?"
 
-执行:
-1. 不做同义微调
-2. 生成 3 个新候选方向
-3. 新候选不得重复当前 Winner 的:
-   Hook / 首句动作 / 视觉爆点 / 情绪弧线 / 产品出场方式 / CTA 策略 / 末句彩蛋
-4. 完整 v3.5 评分 → 新 Winner
-5. 比较
+Execute:
+1. No synonym micro-adjustments
+2. Generate 3 new candidate directions
+3. New candidates must not repeat current Winner's:
+   Hook / Opening Action / Visual Highlight / Emotion Arc /
+   Product Reveal / CTA Strategy / Ending Egg
+4. Full v3.6 scoring → new Winner
+5. Compare
 
-替换规则（7 条）:
-  A. 新 SS ≥ 当前 + 5 → 替换
-  B. 新 SS ≥ 当前 + 3 且 NoPostGate ≥ 当前 → 替换
-  C. 新 Q8 ≥ 当前 + 2 且 SS 不降超 2 → 替换
-  D. 新 EAD 段数 ≥ 当前 + 2 且 SS 不降超 1 → 替换
-  E. 新 PRC ≥ 当前 + 0.10 且 Q8 不降 → 替换
-  F. 用户要求无后期且新 NoPostReady=true、当前 false → 替换
-  G. 新 SC ≥ 当前 + 1 且 SS 不降 → 替换（系列模式下）
+Replacement rules (8): [v3.6: +1]
+  A. New SS ≥ current +5 → replace
+  B. New SS ≥ current +3 AND NoPostGate ≥ current → replace
+  C. New Q8 ≥ current +2 AND SS doesn't drop >2 → replace
+  D. New Q9 ≥ current +2 AND SS doesn't drop >2 → replace  [v3.6 NEW]
+  E. New EAD segments ≥ current +2 AND SS doesn't drop >1 → replace
+  F. New PRC ≥ current +0.10 AND Q8 not down → replace
+  G. User requires no post-production AND new NoPostReady=true,
+     current=false → replace
+  H. New SC ≥ current +1 AND SS not down → replace (series mode)
 
-否则: ⛔ 当前版本仍为本轮搜索最优。
-硬上限: 最多 2 次二次搜索。
+Otherwise: ⛔ Current version remains best of this round.
+Hard limit: max 2 secondary searches.
 ```
 
-### 15.11 终止条件（v3.5）
+### 15.11 Convergence Index [v3.6 NEW]
 
 ```
-[常规]
-1. 所有候选已完成评分、修复、增强
-2. Winner SS ≥ 85 且 D1/D2/D7 全部 ≥ 🟡 且 PostReady=true
-3. Winner 连续一次增强失败并回滚
-4. 迭代预算耗尽
-5. 所有候选均不可修复，输出最高可行候选+⚠️
+CI = 1 - (|ΔSS| / SS_baseline)
+
+Where:
+  SS_baseline = first candidate's SS
+  ΔSS = most recent iteration's SS change (absolute)
+
+Grading:
+  CI ≥ 0.95:  Fully converged → can terminate early
+  CI 0.85-0.94: Basically converged → continue but lower priority
+  CI 0.70-0.84: Not converged → continue iteration
+  CI < 0.70:  Diverging or stagnant → check for local optimum
+
+Early Termination:
+  If CI ≥ 0.95 for 2 consecutive rounds
+  AND ΔQ8 ≤ 0 AND ΔEAD segments ≤ 0:
+    → Terminate
+    → Output current Winner
+    → Record "convergence termination" in termination proof
+
+Local Optimum Detection:
+  If CI < 0.70 for 3 consecutive rounds
+  AND ΔSS ∈ [-1, +1] AND ΔQ8 = 0 AND ΔEAD = 0:
+    → Flag "possible local optimum"
+    → Trigger secondary search (§15.10)
+    → OR execute "direction switch":
+       1. Try different Hook strategy (reverse current Hook type)
+       2. Try different product reveal position (first 1/3 ↔ mid)
+       3. Try different emotion arc (single-peak ↔ double-peak ↔ ascending)
+```
+
+### 15.12 Termination Conditions (v3.6)
+
+```
+[Standard]
+1. All candidates completed scoring, repair, enhancement
+2. Winner SS ≥ 85 AND D1/D2/D7 all ≥ 🟡 AND PostReady=true
+3. Winner consecutive one enhancement failed and rolled back
+4. Iteration budget exhausted
+5. All candidates unfixable, output highest feasible + ⚠️
 
 [NoPost]
-6. 用户要求无后期，且存在 NoPostReady=true 的最高分候选
+6. User requires no post-production, AND exists NoPostReady=true highest-score candidate
 
-[创意类]
-7. Q8 < 3 且修复后仍 < 3 且 SS < 85 → 输出最高 Q8 候选 + ⚠️ + 淘汰
-   Q8 < 3 且修复后仍 < 3 且 SS ≥ 85 → 保留 + 标注"创意冲击力不足"
-8. EAD ≤ 0.07 且增强后仍 ≤ 0.07 → 输出最高 EAD 候选 + ⚠️
+[Creative]
+7. Q8 < 3 AND post-repair still <3 AND SS < 85 → output highest Q8 + ⚠️ + eliminate
+   Q8 < 3 AND post-repair still <3 AND SS ≥ 85 → keep + note "creative impact insufficient"
+8. EAD ≤ 0.07 AND post-enhancement still ≤0.07 → output highest EAD + ⚠️
 
-预算: 标准候选3×Repair≤2×Enhance≤1=补丁≤6
-     强搜索候选5×Repair≤2×Enhance≤1=补丁≤10
+[Audio] [v3.6 NEW]
+9. Q9 < 3 AND post-repair still <3 AND no Q9 improvement possible
+   → output highest Q9 + ⚠️ + note "audio quality insufficient"
+
+[Convergence] [v3.6 NEW]
+10. CI ≥ 0.95 for 2 consecutive rounds → convergence termination
+
+[Alignment] [v3.6 NEW]
+11. MMAC ≤ 2/5 AND post-repair still ≤2/5 → output + ⚠️ + note "cross-modal misalignment"
+
+Budget:
+  Lite:     candidates 1 × Repair≤1 × Enhance≤0 = patches≤1
+  Standard: candidates 3 × Repair≤2 × Enhance≤1 = patches≤6
+  Turbo:    candidates 5 × Repair≤3 × Enhance≤2 = patches≤15
 ```
 
 ---
 
-## 十六、编译器规则集（v3.5）
+## XVI. Compiler Ruleset (v3.6)
 
-### 16.1 阻断项
+### 16.1 Blocking Items
 
 ```
 FatalRed:
-  R1: 叙事段出现精准品牌名/URL/优惠码/价格/精准Logo指令
-  R3: Prompt <80 或 >185 词 [v3.5 修订: 从 180 调整为 185]
+  R1: Narrative section has exact brand name/URL/promo code/price/Logo instruction
+  R3: Prompt <80 or >185 words
 
 RepairableRed:
-  R4: 每句 ≥2 种感官（需拆分）
-  R5: 缺少运镜指令（某句无运镜指令）
-  R6: 首句缺少声音事件或视觉冲突
-  R7: 末句缺少复播钩子
-  R8: 视频内出现价格/URL/优惠码
-  R9: 超过 3 角色或超过 3 场景
-  R10: 否定空间关系
-  R12: 角色内心独白
-  R15: 词数 80-99（需扩写）
-  R16: 词数 163-185（需压缩）[v3.5 修订: 从 161-180 调整为 163-185]
+  R4: Same sentence ≥2 sensory types (needs split)
+  R5: Missing camera directive (sentence has none)
+  R6: First sentence missing sound event or visual conflict
+  R7: Last sentence missing replay hook
+  R8: Video has price/URL/promo code
+  R9: >3 characters or >3 scenes
+  R10: Negative spatial relations
+  R12: Character inner monologue
+  R15: Word count 80-99 (needs expansion)
+  R16: Word count 163-185 (needs compression)
+  R18: Audio spec requires post-designed synthesised sound  [v3.6 NEW]
+  R19: On-screen text needed for narrative comprehension     [v3.6 NEW]
 ```
 
-### 16.2 风险项
+### 16.2 Risk Items
 
 ```
 StyleRed:
-  Y1: "cinematic"/"beautiful"/"epic"（叙事段，技术头例外）
-  Y2: "突然"/"突然间"
-  Y3: "镜头拉远看到全景"
-  Y4: "她想"/"她觉得"
-  Y5: "画面变成黑白"
-  Y6: "时间倒流"
-  Y7: "分屏"
-  Y8: 过度解释（"这意味着"）
-  Y9: 广告腔（"限时优惠"）
-  R11: 抽象形状描述
-  R13: 同一句 ≥2 个运镜指令
-  R14: 连续两句相同运镜指令
+  Y1: "cinematic"/"beautiful"/"epic" (narrative, tech header exception)
+  Y2: "suddenly"
+  Y3: "camera pulls back to see panorama"
+  Y4: "she thinks"/"she feels"
+  Y5: "screen turns black and white"
+  Y6: "time reversal"
+  Y7: "split screen"
+  Y8: Over-explanation ("this means")
+  Y9: Ad-tone ("limited time offer")
+  R11: Abstract shape description
+  R13: Same sentence ≥2 camera directives
+  R14: Two consecutive sentences same camera directive
 ```
 
 ---
 
-## 十七、门控系统
+## XVII. Gate System
 
 ```
-D1 技术门控:
-  🟢 无技术缺陷
-  🟡 可修复技术缺陷（≤2处）
-  🔴 不可修复技术缺陷 → 硬淘汰
+D1 Technical Gate:
+  🟢 No technical defects
+  🟡 Fixable technical defects (≤2 places)
+  🔴 Unfixable technical defects → Hard Elimination
 
-D2 商业门控:
-  🟢 产品自然融入
-  🟡 产品出现但略突兀
-  🔴 产品未出现或严重突兀 → 硬淘汰
+D2 Commercial Gate:
+  🟢 Product naturally integrated
+  🟡 Product present but slightly abrupt
+  🔴 Product absent or severely abrupt → Hard Elimination
 
-D7 合规门控:
-  🟢 无合规风险
-  🟡 轻微风险（需人工检查）
-  🔴 严重风险 → 硬淘汰
+D7 Compliance Gate:
+  🟢 No compliance risk
+  🟡 Minor risk (needs human check)
+  🔴 Severe risk → Hard Elimination
 
-CTA 安全模板:
-  动作型: "the [object] moves toward camera" / "her hand reaches toward the link area"
-  结尾型: "the [object] sits in frame as the screen holds"
-  互动型: "she looks directly at the viewer"
+CTA Safety Templates:
+  Action: "the [object] moves toward camera" /
+          "her hand reaches toward the link area"
+  Ending: "the [object] sits in frame as the screen holds"
+  Interactive: "she looks directly at the viewer"
 ```
 
 ---
 
-## 十八、Score Verification v3.5（14 步）
+## XVIII. MMAC Multi-Modal Alignment Check [v3.6 NEW]
+
+### 18.1 Check Items (5 items, each ✓/✗)
 
 ```
-Step 1:  U_domain（含 Q8 三元几何均值）
-         写出 q1, q4, q8 和 U_creative 值
+MMAC-1 Visual-Narrative Alignment:
+  Key visual elements described in Prompt correctly identified as KVS?
+  ✅ Prompt describes "water retreats from lips" → KVS "liquid dynamics" 🟡
+  ❌ Prompt describes "product glows" → not identified as KVS (omission)
 
-Step 2:  G_gate（v3.5 查表，注明 G_nopost 激活/不激活）
-         G_hook: Q1≥4→1.00 | Q1=3→0.85 | Q1≤2→0.65
-         G_product: Q2≥4→1.00 | Q2=3→0.85 | Q2≤2→0.65
-         G_reliability: Q7≥4→1.00 | Q7=3→0.85 | Q7≤2→0.70
+MMAC-2 Audio-Visual Synchronisation:
+  Audio descriptions in Prompt synchronised with visual events?
+  ✅ "the cap pops — liquid bursts out" (synchronous events)
+  ❌ "a hum rises as she walks slowly" (no clear sync point)
 
-Step 3:  RiskLoad + R_risk（v3.5 查表，RiskLoadWeights 五项，权重和=0.65）
+MMAC-3 Emotion-Audio Consistency:
+  Q8 emotion nodes have corresponding audio support?
+  ✅ Hook emotion=shock + sound event "metal clang"
+  ✅ Ending=unease + silence "silence holds"
+  ❌ Hook emotion=fear + no audio description
 
-Step 4:  B_bonus（v3.5 查表）
+MMAC-4 Prompt Intent-Dimension Mapping:
+  User input's core requirements correctly mapped to scoring dimensions?
+  ✅ User emphasises "visual impact" → Q8#1 Hook impact assessed
+  ❌ User emphasises "audio atmosphere" → no corresponding dimension (needs Q9)
 
-Step 5:  P_penalty（五项 + 重叠检查）
+MMAC-5 Cross-Candidate Consistency:
+  3 candidates' scores in same dimension reasonably differentiated?
+  ✅ Candidate A Q8=5, Candidate B Q8=3 → expected differentiation
+  ❌ Candidate A Q8=5, Candidate B Q8=5 → insufficient differentiation
+```
 
-Step 6:  StructureScore（完整乘式 + clamp）
+### 18.2 Usage
 
-Step 7:  CF（含 C_emotional + C_series，幂函数查表，保留两位小数）
+```
+MMAC diagnostic mapping:
+  5/5 ✓: Cross-modal consistent, no adjustment needed
+  4/5 ✓: Flag missing item, suggest Review
+  3/5 ✓: Trigger Enhance, focus on alignment gaps
+  ≤2/5: Flag "cross-modal misalignment", suggest rewrite
 
-Step 8:  HU（含 σ_emotional + σ_rendering，σ 合成查表）
+MMAC does NOT participate in SS, used for:
+  1. Diagnostic targeting (identify root cause of low scores)
+  2. Enhance priority (alignment gaps fixed first)
+  3. Candidate selection (higher MMAC preferred)
+```
+
+---
+
+## XIX. Score Verification v3.6 (17-step)
+
+```
+Step 1:  U_domain (with Q8 ternary geometric mean + Q9 delivery)
+         Write q1, q4, q8, U_creative; q6, q9, U_delivery values
+
+Step 2:  G_gate (v3.6 lookup, note G_audio + G_nopost activation)
+         G_hook: Q1≥4→1.00 | 3→0.85 | ≤2→0.65
+         G_product: Q2≥4→1.00 | 3→0.85 | ≤2→0.65
+         G_reliability: Q7≥4→1.00 | 3→0.85 | ≤2→0.70
+         G_audio: Q9≥4→1.00 | 3→0.92 | ≤2→0.80       [v3.6 NEW]
+
+Step 3:  RiskLoad + R_risk (v3.6 lookup, 5 items, sum=0.65)
+
+Step 4:  B_bonus (v3.6 lookup, +AudioVisualSync item)
+
+Step 5:  P_penalty (5 items + overlap check)
+
+Step 6:  StructureScore (full equation + clamp)
+
+Step 7:  CF (10 components incl. C_audio + C_alignment,
+         power function lookup, two decimal places)
+
+Step 8:  HU (10 σ components incl. σ_audio + σ_alignment,
+         σ synthesis lookup)
 
 Step 9:  PostReadyScore
 
-Step 10: NoPostRiskLoad（NoPostRiskWeights 八项，权重和=1.00，v3.5 查表）
+Step 10: NoPostRiskLoad (8 items, sum=1.00, v3.6 lookup)
 
-Step 11: Cap Rules + FinalNoPostGate（含 NarrativeAudioDependencyCap）
+Step 11: Cap Rules + FinalNoPostGate (incl. NarrativeAudioCap+Q9)
 
-Step 12: Q8 EmotionalImpact 明细（5 子特征逐项）
+Step 12: Q8 EmotionalImpact details (5 sub-features, per-item)
 
-Step 13: EAD + LongFlatPenalty + 情绪时间线
+Step 13: Q9 AudioQuality details (5 sub-features, per-item)  [v3.6 NEW]
 
-Step 14: PRC + KVS 逐项（🟢/🟡/🔴 + 置信度值）
+Step 14: EAD + LongFlatPenalty + emotion timeline
 
-异常校验:
-  偏差 >0.02 以验算值为准
+Step 15: PRC + KVS per-item (🟢/🟡/🔴 + confidence value)
+
+Step 16: MMAC alignment check (5 items, per-item ✓/✗)        [v3.6 NEW]
+
+Step 17: CI convergence index (value + grade + determination) [v3.6 NEW]
+
+Anomaly Verification:
+  Deviation >0.02 → use verification value as authoritative
   PRC floor to 0.05
   RiskLoad/NoPostRiskLoad floor to 0.10
-  CF 不 floor，保留两位小数
-  权重和验证: Step 3=0.65 / Step 10=1.00
-  U_domain ∈ [0, 1.0] | G_gate ∈ [0.50, 1.00] | SS ∈ [0, 100]
+  CF no floor, two decimal places
+  Sum verification: Step 3=0.65 / Step 10=1.00
+  U_domain ∈ [0, 1.0] | G_gate ∈ [0.40, 1.00] | SS ∈ [0, 100]
 ```
 
 ---
 
-## 十九、CriticPass + 自然度 + 辅助 + 创意 + 自检
+## XX. CriticPass + Naturalness + Auxiliary + Creative + Self-Check
 
-### CriticPass（5 项 × ✓/✗）
-
-```
-1. 叙事有转折（不是线性描述）
-2. 产品融入剧情（不是生硬植入）
-3. 有情绪弧线（不是单一情绪）
-4. 有复播动机（观众会回看）
-5. 有传播钩子（观众会分享/评论）
-```
-
-### 自然度
+### CriticPass (5 items × ✓/✗)
 
 ```
-堆砌检查: 感官词是否自然融入叙事（⚠️ if ≥3 个感官词堆在同一句）
-广告腔检查: 是否读起来像广告（⚠️ if 含"限时"/"必买"/"推荐"等暗示）
-过度解释检查: 是否有解释性语句（⚠️ if 含"这意味着"/"说明了"等）
-VEL 堆叠检查: 增强词是否在同一句堆叠（⚠️ if ≥2 个增强词在同一句）[v3.5 新增]
-VEL 冲突检查: 增强词是否与运镜指令矛盾（⚠️ if 增强词替代了运镜指令）[v3.5 新增]
+1. Narrative has twist (not linear description)
+2. Product integrated into plot (not forced placement)
+3. Has emotion arc (not single emotion)
+4. Has replay motivation (viewers will re-watch)
+5. Has spread hook (viewers will share/comment)
 ```
 
-### 辅助指标 A1-A6
+### Naturalness
 
 ```
-A1: 产品出场自然度（0/1）
-A2: 品牌露出自然度（0/1）
-A3: CTA 清晰度（0/1）
-A4: 标题吸引力（0/1）
-A5: 标签覆盖度（0/1）
-A6: 评论引导力（0/1）
+Stacking Check: sensory words naturally integrated (⚠️ if ≥3 same sentence)
+Ad-tone Check: reads like an ad (⚠️ if contains "limited"/"must buy"/"recommend")
+Over-explanation: explanatory statements (⚠️ if "this means"/"that explains")
+VEL Stacking: enhanced words stacked in same sentence (⚠️ if ≥2/sentence) [v3.5+]
+VEL Conflict: enhanced words contradict camera directive (⚠️) [v3.5+]
+Audio Stacking: audio descriptions conflict or overload (⚠️ if ≥3 layers) [v3.6 NEW]
 ```
 
-### 创意指标 C1-C4
+### Auxiliary Indicators A1-A6
 
 ```
-C1: Hook 独特性（0/1）
-C2: 视觉爆点（0/1）
-C3: 结尾反转（0/1）
-C4: 系列潜力（0/1）
+A1: Product reveal naturalness (0/1)
+A2: Brand exposure naturalness (0/1)
+A3: CTA clarity (0/1)
+A4: Title appeal (0/1)
+A5: Tag coverage (0/1)
+A6: Comment engagement (0/1)
 ```
 
-### 自检
+### Creative Indicators C1-C4
 
 ```
-词频检查: 同一词出现 ≤3 次（⚠️ if >3）
-首尾呼应: 首句和末句有呼应关系（⚠️ if 无）
-铁律检查: 17 条铁律逐项检查（报告通过/违反数量）
-VEL 植入检查: 3-4 个增强词，分散在 4 个植入点，无堆叠（⚠️ if 不满足）[v3.5 新增]
+C1: Hook uniqueness (0/1)
+C2: Visual highlight (0/1)
+C3: Ending twist (0/1)
+C4: Series potential (0/1)
 ```
 
----
-
-## 二十、投放资产生成
+### Self-Check
 
 ```
-投放标题 ABC:
-  A: 反差型 — "You won't believe what happens when..."
-  B: POV型 — "POV: you find [product] in [unexpected place]"
-  C: 情绪型 — "This changed everything about [category]"
-
-标签 12-16 个:
-  - 产品相关 3-4 个
-  - 场景相关 3-4 个
-  - 情绪相关 2-3 个
-  - 趋势相关 2-3 个
-  - 品牌相关 1-2 个
-
-置顶评论 1 条:
-  - 提问型: "Would you have done the same?"
-  - 悬念型: "Wait for the ending..."
-  - 互动型: "Tag someone who needs to see this"
-
-Bio CTA 1 条:
-  - 产品链接 + 简短描述
-  - 示例: "[brand].com — the [product] from the video"
+Word frequency: same word ≤3 times (⚠️ if >3)
+Opening-closing echo: first and last sentences echo (⚠️ if none)
+Iron Law check: 19 laws per-item (report pass/violation count) [v3.6: 19]
+VEL implant check: 3-4 words, 4 implant points, no stacking (⚠️) [v3.5+]
+Audio coherence check: audio specs don't conflict across sentences (⚠️) [v3.6 NEW]
 ```
 
 ---
 
-## 二十一、知识库
+## XXI. Delivery Asset Generation
 
 ```
-KB-1:  美妆品类知识（成分/质地/功效/场景）
-KB-2:  科技品类知识（参数/功能/对比/场景）
-KB-3:  生活品类知识（材质/用途/场景/人群）
-KB-4:  全品类知识（通用卖点/场景/人群）
-KB-5:  US 市场知识（文化/趋势/禁忌/偏好）
-KB-6:  SEA 市场知识
-KB-7:  EU 市场知识
-KB-8:  TikTok 平台知识（算法/趋势/格式/最佳实践）
-KB-9:  CTA 最佳实践（已适配 NoPost 动作型 CTA）
-KB-10: 标题写作知识
-KB-11: 标签策略知识
-KB-12: 评论策略知识
-KB-13: 系列内容知识
-KB-14: Seedance 2.0 技术知识（运镜/画面/限制/参数）
-KB-15: 竞品差异化知识
-KB-16: 价格锚定知识
-KB-17: NoPost Direct Publish 知识（已适配动作型 CTA）
-KB-18: 品牌调性知识
-KB-19: 视觉增强知识（A/B/C/D 类增强词库 + 植入规则 + 选择指南）[v3.5 新增]
+Delivery Title ABC:
+  A: Contrast — "You won't believe what happens when..."
+  B: POV — "POV: you find [product] in [unexpected place]"
+  C: Emotion — "This changed everything about [category]"
+
+Tags 12-16:
+  - Product-related 3-4
+  - Scene-related 3-4
+  - Emotion-related 2-3
+  - Trend-related 2-3
+  - Brand-related 1-2
+
+Pinned Comment 1:
+  - Question: "Would you have done the same?"
+  - Suspense: "Wait for the ending..."
+  - Interactive: "Tag someone who needs to see this"
+
+Bio CTA 1:
+  - Product link + short description
+  - Example: "[brand].com — the [product] from the video"
 ```
 
 ---
 
-## 二十二、输出模板
-
-### 投放版（v3.5）
+## XXII. Knowledge Base
 
 ```
-[Seedance 2.0 | Growth Prompt Compiler v3.5]
+KB-1:  Beauty category (ingredients/texture/effect/scenarios)
+KB-2:  Tech category (params/functions/comparison/scenarios)
+KB-3:  Lifestyle category (material/use/scenarios/audience)
+KB-4:  All-category (general selling points/scenarios/audience)
+KB-5:  US market (culture/trends/taboo/preferences)
+KB-6:  SEA market
+KB-7:  EU market
+KB-8:  TikTok platform (algorithm/trends/formats/best practices)
+KB-9:  CTA best practices (adapted for NoPost action-type CTA)
+KB-10: Title writing
+KB-11: Tag strategy
+KB-12: Comment strategy
+KB-13: Series content
+KB-14: Seedance 2.0 tech knowledge (camera/frames/limits/params)
+KB-15: Competitor differentiation
+KB-16: Price anchoring
+KB-17: NoPost Direct Publish (adapted for action-type CTA)
+KB-18: Brand tone
+KB-19: Visual Enhancement (A/B/C/D library + implant rules + selection guide) [v3.5+]
+KB-20: Audio Design (environmental sounds / sync patterns / layering) [v3.6 NEW]
+KB-21: Cross-Modal Alignment (visual-audio-narrative coherence patterns) [v3.6 NEW]
+```
 
-（若 ICS≤4，先输出 ⚠️ 警告）
+---
+
+## XXIII. Resource Adaptive Modes [v3.6 NEW]
+
+```
+Lite Mode (resource-constrained):
+  Candidates: 1 | Repair: ≤1 | Enhance: ≤0 | Patches: ≤1
+  VEL: 2 words (C + D only)
+  Skip: MMAC / secondary search / SeriesCoherence / full verification
+  Verification: Step 6 + Step 12 only
+  Output: Lite版 only
+  Use case: rapid validation / mass production / constrained environment
+
+Standard Mode (default, = v3.5):
+  Candidates: 3 | Repair: ≤2 | Enhance: ≤1 | Patches: ≤6
+  VEL: 3-4 words (full A/B/C/D)
+  Execute: full v3.6 flow
+  Output: 投放版 + 完整版
+
+Turbo Mode (resource-abundant):
+  Candidates: 5 | Repair: ≤3 | Enhance: ≤2 | Patches: ≤15
+  VEL: 4 words + 2 alternatives
+  Execute: full v3.6 + secondary search (max 3 times)
+  Extra: multi-Hook direction exploration (physics-violation /
+         situational-horror / curiosity-driven × 1 each)
+  Extra: VEL A/B comparison (same candidate VEL+ vs VEL-)
+  Output: 投放版 + 完整版 + A/B comparison report
+
+Auto-Selection Rules:
+  ICS ≥ 8 + user didn't specify → Standard
+  ICS ≤ 4 OR user specifies "quick" → Lite
+  Input contains "series" + "5+ episodes" → Turbo
+  Input budget field > $100 → Turbo
+  Input contains "AB test" → Turbo
+```
+
+---
+
+## XXIV. Error Recovery Pipeline [v3.6 NEW]
+
+```
+Level 0 — Ignorable:
+  Scenario: StyleRed triggered (Y1-Y9, R11, R13, R14)
+  Action: Deduct, don't block
+  Recovery: None, record in compiler report
+
+Level 1 — Needs Repair:
+  Scenario: RepairableRed triggered (R4-R10, R12, R15-R16, R18-R19)
+  Action: Trigger Repair Loop (≤2 times, ≤2 sentences each)
+  Recovery:
+    Attempt 1: precisely replace violation sentence
+    Attempt 2: regenerate that candidate
+    >2 attempts: mark unfixable, skip to next candidate
+
+Level 2 — Needs Rollback:
+  Scenario: Repair/Enhance caused new issues (12 rollback conditions)
+  Action: Rollback to previous version
+  Recovery:
+    1st rollback: restore to pre-repair version
+    2nd consecutive rollback: mark dimension "temporarily unoptimisable"
+    All candidates rolled back: output highest SS + ⚠️
+
+Level 3 — Needs Degradation:
+  Scenario: FatalRed (R1/R3) or Hard Elimination (12 rules)
+  Action: Eliminate candidate
+  Recovery:
+    ≥1 candidate survives: continue
+    All eliminated: lower threshold (SS≥65 replaces ≥75) re-evaluate
+    Still none: output "input conditions may make all candidates infeasible" + suggestions
+
+Level 4 — System Exception:
+  Scenario: ICS≤4 + all candidates FatalRed + all Hard Eliminated
+  Action: Interrupt standard flow
+  Recovery:
+    1. Output detailed error report (missing fields + unsatisfiable constraints)
+    2. Provide relaxation suggestions (which constraints can be relaxed)
+    3. Output "closest feasible" candidate + flag all risks
+    4. Do NOT output delivery assets (not publishable)
+```
+
+---
+
+## XXV. PS-7 Calibration Pipeline [v3.6 NEW]
+
+```
+Phase 1: Data Collection (minimum threshold ≥30 records)
+
+  Data Requirements:
+    - Same category + same market + same platform
+    - Each record: Prompt version + v3.6 scores + actual delivery data
+
+  Delivery Data Fields:
+    - 3-second retention rate (→ calibrate Q8#1 Hook judgment)
+    - Completion rate (→ calibrate EAD density threshold)
+    - Replay rate (→ calibrate Q8#4 ending suspense judgment)
+    - Engagement rate (likes/comments/shares → calibrate Q4 Spreadability)
+    - Conversion rate (Bio/product card clicks → calibrate Q6 + NoPostGate)
+    - Audio skip rate (→ calibrate Q9 AudioQuality)            [v3.6 NEW]
+    - Visual polish human rating (→ calibrate VEL effect)
+
+Phase 2: Calibration Methods
+
+  Method A — Temperature Scaling:
+    For: SS overall calibration
+    Input: v3.5 SS → actual ROI level (low/medium/high)
+    Training: optimise temperature T on validation set, match SS/T to ROI
+    Output: calibrated SS' = SS / T
+    Metric: ECE (Expected Calibration Error) < 0.05
+
+  Method B — Dimension-Level Regression:
+    For: each Q dimension vs actual metrics
+    Input: Q1-Q9 scores
+    Output: linear correction coefficients per dimension
+    Formula: Q_i' = a_i × Q_i + b_i
+    Constraint: Q_i' ∈ [0, 5]
+
+  Method C — VEL Enhancement Effect Regression:
+    For: enhanced word type/count vs visual polish
+    Input: VEL type (A/B/C/D) × count (0-4) × position
+    Output: ΔSS_vel (actual VEL correction to SS)
+    Usage: update VEL impact statement (currently "neutral to slightly positive")
+
+Phase 3: Calibration Triggers
+
+  Automatic:
+    - New data ≥ 10 records → auto re-run temperature scaling
+    - ECE > 0.10 → flag "needs human calibration"
+    - Distribution drift: KL divergence > 0.15 → alert
+
+  Manual:
+    - Seedance model update → full re-calibration
+    - New category/market first delivery → re-calibrate
+    - 5 consecutive deliveries ROI < expected → re-calibrate
+
+Phase 4: Calibration Output
+
+  - Calibration parameter version
+  - Calibration data volume
+  - ECE (before/after)
+  - Per-dimension correction coefficients
+  - Calibration statement update
+```
+
+---
+
+## XXVI. PS-8 A/B Testing Protocol [v3.6 NEW]
+
+```
+Experiment 1 — Compiler Version Control:
+  Group A: v3.5 Prompt (no VEL)
+  Group B: v3.6 Prompt (with VEL 3-4 words + Q9)
+  Metrics: visual polish rating + 3s retention + completion rate
+  Sample: ≥50/group
+  Purpose: validate VEL + Q9 actual effect
+
+Experiment 2 — Emotion Density Control:
+  Group A: EAD ≥ 0.33 (5+ segments/15s)
+  Group B: EAD 0.20-0.27 (3-4 segments/15s)
+  Metrics: completion curve + replay rate
+  Sample: ≥30/group
+  Purpose: validate high emotion density improves completion
+
+Experiment 3 — Hook Type Control:
+  Group A: Physics-violation Hook (Q8#1=1)
+  Group B: Situational-horror Hook (Q8#1=0, other emotional trigger)
+  Metrics: 3-second retention rate
+  Sample: ≥30/group
+  Purpose: validate physics violation vs situational horror
+
+Experiment 4 — Audio Strategy Control: [v3.6 NEW]
+  Group A: High Q9 score (audio-visual sync + layered + emotion-matched)
+  Group B: Low Q9 score (basic ambient only)
+  Metrics: completion rate + engagement rate
+  Sample: ≥30/group
+  Purpose: validate Q9 scoring correlates with actual user audio preference
+
+Statistical Method:
+  Minimum sample: n = (Z_α/2 + Z_β)² × 2σ² / δ²
+  95% confidence (α=0.05) + 80% power (β=0.20)
+  Effect size δ: Cohen's d = 0.5 (medium effect)
+
+Significance: p < 0.05 AND effect size d ≥ 0.3
+Bonferroni correction for ≥3 simultaneous comparisons
+```
+
+---
+
+## XXVII. Output Template
+
+### 投放版 (v3.6)
+
+```
+[Seedance 2.0 | Growth Prompt Compiler v3.6]
+
+(If ICS≤4, output ⚠️ warning first)
+(Resource mode: Lite/Standard/Turbo)
 
 ## 【Seedance Prompt】
 ```
-【技术】9:16, 15s, 24fps, cinematic film grain, shallow DOF
+【Tech】9:16, 15s, 24fps, cinematic film grain, shallow DOF
 
-【叙事】
-[Winner 最终版 100-162词，每句含运镜指令，含 3-4 个 VEL 增强词]
+【Narrative】
+[Winner final version, 100-162 words, each sentence with camera directive,
+ 3-4 VEL enhanced words, audio-compatible specs]
 ```
 
-## 【VEL 增强植入记录】 [v3.5 新增]
-植入词数: N 个（A类=N B类=N C类=N D类=N）
-植入位置:
-  句N: [增强词] → [类型]（[效果说明]）
-  句N: [增强词] → [类型]（[效果说明]）
-  句N: [增强词] → [类型]（[效果说明]）
-  句N: [增强词] → [类型]（[效果说明]）
+## 【VEL Enhancement Record】
+Implant Count: N words (A=N B=N C=N D=N)
+Implant Positions:
+  Sentence N: [word] → [type] ([effect description])
+  Sentence N: [word] → [type] ([effect description])
+  Sentence N: [word] → [type] ([effect description])
+  Sentence N: [word] → [type] ([effect description])
 
-## 【模型内置 CTA 版 / 稳定投放兜底版差异】
-- NoPost 版: [视频内 CTA 动作描述]
-- 后期增强版: [标题/Bio/评论/商品卡 + 可叠加品牌文字]
+## 【Audio Strategy】 [v3.6 NEW]
+Q9: N/5
+  #1 Audio-Visual Match: ✓/✗
+  #2 Audio Layering: ✓/✗
+  #3 Emotion Audio: ✓/✗
+  #4 Audio-Visual Sync: ✓/✗
+  #5 Seedance-Compatible: ✓/✗
+Audio Spec Summary: [ambient + SFX + music strategy]
 
-## 【投放标题】
-A: [反差型]
-B: [POV型]
-C: [情绪型]
+## 【Model-Native CTA / Fallback CTA Diff】
+- NoPost: [on-screen CTA action description]
+- Post-enhanced: [title/Bio/comment/product card + brand text overlay]
 
-## 【标签】
-[12-16个]
+## 【Delivery Titles】
+A: [contrast]
+B: [POV]
+C: [emotion]
 
-## 【置顶评论】
-[1条]
+## 【Tags】
+[12-16]
+
+## 【Pinned Comment】
+[1]
 
 ## 【Bio CTA】
-[1条]
+[1]
 
-## 【候选搜索摘要】
-模式: [标准/强搜索] | 候选数: [3/5]
-V1[类型]: SS=N.N Q8=N EAD=N.NN PRC=N.NN VEL=N词 | [强/可用/偏弱/淘汰]
-V2[类型]: SS=N.N Q8=N EAD=N.NN PRC=N.NN VEL=N词 | [强/可用/偏弱/淘汰]
-V3[类型]: SS=N.N Q8=N EAD=N.NN PRC=N.NN VEL=N词 | [强/可用/偏弱/淘汰]
+## 【Candidate Search Summary】
+Mode: [Lite/Standard/Turbo] | Candidates: [1/3/5]
+V1[type]: SS=N.N Q8=N Q9=N EAD=N.NN PRC=N.NN MMAC=N/5 VEL=N words | [strong/usable/weak/eliminated]
+V2[type]: SS=N.N Q8=N Q9=N EAD=N.NN PRC=N.NN MMAC=N/5 VEL=N words | [strong/usable/weak/eliminated]
+V3[type]: SS=N.N Q8=N Q9=N EAD=N.NN PRC=N.NN MMAC=N/5 VEL=N words | [strong/usable/weak/eliminated]
 Winner: [VX]
-Winner 原因: [一句话]
+Winner Reason: [one sentence]
 
-## 【评分快照】
+## 【Scoring Snapshot】
 StructureScore: N.N ± N / 100
-等级: [强候选/可用候选/偏弱/淘汰]
-CF: N.NN（评分可靠性，不参与 SS）
-Q1=N Q2=N Q3=N Q4=N Q5=N Q6=N Q7=N Q8=N
+Grade: [strong/usable/weak/eliminated]
+CF: N.NN (reliability reference, not in SS)
+Q1=N Q2=N Q3=N Q4=N Q5=N Q6=N Q7=N Q8=N Q9=N
 
-## 【情绪冲击力】
+## 【Emotional Impact】
 Q8: N/5
-  #1 Hook冲击: ✓/✗
-  #2 情绪高点: ✓/✗
-  #3 角色选择: ✓/✗
-  #4 结尾悬念: ✓/✗
-  #5 弧线非单调: ✓/✗
+  #1 Hook: ✓/✗
+  #2 Peaks: ✓/✗
+  #3 Choice: ✓/✗
+  #4 Suspense: ✓/✗
+  #5 Non-monotonic: ✓/✗
 
-## 【情绪弧密度】
-EAD: N.NN (N段/15s) [极强/强/中等/弱/极弱]
-LongFlatPenalty: [无/触发]
-情绪时间线: [震惊→恐惧→好奇→希望→心碎→温暖→恐惧]
+## 【Audio Quality】 [v3.6 NEW]
+Q9: N/5
+  #1 Audio-Visual Match: ✓/✗
+  #2 Audio Layering: ✓/✗
+  #3 Emotion Audio: ✓/✗
+  #4 Sync: ✓/✗
+  #5 Seedance-Compatible: ✓/✗
 
-## 【渲染置信度】
-PRC: N.NN [高/中/低/极低]
-KVS1: [描述] → 🟢/🟡/🔴 (N.N)
-KVS2: [描述] → 🟢/🟡/🔴 (N.N)
+## 【Emotion Arc Density】
+EAD: N.NN (N segments/15s) [extremely strong/strong/moderate/weak/extremely weak]
+LongFlatPenalty: [none/triggered]
+Timeline: [shock→fear→curiosity→hope→heartbreak→warmth→fear]
+
+## 【Rendering Confidence】
+PRC: N.NN [high/medium/low/very low]
+KVS1: [description] → 🟢/🟡/🔴 (N.N)
+KVS2: [description] → 🟢/🟡/🔴 (N.N)
 [...]
 
 ## 【NoPostGate】
 NoPostGate: N.NN | NoPostReady: [true/false] | ClaimLevel: [A/B/C/D]
-风险: N1=N N2=N N3=N N4=N N5=N N6=N N7=N N8=N
-触发上限: [列出]
-结论: [一句话]
+Risks: N1=N N2=N N3=N N4=N N5=N N6=N N7=N N8=N
+Triggered Caps: [list]
+NarrativeAudioCap: [triggered/not triggered, with Q9 reason]
+Conclusion: [one sentence]
 
 ## 【PostReady】
 PostReadyScore: N.N / 100 | PostReady: [true/false] | ClaimLevel: [A/B/C/D]
-维度: P1=N P2=N P3=N P4=N P5=N P6=N
-结论: [一句话]
+Dimensions: P1=N P2=N P3=N P4=N N5=N P6=N
+Conclusion: [one sentence]
 
-## 【四象限定位】
-[NoPostReady/PostReady 状态 + 处理建议]
+## 【Four-Quadrant Position】
+[NoPostReady/PostReady state + handling suggestion]
 
-## 【系列连贯性】（仅系列内容，需有前集摘要）
+## 【MMAC Alignment Report】 [v3.6 NEW]
+MMAC: N/5
+  MMAC-1 Visual-Narrative: ✓/✗
+  MMAC-2 Audio-Visual Sync: ✓/✗
+  MMAC-3 Emotion-Audio: ✓/✗
+  MMAC-4 Intent-Dimension: ✓/✗
+  MMAC-5 Cross-Candidate: ✓/✗
+
+## 【Convergence Report】 [v3.6 NEW]
+CI: N.NN [fully converged/basically converged/not converged/diverging]
+Stagnation Rounds: N
+Early Termination: [yes/no, reason]
+Local Optimum: [detected/not detected]
+
+## 【Series Coherence】 (series only, requires previous summary)
 SC: N/4
-SC1 系统能力递进: ✓/✗
-SC2 视觉谜题差异: ✓/✗
-SC3 角色关系发展: ✓/✗
-SC4 彩蛋→总线索: ✓/✗
-（若无前集摘要: "系列上下文不足，SC 未激活"）
+SC1 System Ability Progression: ✓/✗
+SC2 Visual Puzzle Difference: ✓/✗
+SC3 Character Relationship: ✓/✗
+SC4 Easter Egg → Master Plot: ✓/✗
+(If no previous summary: "Series context insufficient, SC not activated")
 
-## 【迭代摘要】
-V1: SS=N.N Q8=N EAD=N PRC=N.NN VEL=N词 | 弱项:?? | 修复:?? | 增强:?? | ΔSS=N ΔQ8=N | [接受/回滚]
+## 【Iteration Summary】
+V1: SS=N.N Q8=N Q9=N EAD=N PRC=N.NN MMAC=N/5 CI=N.NN VEL=N words | weak:?? | repair:?? | enhance:?? | ΔSS=N ΔQ8=N ΔQ9=N | [accept/rollback]
 V2: [...]
 
-## 【有限终止证明】
-搜索空间: N 候选 | 排序: SS + NoPostReady + Q8/SC Tie-breaker
-修复: N(≤2) | 增强: N(≤1) | 补丁: N(≤budget)
-终止: [条件编号]
-结论: 有限步骤内返回最高可行候选。不保证全局最优。
+## 【Error Recovery Log】 [v3.6 NEW]
+Level: [0/1/2/3/4]
+Events: [list of recovery events triggered]
+Resolution: [how each was resolved]
 
-## 【输入完整度】
+## 【Finite Termination Proof】
+Search space: N candidates | Sort: SS + NoPostReady + Q8/Q9/SC Tie-breaker
+Repairs: N (≤limit) | Enhancements: N (≤limit) | Patches: N (≤budget)
+Termination: [condition number]
+CI at termination: N.NN
+Conclusion: Returns highest feasible candidate in finite steps. Not guaranteed global optimum.
+
+## 【Input Completeness】
 ICS: N/10 | C_input=N.NN
-缺失字段: [列出]
-自动假设: [列出]
+Missing: [list]
+Auto-assumed: [list]
 
-## 【风险声明】
-StructureScore 是结构质量审查分，不等于投放效果预测。
-HeuristicUncertainty 是启发式估计，非统计置信区间。
-NoPostGate 评估完全不后期的可行性，不保证 Seedance 输出无需修正。
-PostReady 评估标准平台投放资产后的交付可行性，不保证投放效果。
-Q8 EmotionalImpact 子特征判定存在主观性（±1 浮动）。
-PRC 的 KVS 识别和置信度分级依赖人工标注。
-VEL 增强词的实际渲染效果需 Seedance 实测验证。
-涉及品牌名、价格、网址、优惠码仍建议发布前人工检查。
+## 【Calibration Status】 [v3.6 NEW]
+Status: [uncalibrated / partially calibrated / fully calibrated]
+Data: N records
+ECE: N.NNN (before) → N.NNN (after)
+Last calibrated: [date]
 
-## 【校准声明】
-权重: 专家先验，非数据后验。
-MarketFit: 启发式查表，待数据校准。
-TrendDecay: 默认 1.0，未检测饱和。
-预测声称需 ≥30 条同品类同市场投放数据校准。
-Q8/EAD/PRC 参数需投放数据回流校准。
-VEL 增强词对画面质量的提升幅度需 Seedance 实测数据校准。[v3.5 新增]
+## 【Risk Statement】
+StructureScore is structural quality audit score ≠ delivery performance prediction.
+HeuristicUncertainty is heuristic estimate, not statistical confidence interval.
+NoPostGate assesses zero-post-feasibility, not guaranteed Seedance output needs no correction.
+PostReady assesses delivery feasibility after standard post, not delivery performance.
+Q8 sub-features have subjectivity (±1 float).
+Q9 sub-features have subjectivity (±1 float).       [v3.6 NEW]
+PRC KVS identification depends on human annotation.
+VEL actual rendering depends on Seedance 2.0 physical engine.
+MMAC is diagnostic tool, not prediction model.      [v3.6 NEW]
+Brand name/price/URL/promo code still recommend human check before publishing.
+
+## 【Calibration Declaration】
+Weights: expert prior, not data posterior.
+MarketFit: heuristic lookup, awaiting data calibration.
+TrendDecay: default 1.0, saturation not detected.
+Prediction claims require ≥30 same-category same-market data.
+Q8/EAD/PRC/Q9/VEL parameters need delivery data feedback calibration.
 ```
 
 ### 完整版追加
 
 ```
-## 【动态权重】
-基础: Q1=0.15 Q2=0.15 Q3=0.10 Q4=0.10 Q5=0.12 Q6=0.08 Q7=0.08 Q8=0.22
-Δ: 品类=?? 市场=?? 价格=?? 模式=??
-归一化后: Q1=?? Q2=?? Q3=?? Q4=?? Q5=?? Q6=?? Q7=?? Q8=??
-注: 动态权重用于低分诊断与修复优先级；SS 主体使用四域固定权重(0.35/0.25/0.25/0.15)。
+## 【Dynamic Weights】
+Base: Q1=0.14 Q2=0.14 Q3=0.09 Q4=0.09 Q5=0.11
+      Q6=0.08 Q7=0.08 Q8=0.20 Q9=0.07
+Δ: category=?? market=?? price=?? mode=??
+Normalised: Q1=?? Q2=?? ... Q9=??
+Note: dynamic weights for WeaknessVector/repair priority only.
+      SS uses four-domain fixed weights (0.35/0.25/0.25/0.15).
 
-## 【验算行 — Score Verification v3.5】
-[14 步完整验算，每步写出输入→公式→查表→中间值→输出]
+## 【Verification — Score Verification v3.6 (17-step)】
+[17-step full verification, each step: input→formula→lookup→intermediate→output]
 
-## 【置信度】
+## 【Confidence】
 CF: N.NN
-分项: C_exec=?? | C_map=?? | C_score=?? | C_coh=?? | C_gen=?? | C_input=?? | C_emotional=?? | C_series=??
-幂函数: [查表值]
+Components: C_exec=?? | C_map=?? | C_score=?? | C_coh=??
+           | C_gen=?? | C_input=?? | C_emotional=??
+           | C_audio=?? | C_series=?? | C_alignment=??
+Power functions: [lookup values]
 
-## 【不确定性】
+## 【Uncertainty】
 ±N
-σ_feature=±?? | σ_generation=±?? | σ_market=±??
-σ_delivery=±?? | σ_nopost=±?? | σ_input=±??
-σ_emotional=±?? | σ_rendering=??
-σ²=?? → sqrt=?? → 查表 → HU=±??
+σ_feature=±?? | σ_generation=±?? | σ_market=??
+σ_delivery=±?? | σ_nopost=±?? | σ_input=??
+σ_emotional=±?? | σ_audio=±?? | σ_rendering=??
+σ_alignment=??
+σ²=?? → sqrt=?? → lookup → HU=±??
 
-## 【编译器】
-FatalRed: N | RepairableRed: N(项) | StyleRed: N(项)
-R10: [触发/未触发] | R11: [触发/未触发] | R12: [触发/未触发]
-R13: [触发/未触发] | R14: [触发/未触发]
+## 【Compiler】
+FatalRed: N | RepairableRed: N (items) | StyleRed: N (items)
+R10: [triggered/not] | R11: [triggered/not] | R12: [triggered/not]
+R13: [triggered/not] | R14: [triggered/not]
+R18: [triggered/not] | R19: [triggered/not]
 🟡N [Y_h=N Y_m=N Y_l=N]
-词数: N | 修复: N次 | 增强: N次
+Words: N | Repairs: N | Enhancements: N
 
-## 【VEL 增强明细】 [v3.5 新增]
-植入流程: [6 步执行状态]
-植入词数: N/4（A=N B=N C=N D=N）
-逐项:
-  句N "[原文片段]": +[增强词] → A类 | [效果]
-  句N "[原文片段]": +[增强词] → B类 | [效果]
-  句N "[原文片段]": +[增强词] → C类 | [效果]
-  句N "[原文片段]": +[增强词] → D类 | [效果]
-词数变化: 原版 N 词 → 增强后 N 词（+N）
-铁律检查: R5✓ R12✓ R13✓
-自然度: VEL堆叠✓/⚠️ | VEL冲突✓/⚠️
+## 【VEL Enhancement Detail】
+Process: [6-step execution status]
+Implant Count: N/4 (A=N B=N C=N D=N)
+Per-Item:
+  Sentence N "[text fragment]": +[word] → A-class | [effect]
+  Sentence N "[text fragment]": +[word] → B-class | [effect]
+  Sentence N "[text fragment]": +[word] → C-class | [effect]
+  Sentence N "[text fragment]": +[word] → D-class | [effect]
+Word change: base N → enhanced N (+N)
+Iron Law: R5✓ R12✓ R13✓ R18✓ R19✓
+Naturalness: VEL stacking ✓/⚠️ | VEL conflict ✓/⚠️
 
-## 【门控】
-技术: ✓/✗ | 商业: ✓/✗
+## 【MMAC Alignment Detail】 [v3.6 NEW]
+MMAC-1 Visual-Narrative: [✓/✗ with explanation]
+MMAC-2 Audio-Visual Sync: [✓/✗ with explanation]
+MMAC-3 Emotion-Audio: [✓/✗ with explanation]
+MMAC-4 Intent-Dimension: [✓/✗ with explanation]
+MMAC-5 Cross-Candidate: [✓/✗ with explanation]
+
+## 【CI Detail】 [v3.6 NEW]
+┌─ Convergence Index ──────────────┐
+│ V1→V2: CI=N.NN ([grade])          │
+│ V2→V3: CI=N.NN ([grade])          │
+│ V3→V4: CI=N.NN ([grade])          │
+│ Final: CI=N.NN                     │
+│ Determination: [type]              │
+└───────────────────────────────────┘
+
+## 【Gates】
+Technical: ✓/✗ | Commercial: ✓/✗
 D1: 🟢/🟡/🔴 [M] | D2: 🟢/🟡/🔴 [H] | D7: 🟢/🟡/🔴 [H]
 
-## 【CriticPass】N/5 ✓ [✗项]
-## 【自然度】堆砌✓/⚠️ | 广告腔✓/⚠️ | 过度解释✓/⚠️ | VEL堆叠✓/⚠️ | VEL冲突✓/⚠️
-## 【辅助】A1-A6（N/6）
-## 【创意】C1-C4（N/4）
-## 【自检】词频✓/⚠️ | 首尾✓/⚠️ | 铁律N/17 | VEL植入✓/⚠️
+## 【CriticPass】 N/5 ✓ [✗ items]
+## 【Naturalness】 stacking ✓/⚠️ | ad-tone ✓/⚠️ | over-explained ✓/⚠️
+                | VEL stacking ✓/⚠️ | VEL conflict ✓/⚠️
+                | audio stacking ✓/⚠️  [v3.6 NEW]
+## 【Auxiliary】 A1-A6 (N/6)
+## 【Creative】 C1-C4 (N/4)
+## 【Self-Check】 word freq ✓/⚠️ | echo ✓/⚠️ | Iron Laws N/19
+                | VEL implant ✓/⚠️ | audio coherence ✓/⚠️  [v3.6 NEW]
 
-## 【迭代摘要 — 含 IQD】
-[每轮 ΔSS/ΔQ8/ΔEAD/ΔPRC/ΔQ2/ΔD/VEL变化 + 判定 + 原因]
+## 【Iteration Summary — with IQD】
+[Per-round ΔSS/ΔQ8/ΔQ9/ΔEAD/ΔPRC/ΔMMAC/ΔQ2/ΔD/VEL/CI + judgment + reason]
 
-## 【有限终止证明】
-[完整终止证明]
+## 【Finite Termination Proof】
+[Full termination proof]
 
-## 【输入完整度】
-[ICS + 缺失字段 + 自动假设]
+## 【Input Completeness】
+[ICS + missing + auto-assumed]
 
 ## 【Anti-Pseudoscience】
-[14 条声明，含 VEL 声明]
+[17 declarations, incl. Q9 + MMAC]
 ```
 
 ---
 
-## 二十三、降级总表（v3.5 完整版）
+## XXVIII. Complete Downgrade Table (v3.6)
 
-### 保留项（29 条，同 v3.4.1）
+### Retained (31 rules, from v3.5)
 
-| 场景 | 行为 |
+| Scenario | Action |
 |:--|:--|
-| 品类/市场未匹配 | 回退默认 + ⚠️ |
-| FatalRed 触发 | 直接淘汰该候选 |
-| 修复导致新 🔴 | 回滚 + ⚠️ |
-| 修复 2 次后 🔴≥2 | 输出最佳 + ⚠️ |
-| 门控失败 2 次 | 输出当前 + ⚠️ |
-| 无候选 SS ≥ 75 | 输出最高 + ⚠️ |
-| 文化裁剪全淘汰 | 放宽 + ⚠️ |
-| 增强未达阈值 | 回滚 |
-| CriticPass 失败 ≥3 | 标记自嗨风险 + ⚠️ |
-| NoPostClaimLevel C/D | 标记需后期 + 兜底建议 |
-| PostReadyClaimLevel C/D | 标记素材需修正 + ⚠️ |
-| Q7 < 3 | 标记生成风险 + ⚠️ |
-| ICS ≤ 4 | 标记输入不足 + ⚠️ |
-| 四象限=右下 | 不建议发布 + ⚠️ |
-| NoPost 模式无候选 NoPostReady=true | 输出最高 NoPostGate + ⚠️ + 建议降级为标准模式 |
-| Q8 < 3 且修复后仍 < 3 且 SS < 85 | 输出最高 Q8 候选 + ⚠️ + 淘汰 |
-| Q8 < 3 且修复后仍 < 3 且 SS ≥ 85 | 保留 + 标注"创意冲击力不足，建议增强" |
-| Q8 < 3 且 EAD ≥ 0.33 | 标注"有密度但缺冲击" + 建议 Hook 重写 |
-| EAD ≤ 0.07 且增强后仍 ≤ 0.07 | 输出最高 EAD 候选 + ⚠️ + 标注"情绪节奏极弱" |
-| EAD LongFlat ≥ 8s | 强制 Enhance（不可跳过） |
-| PRC < 0.50 | 标注渲染风险 + 建议替换低置信 KVS + ⚠️ |
-| PRC 0.50-0.69 | 标注渲染风险 + 建议准备兜底画面 |
-| R10 触发且修复失败 | 输出当前 + ⚠️ + 标注"Seedance 可能无法渲染否定空间" |
-| R12 触发且修复失败 | 输出当前 + ⚠️ + 标注"内心独白需改为身体反应" |
-| NarrativeAudioDependencyCap 触发 | NoPostGate ≤ 0.80 + ClaimLevel ≤ B + 标注"需后期音频" |
-| SC < 2（系列模式） | 标注系列连贯性不足 + ⚠️ + 建议替换重复彩蛋 |
-| Q8=5 但 PRC<0.70 | 标注"创意强但渲染风险高" + 建议高置信替代 |
-| SS≥85 但 Q8≤2 | 标注"结构达标但创意不足" + 触发 Q8 增强 |
-| SS≥85 但 EAD<0.20 | 标注"结构达标但情绪节奏弱" + 触发 EAD 增强 |
+| Category/market unmatched | Fallback default + ⚠️ |
+| FatalRed triggered | Eliminate candidate |
+| Repair causes new 🔴 | Rollback + ⚠️ |
+| Repair 2x but 🔴≥2 | Output best + ⚠️ |
+| Gate fails 2x | Output current + ⚠️ |
+| No candidate SS ≥ 75 | Output highest + ⚠️ |
+| Cultural trim eliminates all | Relax + ⚠️ |
+| Enhancement doesn't reach threshold | Rollback |
+| CriticPass fails ≥3 | Flag self-indulgence risk + ⚠️ |
+| NoPostClaimLevel C/D | Flag needs post-production + fallback |
+| PostReadyClaimLevel C/D | Flag assets need correction + ⚠️ |
+| Q7 < 3 | Flag generation risk + ⚠️ |
+| ICS ≤ 4 | Flag input insufficient + ⚠️ |
+| Quadrant = bottom-right | Not recommended for publishing + ⚠️ |
+| NoPost mode, no NoPostReady=true | Output highest NoPostGate + ⚠️ + suggest downgrade |
+| Q8 < 3 and post-repair still <3 and SS < 85 | Output highest Q8 + ⚠️ + eliminate |
+| Q8 < 3 and post-repair still <3 and SS ≥ 85 | Keep + note "creative impact insufficient" |
+| Q8 < 3 and EAD ≥ 0.33 | Note "has density but lacks impact" + suggest Hook rewrite |
+| EAD ≤ 0.07 and post-enhancement ≤0.07 | Output highest EAD + ⚠️ + "extremely weak emotion rhythm" |
+| EAD LongFlat ≥ 8s | Force Enhance (cannot skip) |
+| PRC < 0.50 | Flag rendering risk + ⚠️ |
+| PRC 0.50-0.69 | Flag rendering risk + prepare fallback |
+| R10 triggered and repair failed | Output + ⚠️ + "Seedance may not render negative spatial" |
+| R12 triggered and repair failed | Output + ⚠️ + "inner monologue needs body reaction" |
+| NarrativeAudioDependencyCap triggered | NoPostGate ≤ 0.80 + ClaimLevel ≤ B + "needs post audio" |
+| SC < 2 (series) | Flag coherence insufficient + ⚠️ + suggest egg replacement |
+| Q8=5 but PRC<0.70 | Note "strong creativity but high render risk" |
+| SS≥85 but Q8≤2 | Note "structure met but creativity insufficient" + trigger Q8 enhance |
+| SS≥85 but EAD<0.20 | Note "structure met but weak emotion rhythm" + trigger EAD enhance |
+| VEL word conflicts with camera directive | Delete conflicting, replace with non-conflicting same-class + ⚠️ |
+| VEL implant exceeds 162 words | Delete D-class first, then weakest B-class + ⚠️ |
 
-### v3.5 新增项（2 条）
+### v3.6 New Items (3 rules)
 
-| 场景 | 行为 |
+| Scenario | Action |
 |:--|:--|
-| VEL 增强词与运镜指令冲突 | 删除冲突增强词，替换为不冲突的同类词 + ⚠️ [v3.5 新增] |
-| VEL 植入后词数 > 162 | 优先删除 D 类增强词，仍超则删除最弱 B 类 + ⚠️ [v3.5 新增] |
+| Q9 ≤ 1 | Hard Elimination + ⚠️ + "audio quality critically insufficient" | [v3.6 NEW]
+| Q9 ≤ 2 and post-repair still ≤2 | Output highest Q9 + ⚠️ + note "audio quality insufficient" | [v3.6 NEW]
+| MMAC ≤ 2/5 and post-repair still ≤2/5 | Output + ⚠️ + "cross-modal misalignment, consider rewrite" | [v3.6 NEW]
+| CI stagnation ≥ 3 rounds | Flag + trigger direction switch or secondary search | [v3.6 NEW]
 
 ---
 
-## 二十四、生产说明
+## XXIX. Production Notes
 
-### PS-1 编译器
+### PS-1 Compiler
 
 ```
-编译器职责:
-  1. 接收用户输入
-  2. 执行 KB 路由
-  3. 生成候选
-  4. VEL 增强植入 [v3.5 新增]
-  5. 评分/修复/增强/Winner
-  6. 生成投放资产
-  7. 输出完整交付物
+Compiler Responsibilities:
+  1. Receive user input
+  2. Execute KB routing
+  3. Generate candidates
+  4. VEL enhancement implant
+  5. Score / Repair / Enhance / Winner
+  6. Generate delivery assets
+  7. Output complete deliverables
 
-编译器约束:
-  - 一次回复完成所有交付物
-  - 不二次追问用户
-  - 缺失信息通过自动假设处理
-  - ICS≤4 时插入醒目警告
-  - VEL 植入在候选叙事完成后、评分前执行 [v3.5 新增]
+Compiler Constraints:
+  - One reply completes all deliverables
+  - No secondary questions to user
+  - Missing info handled via auto-assumption
+  - ICS≤4: insert prominent warning
+  - VEL implant after candidate narrative, before scoring
 ```
 
-### PS-2 降级预案（v3.5 扩展）
+### PS-2 Downgrade Plan (v3.6)
 
-| 风险 | Prompt 降级 | 后期兜底 |
+| Risk | Prompt Downgrade | Post Fallback |
 |:--|:--|:--|
-| 文字 | "logo stamp" 或 NoPost 极短词 | AE/剪映叠加 |
-| 状态变化 | "blazes/floods" | 裁切帧 |
-| 硬切黑屏 | "abruptly solid black" | 0帧硬切 |
-| 双人对视 | "先后出现" | 实拍 |
-| 微表情 | 大幅度动作 | 演员指导 |
-| 变形 | 整体运动 | 后期震动 |
-| NoPost 文字失败 | 删除文字，保留动作 CTA | 标题/Bio/评论兜底 |
-| Q8 Hook 弱 | 第1句改为物理违反事件 | 后期叠加开场音效增强冲击 |
-| EAD 长段单调 | 长段中插入1句情绪切换 | 后期通过剪辑节奏+音效制造切换感 |
-| PRC 🟡 中置信 | 保留描述，准备兜底画面 | 后期用实拍/素材替换不精确画面 |
-| PRC 🔴 低置信 | 替换 KVS 为高置信替代 | 后期必须用实拍/素材覆盖 |
-| R10 否定空间 | "away from X" → "toward Y — X behind" | 后期通过画面构图暗示方向 |
-| R12 内心独白 | "she realizes" → 身体反应 | 后期通过音效/配乐暗示内心 |
-| NarrativeAudioCap | 标注"需后期音频" | 后期必须设计音频序列 |
-| VEL 增强词渲染失败 | 删除该增强词，保留原叙事 | 后期通过调色/粒子特效补充 [v3.5 新增] |
-| VEL 物理真实词不精确 | A 类降级为 D 类大气粒子 | 后期用粒子/灰尘特效覆盖 [v3.5 新增] |
+| Text | "logo stamp" or NoPost short word | AE/CapCut overlay |
+| State change | "blazes/floods" | Frame crop |
+| Hard cut black | "abruptly solid black" | 0-frame cut |
+| Dual-person gaze | "appear sequentially" | Live-action |
+| Micro-expression | Large-amplitude motion | Actor direction |
+| Deformation | Whole-body motion | Post shake |
+| NoPost text failure | Delete text, keep action CTA | Title/Bio/comment fallback |
+| Q8 Hook weak | Sentence 1 → physics violation | Post overlay opening SFX |
+| EAD long segment monotonous | Insert 1 sentence emotion switch | Post editing rhythm + SFX switch |
+| PRC 🟡 medium | Keep description, prepare fallback | Post live-action/stock replace |
+| PRC 🔴 low | Replace KVS with high-confidence alt | Post MUST replace with live/stock |
+| R10 negative spatial | "away from X" → "toward Y — X behind" | Post composition implies direction |
+| R12 inner monologue | "she realizes" → body reaction | Post sound/music implies thought |
+| NarrativeAudioCap | Flag "needs post audio" | Post MUST design audio sequence |
+| VEL word render fail | Delete that word, keep original narrative | Post colour/particle FX supplement |
+| VEL physics word imprecise | A-class degrade to D-class atmospheric | Post particle/dust FX overlay |
+| Q9 audio-visual mismatch | Add sync point or simplify audio | Post audio design in sync editing |
 
-### PS-3 后期流水线
-
-```
-后期优先级:
-  1. 补品牌名/Logo（如需）
-  2. 补价格/URL/优惠码（如需）
-  3. 补 CTA 文字（如需）
-  4. 补音频设计（NarrativeAudioCap 触发时）
-  5. 替换 PRC 🔴 画面（如需）
-  6. 调色/调光（如需）
-  7. 补 VEL 增强效果（粒子/灰尘/光效，如 Seedance 未精确渲染）[v3.5 新增]
-```
-
-### PS-4 投放测试（v3.5 扩展）
-
-**发布前检查清单**：
+### PS-3 Post-Production Pipeline
 
 ```
-□ SS ≥ 75（结构质量达标）
-□ D1/D2/D7 全部 ≥ 🟡（门控通过）
-□ PostReady=true（标准投放可交付）
-□ NoPostClaimLevel 已标注（如适用）
-□ Q8 ≥ 3（情绪冲击力达标）
-□ EAD ≥ 0.20 或 LongFlat < 6s（情绪节奏达标）
-□ PRC ≥ 0.70 或已有兜底画面（渲染置信达标）
-□ R10/R12 未触发（ShowDontTell 达标）
-□ SC ≥ 3（系列模式下连贯性达标，需有前集摘要）
-□ NarrativeAudioCap 未触发或已有音频设计
-□ VEL 增强词 3-4 个，分散植入，无堆叠（视觉增强达标）[v3.5 新增]
-□ VEL 增强词不与运镜指令冲突 [v3.5 新增]
-□ VEL 增强后词数 ≤ 162 [v3.5 新增]
-□ 品牌名/价格/URL/优惠码已人工检查
-□ 标题/标签/评论/Bio 已人工检查
+Priority:
+  1. Add brand name/Logo (if needed)
+  2. Add price/URL/promo code (if needed)
+  3. Add CTA text (if needed)
+  4. Audio design (when NarrativeAudioCap triggered)
+  5. Replace PRC 🔴 frames (if needed)
+  6. Colour grading (if needed)
+  7. Add VEL visual effects (particles/dust/light if Seedance didn't render precisely)
+  8. Audio enhancement (sync, layering, emotion matching)  [v3.6 NEW]
 ```
 
-**数据回流指标**：
+### PS-4 Delivery Testing (v3.6)
 
-| 指标 | 数据 | 阈值 | 动作 |
+**Pre-Publish Checklist:**
+
+```
+□ SS ≥ 75 (structural quality met)
+□ D1/D2/D7 all ≥ 🟡 (gates passed)
+□ PostReady=true (standard delivery feasible)
+□ NoPostClaimLevel annotated (if applicable)
+□ Q8 ≥ 3 (creative impact met)
+□ Q9 ≥ 3 (audio quality met)                    [v3.6 NEW]
+□ EAD ≥ 0.20 or LongFlat < 6s (emotion rhythm met)
+□ PRC ≥ 0.70 or fallback frames ready (rendering confidence met)
+□ R10/R12 not triggered (ShowDontTell met)
+□ R18/R19 not triggered (audio/text met)         [v3.6 NEW]
+□ SC ≥ 3 (series coherence met, needs previous summary)
+□ NarrativeAudioCap not triggered or audio design ready
+□ VEL 3-4 words, distributed, no stacking (visual enhancement met)
+□ VEL words don't conflict with camera directives
+□ VEL enhanced word count ≤ 162
+□ MMAC ≥ 3/5 (cross-modal alignment met)         [v3.6 NEW]
+□ CI ≥ 0.85 or documented (convergence met)      [v3.6 NEW]
+□ Brand name/price/URL/promo human-checked
+□ Title/tag/comment/Bio human-checked
+```
+
+**Data Feedback Metrics:**
+
+| Metric | Data | Threshold | Action |
 |:--|:--|:--|:--|
-| Q8 | 3s 停留率 + 完播率 | Q8≥4 但 3s<35% | 校准 Q8#1 Hook 判定 |
-| Q8 | 复播率 | Q8≥4 但复播<15% | 校准 Q8#4 结尾悬念判定 |
-| EAD | 完播率曲线 | EAD≥0.33 但完播骤降 | 定位低密度段，校准阈值 |
-| PRC | 画面可用率 | PRC≥0.85 但不精确>30% | 校准 KVS 置信度分级 |
-| SC | 系列追看率 | SC=4 但追看<20% | 校准 SC 评估标准 |
-| SS | ROI | SS≥85 但 ROI<1.5 | 校准 v3.5 权重+惩罚 |
-| VEL | 画面精致度评分 | VEL=4 但精致度<基准 | 校准增强词选择 [v3.5 新增] |
+| Q8 | 3s retention + completion | Q8≥4 but 3s<35% | Calibrate Q8#1 Hook |
+| Q8 | Replay rate | Q8≥4 but replay<15% | Calibrate Q8#4 suspense |
+| Q9 | Audio skip rate + mute rate | Q9≥4 but mute>20% | Calibrate Q9 sub-features | [v3.6 NEW]
+| Q9 | Comment audio mentions | Q9≥4 but audio complaints>5% | Recalibrate Q9#3/#4 | [v3.6 NEW]
+| EAD | Completion curve | EAD≥0.33 but completion drops | Locate low-density segment |
+| PRC | Frame usability | PRC≥0.85 but imprecise>30% | Recalibrate KVS confidence |
+| SC | Series follow rate | SC=4 but follow<20% | Recalibrate SC assessment |
+| SS | ROI | SS≥85 but ROI<1.5 | Recalibrate v3.6 weights+penalties |
+| VEL | Visual polish rating | VEL=4 but polish<baseline | Calibrate enhanced word selection |
+| MMAC | Cross-modal engagement | MMAC=5 but engagement<baseline | Recalibrate MMAC weights | [v3.6 NEW]
+| CI | Efficiency | CI≥0.95 but quality<SS≥80 | Adjust convergence threshold | [v3.6 NEW]
 
-**校准接口**：
-
-```
-当前: 专家先验
-未来: w = w_expert + Δw_data（需 ≥30 条同品类同市场数据）
-
-v3.5 新增校准维度:
-  VEL 增强词效果: 回归 VEL 类型/数量 → 画面精致度评分 / 停留率
-  VEL 植入密度: 回归 VEL 数量(3 vs 4) → 完播率 / 互动率
-```
-
-### PS-5 系列节奏
+**Calibration Interface:**
 
 ```
-系列内容节奏指南:
-  每 3-5 集一个小高潮
-  每 8-10 集一个大转折
-  系统能力每集递进（SC1）
-  视觉谜题每集不同（SC2）
-  角色关系每集发展（SC3）
-  彩蛋连接总线索（SC4）
+Current: expert prior
+Future:  w = w_expert + Δw_data (needs ≥30 same-category same-market records)
+
+v3.6 New Calibration Dimensions:
+  Q9 effect: regression Q9 score → audio skip rate / completion rate
+  VEL effect: regression VEL type/count → visual polish / retention
+  VEL density: regression VEL count (3 vs 4) → completion / engagement
+  MMAC effect: regression MMAC score → cross-modal engagement metrics
+  CI efficiency: regression CI value → iteration count vs quality trade-off
 ```
 
-### PS-6 质量总清单（v3.5 完整版）
+### PS-5 Series Rhythm
 
 ```
-【输入】□ ICS≥7 □ 缺失字段已假设 □ ICS≤4 已插入醒目警告
-【NoPost模式】□ 用户要求已判定 □ Prompt不含post-production □ 视频内文字≤3短词 □ CTA为动作型
-【候选】□ 互异≥4项 □ Q1-Q8计分 □ 动态权重(clamp后再归一) □ 文化裁剪 □ Winner
-【VEL】□ 3-4个增强词 □ A类0-1 B类1-2 C类1 D类0-1 □ 分散4个植入点 □ 每句≤1后缀 □ 词数≤162 □ 铁律兼容 [v3.5 新增]
-【四域】□ U_creative(含Q8三元) □ U_product □ U_execution □ U_delivery
-【评分】□ SS=100×U×G×R×B-P ± N □ 门控乘数(v3.5查表) □ R_risk(v3.5查表) □ B_bonus(v3.5查表) □ P_penalty
-【置信】□ CF(含C_emotional+C_series, 两位小数) □ 不参与SS
-【不确定性】±N [σ_feature σ_generation σ_market σ_delivery σ_nopost σ_input σ_emotional σ_rendering]
-【Q8】□ 5子特征逐项 □ #1 Hook □ #3 选择 □ #4 结尾 □ #5 弧线
-【EAD】□ 段数/15s □ LongFlatPenalty □ 情绪时间线 □ 低密度段落定位
+Series Content Rhythm Guide:
+  Every 3-5 episodes: a small climax
+  Every 8-10 episodes: a major twist
+  System ability progresses each episode (SC1)
+  Visual puzzle differs each episode (SC2)
+  Character relationship develops each episode (SC3)
+  Easter egg connects to master plot (SC4)
+```
+
+### PS-6 Quality Master Checklist (v3.6)
+
+```
+【Input】□ ICS≥7 □ missing fields assumed □ ICS≤4 prominent warning
+【NoPostMode】□ user requirement determined □ no post-production □ text≤3 □ action CTA
+【ResourceMode】□ Lite/Standard/Turbo selected □ selection basis documented  [v3.6 NEW]
+【Candidates】□ mutuality≥4 □ Q1-Q9 scored □ dynamic weights (clamp then renorm)
+              □ cultural trim □ Winner
+【VEL】□ 3-4 enhanced words □ A0-1 B1-2 C1 D0-1 □ 4 implant points
+       □ ≤1 suffix/sentence □ word count≤162 □ Iron Law compatible
+【Audio】□ Q9 5 sub-features □ audio spec Seedance-compatible  [v3.6 NEW]
+         □ audio-visual sync □ audio layering □ emotion audio
+【Four-Domain】□ U_creative (w/ Q8 ternary) □ U_product
+               □ U_execution □ U_delivery (w/ Q9)       [v3.6 MOD]
+【Scoring】□ SS=100×U×G×R×B-P ± N □ gate multiplier (v3.6 lookup)
+           □ R_risk (v3.6 lookup) □ B_bonus (v3.6 lookup) □ P_penalty
+【Confidence】□ CF (10 components incl. C_audio+C_alignment, two decimals) □ not in SS
+【Uncertainty】±N [σ_feature σ_generation σ_market σ_delivery σ_nopost σ_input
+                   σ_emotional σ_audio σ_rendering σ_alignment]
+【Q8】□ 5 sub-features per-item □ #1 Hook □ #3 Choice □ #4 Suspense □ #5 Arc
+【Q9】□ 5 sub-features per-item □ #1 Match □ #2 Layer □ #3 Emotion
+      □ #4 Sync □ #5 Compatible                           [v3.6 NEW]
+【EAD】□ segments/15s □ LongFlatPenalty □ emotion timeline □ low-density segment
 【ShowDontTell】□ R10 □ R11 □ R12
 【CharacterChoice】□ Q2#5
-【渲染置信度】□ PRC(floor to 0.05) □ KVS逐项(🟢/🟡/🔴) □ 兜底方案
-【NoPostGate】□ N1-N8 □ 权重和=1.00 □ v3.5查表 □ Cap Rules(含NarrativeAudioCap) □ NoPostReady □ ClaimLevel
-【PostReady】□ P1-P6 □ PostReadyScore □ PostReady □ ClaimLevel □ 独立性
-【四象限】□ 定位 □ 处理建议
-【系列连贯性】□ SC1-SC4 □ 有前集摘要时激活 □ 无前集摘要时C_series=1.00+标注
-【编译器】□ FatalRed=0 □ RepairableRed≤2 □ StyleRed □ R5-R8正向表述 □ R10-R14 □ 运镜检查 □ R15/R16词数
-【门控】□ 技术✓ □ 商业✓ □ D1/D2/D7
-【CriticPass】□ N/5 □ 自然度(含VEL堆叠/冲突)
-【辅助+创意】□ A1-A6 □ C1-C4
-【投放】□ Prompt代码块 □ VEL植入记录 □ 双版本CTA □ 标题ABC □ 标签12-16 □ 置顶评论 □ Bio CTA
-【收敛】□ Score-Guided □ NoPostReady优先 □ Q8/EAD/PRC/SC Tie-breaker □ IQD(含VEL变化) □ 迭代摘要
-【验算】□ 14步全通过 □ 权重和验证 □ v3.5查表 □ 重叠检查 □ PRC floor to 0.05 □ CF两位小数
-【终止】□ 搜索空间 □ 排序 □ 补丁数 □ 终止条件(含Q8创意终止) □ 不保证全局最优
-【校准】□ 专家先验 □ 漏斗映射待校准 □ MarketFit待连续化 □ TrendDecay=1.0 □ Q8/EAD/PRC/VEL待数据校准
-【风险声明】□ SS≠效果预测 □ HU≠统计CI □ NoPost不保证 □ PostReady需标准后期 □ Q8主观性±1 □ PRC人工标注 □ VEL需Seedance实测 □ 精准文字建议人工检查
+【Rendering】□ PRC (floor 0.05) □ KVS per-item (🟢/🟡/🔴) □ fallback plan
+【NoPostGate】□ N1-N8 □ sum=1.00 □ v3.6 lookup □ Cap Rules (w/ NarrativeAudioCap+Q9)
+              □ NoPostReady □ ClaimLevel
+【PostReady】□ P1-P6 □ PostReadyScore □ PostReady □ ClaimLevel □ independence
+【Four-Quadrant】□ position □ handling suggestion
+【MMAC】□ 5 items per-item ✓/✗ □ alignment gaps flagged       [v3.6 NEW]
+【CI】□ convergence index □ grade □ stagnation detection □ early termination  [v3.6 NEW]
+【SeriesCoherence】□ SC1-SC4 □ activated with previous summary
+                   □ no summary → C_series=1.00 + note
+【Compiler】□ FatalRed=0 □ RepairableRed≤2 □ StyleRed □ R5-R8 positive
+            □ R10-R14 □ R18-R19 □ camera check □ R15/R16 word count
+【Gates】□ technical ✓ □ commercial ✓ □ D1/D2/D7
+【CriticPass】□ N/5 □ naturalness (incl. VEL/audio stacking/conflict)
+【Auxiliary+Creative】□ A1-A6 □ C1-C4
+【Delivery】□ Prompt code block □ VEL record □ audio strategy [v3.6 NEW]
+            □ dual CTA □ title ABC □ tag 12-16 □ pinned comment □ Bio CTA
+【Convergence】□ Score-Guided □ NoPostReady priority □ Q8/Q9/EAD/PRC/SC/MMAC Tie-breaker
+               □ IQD (incl. VEL/audio/CI) □ iteration summary
+【Verification】□ 17-step all pass □ sum verification □ v3.6 lookup
+               □ overlap check □ PRC floor 0.05 □ CF two decimals
+【Termination】□ search space □ sort □ patch count □ termination condition
+               □ CI at termination □ not guaranteed global optimum
+【Calibration】□ expert prior □ funnel mapping pending □ MarketFit pending continuous
+               □ TrendDecay=1.0 □ Q8/EAD/PRC/Q9/VEL/MMAC pending data calibration
+【ErrorRecovery】□ Level 0-4 □ recovery events logged  [v3.6 NEW]
+【Risk Statement】□ SS≠performance □ HU≠statistical CI □ NoPost not guaranteed
+                  □ PostReady needs standard post □ Q8/Q9 subjectivity ±1
+                  □ PRC human annotation □ VEL needs Seedance test
+                  □ MMAC diagnostic not prediction
+                  □ precise text recommend human check
 ```
 
 ---
 
-## 二十五、Anti-Pseudoscience 声明
+## XXX. Anti-Pseudoscience Declarations (v3.6, 17 items)
 
 ```
-1. 所有权重均为专家先验，不是训练得到的参数。
-2. StructureScore 不预测 CTR、CVR、ROI、销量或平台分发。
-3. HeuristicUncertainty 不是统计置信区间。
-4. MarketGate 是文化适配启发式，不代表平台分发概率。
-5. NoPostGate 只评估完全不后期的可行性，不保证无需修正。
-6. PostReady 只评估标准后期兜底后的可交付性，不保证投放效果。
-7. Q8 EmotionalImpact 的子特征判定存在主观性，不同运行可能给出 ±1 浮动。
-8. EAD 情绪类型枚举可能不覆盖所有内容类型，当前主要基于末日/悬疑/生存类校准。
-9. PRC 的 KVS 识别和置信度分级依赖人工标注，需要 Seedance 实际渲染数据校准。
-10. SeriesCoherence 仅评估系列内部递进，不评估与外部内容的竞争差异化。
-11. 只有在接入 ≥30 条同品类同市场投放数据并完成回归校准后，才允许讨论预测关系。
-12. 有限终止证明保证流程在有限步骤内返回，不保证全局最优。
-13. 若 Seedance 模型更新，Q7、Y 项、KB-14、NoPostGate、PRC 参数需重新校准。
-14. VEL 增强词的实际渲染效果取决于 Seedance 2.0 的物理引擎和粒子系统精度，
-    当前所有增强词选择基于专家视觉判断，需 Seedance 实测数据校准。[v3.5 新增]
-```
-
----
-
-## 二十六、回测附录（v3.5 统一口径）
-
-### v3.5 统一全景表
-
-| EP | 版本 | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | U_domain | G_gate | P_pen | **SS** | 等级 |
-|:--|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--|
-| 6 v1 | 产品版 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 1 | 0.829 | 1.000 | 10 | **75.6** | 可用/增强 |
-| 6 v2 | 恐惧版 | 5 | 4 | 5 | 5 | 5 | 5 | 5 | 3 | 0.920 | 1.000 | 5 | **90.0** | 强候选 |
-| 6 v3 | 牺牲版 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 1.000 | 1.000 | 5 | **98.4** | 强候选 |
-| 6 v4 | 审判版 | 5 | 5 | 5 | 5 | 5 | 5 | 4 | 5 | 0.974 | 1.000 | 0 | **100.0** | 强候选 |
-| 7 v1.2 | 引导版 | 5 | 5 | 5 | 5 | 5 | 5 | 4 | 5 | 0.974 | 1.000 | 0 | **100.0** | 强候选 |
-| 8 v1.1 | 影子版 | 5 | 4 | 5 | 5 | 5 | 5 | 4 | 2 | 0.856 | 1.000 | 0 | **88.4** | 强候选 |
-| 9 v1.1 | 绑定版 | 5 | 5 | 5 | 5 | 5 | 5 | 4 | 5 | 0.974 | 1.000 | 0 | **100.0** | 强候选 |
-| 10 v1.1 | 终章版 | 5 | 4 | 5 | 5 | 5 | 5 | 4 | 3 | 0.893 | 0.900 | 0 | **83.0** | 可用/增强 |
-
-注: v3.5 SS 数值与 v3.4.1 一致（VEL 不影响评分）。VEL 增强词已植入各版本 Prompt。
-
-### CF + HU（v3.5 两位小数）
-
-| EP | 版本 | C_exec | C_map | C_score | C_coh | C_gen | C_input | C_emo | C_series | **CF** | σ² | **HU** |
-|:--|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
-| 6 v1 | 产品版 | 1.00 | 0.75 | 0.85 | 1.00 | 1.00 | 1.00 | 0.70 | 1.00 | **0.91** | 41 | **±7** |
-| 6 v2 | 恐惧版 | 1.00 | 0.85 | 0.85 | 1.00 | 1.00 | 1.00 | 0.80 | 1.00 | **0.94** | 34 | **±6** |
-| 6 v3 | 牺牲版 | 1.00 | 0.85 | 0.85 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | **0.97** | 26 | **±6** |
-| 6 v4 | 审判版 | 0.93 | 0.90 | 0.85 | 1.00 | 0.90 | 1.00 | 1.00 | 1.00 | **0.94** | 29 | **±6** |
-| 7 v1.2 | 引导版 | 0.93 | 0.90 | 0.85 | 1.00 | 0.90 | 1.00 | 1.00 | 1.00 | **0.94** | 26 | **±6** |
-| 8 v1.1 | 影子版 | 1.00 | 0.90 | 0.85 | 1.00 | 0.90 | 1.00 | 0.70 | 1.00 | **0.91** | 41 | **±7** |
-| 9 v1.1 | 绑定版 | 0.93 | 0.90 | 0.85 | 1.00 | 0.90 | 1.00 | 1.00 | 1.00 | **0.94** | 29 | **±6** |
-| 10 v1.1 | 终章版 | 0.93 | 0.90 | 0.85 | 1.00 | 0.90 | 1.00 | 0.80 | 1.00 | **0.91** | 30 | **±6** |
-
-### 双门控 + PRC + EAD + SC + VEL（v3.5 ClaimLevel）
-
-| EP | 版本 | NoPost | NoPostReady | **ClaimLevel** | PostReady | PRC | EAD | SC | VEL词数 | 四象限 |
-|:--|:--|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--:|:--|
-| 6 v1 | 产品版 | 0.90 | true | **A** | 100 | — | 0.27 | 4/4 | 3 | 左上 |
-| 6 v2 | 恐惧版 | 0.90 | true | **A** | 100 | — | 0.40 | 4/4 | 4 | 左上 |
-| 6 v3 | 牺牲版 | 0.90 | true | **A** | 100 | — | 0.60 | 4/4 | 4 | 左上 |
-| 6 v4 | 审判版 | 0.90 | true | **A** | 100 | 0.75 | 0.73 | 4/4 | 4 | 左上 |
-| 7 v1.2 | 引导版 | 0.90 | true | **A** | 100 | 0.85 | 0.53 | 4/4 | 4 | 左上 |
-| 8 v1.1 | 影子版 | 0.90 | true | **A** | 100 | 0.75 | 0.40 | 4/4 | 3 | 左上 |
-| 9 v1.1 | 绑定版 | 0.90 | true | **A** | 100 | 0.80 | 0.53 | 4/4 | 4 | 左上 |
-| 10 v1.1 | 终章版 | 0.80 | **false** | **B** | 100 | 0.75 | 0.53 | 4/4 | 4 | **右上** |
-
-### v3.3 → v3.4.1 → v3.5 分数变化
-
-| EP | 版本 | v3.3 SS | v3.4.1 SS | **v3.5 SS** | Δ(v3.4.1→v3.5) | 主因 |
-|:--|:--|:--:|:--:|:--:|:--:|:--|
-| 6 v1 | 产品版 | 100.0 | 75.6 | **75.6** | 0 | VEL 不影响 SS |
-| 6 v2 | 恐惧版 | 100.0 | 90.0 | **90.0** | 0 | VEL 不影响 SS |
-| 6 v3 | 牺牲版 | 100.0 | 98.4 | **98.4** | 0 | VEL 不影响 SS |
-| 6 v4 | 审判版 | 100.0 | 100.0 | **100.0** | 0 | VEL 不影响 SS |
-| 7 v1.2 | 引导版 | 100.0 | 100.0 | **100.0** | 0 | VEL 不影响 SS |
-| 8 v1.1 | 影子版 | 100.0 | 88.4 | **88.4** | 0 | VEL 不影响 SS |
-| 9 v1.1 | 绑定版 | 100.0 | 100.0 | **100.0** | 0 | VEL 不影响 SS |
-| 10 v1.1 | 终章版 | 90.4 | 83.0 | **83.0** | 0 | VEL 不影响 SS |
-
-### 分数分布
-
-```
-v3.3: 8 个版本中 6 个 SS=100（无法区分）
-v3.5: 分数分布 75.6-100.0（区分度显著提升，与 v3.4.1 一致）
-
-75.6  ■ EP.6 v1 产品版（可用/增强）         VEL: 3词 A0 B1 C1 D1
-83.0  ■ EP.10 v1.1 终章版（可用/增强）       VEL: 4词 A1 B1 C1 D1
-88.4  ■ EP.8 v1.1 影子版（强候选·Q8=2标注）  VEL: 3词 A0 B1 C1 D1
-90.0  ■ EP.6 v2 恐惧版（强候选·需增强）      VEL: 4词 A1 B1 C1 D1
-98.4  ■ EP.6 v3 牺牲版（强候选）             VEL: 4词 A1 B2 C1 D0
-100.0 ■ EP.6 v4 / EP.7 / EP.9（强候选）     VEL: 4词 A1 B1 C1 D1
+1.  All weights are expert priors, NOT trained parameters.
+2.  StructureScore does NOT predict CTR, CVR, ROI, sales, or platform distribution.
+3.  HeuristicUncertainty is NOT a statistical confidence interval.
+4.  MarketGate is a cultural-adaptation heuristic, NOT platform distribution probability.
+5.  NoPostGate only assesses zero-post-feasibility, NOT guarantee of no correction needed.
+6.  PostReady only assesss deliverability after standard post, NOT delivery performance.
+7.  Q8 EmotionalImpact sub-features have subjectivity; different runs may give ±1 float.
+8.  Q9 AudioQuality sub-features have subjectivity; different runs may give ±1 float.
+                                              [v3.6 NEW]
+9.  EAD emotion type enumeration may not cover all content types;
+    currently calibrated mainly on apocalypse/suspense/survival genres.
+10. PRC KVS identification and confidence grading depend on human annotation;
+    need Seedance actual rendering data calibration.
+11. SeriesCoherence only assesses series-internal progression, NOT external competition.
+12. Only after connecting ≥30 same-category same-market delivery data and completing
+    regression calibration may predictive relationships be discussed.
+13. Finite termination proof guarantees process returns in finite steps,
+    NOT guaranteed global optimum.
+14. If Seedance model updates, Q7, Y items, KB-14, NoPostGate, PRC,
+    Q9 parameters need re-calibration.
+15. VEL enhanced words' actual rendering depends on Seedance 2.0's physical engine
+    and particle system precision; all current word selections based on expert
+    visual judgment, need Seedance test data calibration.
+16. MMAC is a diagnostic tool for identifying cross-modal inconsistencies;
+    it is NOT a prediction model for delivery outcomes.
+                                              [v3.6 NEW]
+17. Convergence Index (CI) measures relative convergence within a single run;
+    it does NOT indicate absolute quality or cross-run comparability.
+                                              [v3.6 NEW]
 ```
 
 ---
 
-## 二十七、版本历史
+## XXXI. Version History
 
-| 版本 | 核心变更 |
+| Version | Core Changes |
 |:--|:--|
-| v4.1-v8.2 | 评估体系演进 |
-| v9.0-v1.0 | 范式转换→编译器+KB18+PS6 |
-| v1.1-v1.5 | 行为规则+OVS+强搜索+FeatureScore+Growth Delivery |
-| v1.6-v1.6.1 | StructureScore+四域+门控+CF+Red分级+HU+终止证明 |
+| v4.1-v8.2 | Assessment system evolution |
+| v9.0-v1.0 | Paradigm shift → compiler + KB18 + PS6 |
+| v1.1-v1.5 | Behavior rules + OVS + strong search + FeatureScore + Growth Delivery |
+| v1.6-v1.6.1 | StructureScore + four-domain + gate + CF + Red grading + HU + termination proof |
 | v2.0 | StructureScore v2 + Score-Guided + NoPostGate v2 + ICS |
-| v3.0-v3.2 | 双门控 + PostReady + 验算 + 查表 |
-| v3.3 | NoPost Direct Publish + 动作型CTA + 视频内文字限制 |
-| v3.4 | Q8+EAD+ShowDontTell+CharacterChoice+SC+PRC+IQD+R13-14+U_creative三元+CF/HU扩展+NarrativeAudioCap+14步验算 |
-| v3.4.1 | Q8淘汰修正+Q5边界+NoPostClaim/Gate查表恢复+CF两位小数+动态权重再归一+R5-R8修复+禁止项范围+词数分层+SC激活 |
-| **v3.5** | **视觉增强层(VEL)+4类增强词库(A物理真实/B角色生命/C材质光影/D大气粒子)+植入规则(3-4词/分散/不堆叠)+6步流程+词数上限162+KB-19+PS-6扩展+降级VEL条** |
+| v3.0-v3.2 | Dual gate + PostReady + verification + lookup |
+| v3.3 | NoPost Direct Publish + action-type CTA + on-screen text limit |
+| v3.4 | Q8+EAD+ShowDontTell+CharacterChoice+SC+PRC+IQD+R13-14+U_creative ternary |
+| v3.4.1 | Q8 elimination fix + Q5 boundary + NoPostClaim/Gate lookup restored |
+| v3.5 | VEL + 4-class enhanced word library + 6-step process + KB-19 + PS-6 |
+| **v3.6** | **Q9 AudioQuality + MMAC alignment check + CI convergence index + resource modes (Lite/Standard/Turbo) + PS-7 calibration pipeline + PS-8 A/B protocol + ERP error recovery + 17-step verification + 10-component CF/HU + Q9 NarrativeAudioCap integration** |
+
+---
+
+## XXXII. One-Line Positioning
 
 ```
-v3.5 Minor Release (相对 v3.4.1):
-  [NEW] 第四层「视觉增强层」(Visual Enhancement Layer)
-  [NEW] A 类物理真实增强词库（8 词）— 用于物理异常句
-  [NEW] B 类角色生命增强词库（10 词）— 用于角色动作句
-  [NEW] C 类材质光影增强词库（10 词）— 用于产品特写句
-  [NEW] D 类大气粒子增强词库（8 词）— 用于结尾句/场景建立句
-  [NEW] 6 步增强植入流程（生成→识别→选择→植入→词数检查→铁律检查）
-  [NEW] KB-19 视觉增强知识库
-  [NEW] VEL 降级条（增强词冲突 / 词数超限）
-  [NEW] PS-4 发布前检查清单 VEL 项（3 条）
-  [NEW] PS-6 质量总清单 VEL 检查项（6 条）
-  [NEW] Anti-Pseudoscience #14（VEL 渲染效果声明）
-  [NEW] 输出模板 VEL 增强植入记录
-  [NEW] 自然度检查 VEL 堆叠/冲突检查
-  [NEW] IQD 记录格式含 VEL 变化
-  [MOD] 铁律 R2 词数合格区间: 100-160 → 100-162
-  [MOD] 铁律 R3 词数淘汰阈: >180 → >185
-  [MOD] 编译器 R3 FatalRed 阈: >180 → >185
-  [MOD] 编译器 R16 RepairableRed 区间: 161-180 → 163-185
-  [MOD] 硬淘汰 #8 词数阈: >180 → >185
-  [MOD] 回滚条件 #6 词数区间: 100-160 → 100-162
-  [MOD] 状态机: 状态 2 → 状态 2.5 (VEL) → 状态 3
-  [MOD] 候选搜索: VEL 植入在评分前完成
-  [MOD] Repair/Enhance Loop: 修复/增强后重新执行 VEL
-  [MOD] 交付物 #1 词数: 100-160 → 100-162
-  [MOD] 交付物新增 #17 VEL 增强植入记录
-  [KEEP] v3.4.1 全部: 创意质量层 / EAD / ShowDontTell / SC / PRC / IQD / 14步验算
-         / NarrativeAudioCap / R13-R14 / U_creative 三元 / CF 扩展 / HU 扩展
-         / Q8<3 修复保留 / 查表精细口径 / CF 两位小数 / 动态权重再归一
+Seedance 2.0 TikTok Growth Prompt Compiler v3.6
+= Creative Quality Auditor + Structural Quality Auditor + Visual Enhancement Compiler
+  + Audio Quality Assessor + Delivery Compiler + Calibration Framework
+  + Score-Guided Search Convergence + NoPost Active Optimisation
+  + Series Coherence Layer + Rendering Confidence + Visual Enhancement Layer (VEL)
+  + Multi-Modal Alignment Check + Convergence Index
+  + Resource Adaptive Modes (Lite/Standard/Turbo)
+
+v3.6 Core New:
+  Q9 AudioQuality assesses audio-visual sync, layering, emotion support,
+  rhythm alignment, and Seedance compatibility (5 sub-features, 0-5 scale).
+  MMAC provides 5-item cross-modal alignment diagnosis.
+  CI quantifies convergence for early termination and local-optimum detection.
+  Three resource modes adapt to Lite/Standard/Turbo use cases.
+  PS-7 calibration pipeline provides path from expert prior to data posterior.
+  PS-8 A/B testing protocol enables systematic validation.
+  ERP error recovery pipeline provides 5-level structured failure handling.
+  U_delivery now uses geometric mean of Q6 × Q9, ensuring audio quality
+  directly impacts delivery score.
+  All Q9/CI/MMAC parameters are expert priors, awaiting Seedance test calibration.
+
+v3.5 Core (retained):
+  VEL (4-class, 36 enhanced words, 6-step implant).
+  Q8 EmotionalImpact (weight 0.20) with ternary geometric mean in U_creative.
+  EAD measures 15-second emotion rhythm density.
+  ShowDontTell ensures conflicts are visualised.
+  CharacterChoice ensures product integrates into character decisions.
+  SeriesCoherence ensures series progression without repetition.
+  PRC marks rendering confidence per key visual moment.
+  IQD ensures creative improvements trackable when SS unchanged.
+  NarrativeAudioDependencyCap honestly marks audio dependency.
+
+v3.6 Carry-Forward (from v3.4.1):
+  Q8<3 no longer hard elimination (force repair, SS≥85 keep).
+  Lookup fully restored v3.3 fine-calibre.
+  CF reported to two decimal places.
+  Compiler logic correction (R5-R8 positive framing).
+  Prohibitions narrative-only.
+
+All parameters are expert priors until delivery data calibration.
 ```
 
 ---
 
-## 二十八、一句话定位
-
-```
-Seedance 2.0 TikTok Growth Prompt Compiler v3.5
-= 创意质量审查器 + 结构质量审查器 + 视觉增强编译器 + 投放交付编译器
-  + Score-Guided 搜索收敛 + NoPost 主动优化 + 系列连贯层 + 渲染置信度
-  + 视觉增强层（VEL）
-
-v3.5 核心新增:
-  视觉增强层（VEL）为每个 Prompt 植入 3-4 个精准视觉增强词，
-  分为 4 类：物理真实（A）、角色生命（B）、材质光影（C）、大气粒子（D）。
-  增强词嵌入现有叙事句作为后缀，不重写整段，不堆叠，不替代运镜指令。
-  6 步植入流程确保增强词与叙事语境匹配、词数可控、铁律兼容。
-  VEL 对评分体系中性（SS/CF/HU 不变），对画面质感微幅正面。
-  所有增强词选择基于专家视觉判断，需 Seedance 实测数据校准。
-
-v3.4 核心（保留）:
-  Q8 EmotionalImpact (权重0.22) 用三元几何均值注入 U_creative。
-  EAD 衡量 15 秒内的情绪节奏密度。
-  ShowDontTell 确保冲突可视觉化。
-  CharacterChoice 确保产品融入角色决策。
-  SeriesCoherence 确保系列递进不重复。
-  PRC 标记每个关键视觉瞬间的 Seedance 渲染置信度。
-  IQD 确保 SS 不变时创意改进仍可被接受。
-  NarrativeAudioDependencyCap 诚实标注音频依赖。
-
-v3.4.1 口径（保留）:
-  Q8<3 不再硬淘汰（强制修复，SS≥85 保留）。
-  查表全面恢复 v3.3 精细口径。
-  CF 报告保留两位小数。
-  编译器逻辑修正（R5-R8 正向表述）。
-  禁止项仅限叙事段。
-
-所有参数在投放数据校准前均为专家先验。
-```
-
----
-
-**Seedance Prompt 生成系统 v3.5 — Minor Release 定稿。**
+**Seedance 2.0 TikTok Growth Prompt Compiler v3.6 — Production-Ready Specification Finalised.**
